@@ -1,7 +1,7 @@
 import java.awt.event.KeyEvent;
 import java.util.Scanner;
 
-public class main {
+public class OldMain {
 
 	public static void main(String[] args) throws Exception {
 		
