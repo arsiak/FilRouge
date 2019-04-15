@@ -6,8 +6,6 @@ public class Perso {
 
 	public Perso() {
 		lettre = "@";
-		positionX = 6;
-		positionY = 8;
 	}
 	
 	public Perso(String lettre, int positionX, int positionY) {
