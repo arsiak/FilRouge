@@ -27,25 +27,18 @@ public class Zone extends Layer implements KeyListener{
 		this.zoneWidth = s.getWidth();
 		this.zoneHeight = s.getHeight();
 		this.coinHautGauche = positionHautGauche;
-		
 		// Initialize the MapTiles array.
+		
+		//La zone ne fait que la taille de l'écran
 		this.zone = new MapTile[s.getWidth()][s.getHeight()];
-		// Set the Layer to display all tiles as empty and black.
-        for (int y = 0 ; y < s.getHeight() ; y++) {
-            for (int x = 0 ; x < s.getWidth() ; x++) {
-                final Tile tile = super.tiles.getTileAt(x, y);
-                tile.setCharacter(' ');
-                //tile.setBackgroundColor(Color.black);
-            }
-        }
-        
-
-	    //this.p = new Personnage(getCenter());
-	    ajouterPersonnage(new Personnage(getCenter()));
-	    this.zone[p.getPosition().getX()][p.getPosition().getY()] = new MapTile(DecorElement.PLAYER);
+		
+		//Ajouter le personnage dans la premiere case vide
+		
+		ajouterPersonnage(new Personnage(getCenter()));
 	    this.updateZone(mapTiles);
 	    this.updateLayerTiles();
 	    this.s.addListener(this);
+	    this.s.draw();
 	}
 	
 	
@@ -64,14 +57,11 @@ public class Zone extends Layer implements KeyListener{
     public int getViewWidth() {
         return super.tiles.getWidth();
     }
-
    
     public int getViewHeight() {
         return super.tiles.getHeight();
     }
 	
-	
-
 	public Personnage getPersonnage() {
 		return this.p;
 	}
@@ -117,9 +107,7 @@ public class Zone extends Layer implements KeyListener{
 		}
 		return this.zone;
 		
-	}
-
-	@Override
+	}	@Override
 	public void keyTyped(KeyEvent e) {
         
 	}
@@ -162,8 +150,6 @@ public class Zone extends Layer implements KeyListener{
 	        this.updateZone(this.map);
 	        this.updateLayerTiles();
 	        this.s.draw();
-	        
-		
 	}
 
 	@Override

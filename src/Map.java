@@ -13,7 +13,7 @@ public class Map{
 	public Map() {
        creerMap();
 	}
-	
+
 	public void creerMap() {
 		Random rand = new Random();
 		this.map = new MapTile[MAP_SIZE][MAP_SIZE];
