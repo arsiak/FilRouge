@@ -129,5 +129,6 @@ public class Perso {
 		monstre.setPointVie(degat);
 		System.out.println(monstre.nom+" perd "+(this.pointAttaque-monstre.pointDefense)+" point(s) de vie !");
 	}
+
 	
 }
