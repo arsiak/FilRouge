@@ -1,10 +1,7 @@
-import java.awt.Dimension;
-import java.awt.Font;
 import java.io.IOException;
 import java.util.ArrayList;
 
 import com.valkryst.VTerminal.Screen;
-import com.valkryst.VTerminal.Tile;
 
 
 public class Fenetre {
@@ -17,9 +14,11 @@ public class Fenetre {
 	public Fenetre() throws IOException {
 		this.screen = new Screen(21,21);
 		this.screen.addCanvasToFrame();
-		Feuille.creerMap();
+		//Feuille.creerMap();
+		Map m = new Map();
 		this.feuillePrincipale = genererMapDonjon();
-		this.zone = new Zone(new Coord(0,0), Feuille.getMap(), this.screen);
+		//this.zone = new Zone(new Coord(0,0), Feuille.getMap(), this.screen);
+		this.zone = new Zone(new Coord(0,0), m.getMap(), this.screen);
 		this.screen.addComponent(this.zone);
 		this.screen.draw();
 		

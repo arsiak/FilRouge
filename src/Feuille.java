@@ -322,7 +322,6 @@ public class Feuille extends Layer {
 	}
 
 	public static MapTile[][] getMap() {
-		// TODO Auto-generated method stub
 		return map;
 	}
 	
