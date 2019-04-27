@@ -16,7 +16,7 @@ public class Fenetre {
 		this.screen.addCanvasToFrame();
 		//Feuille.creerMap();
 		Map m = new Map();
-		this.feuillePrincipale = genererMapDonjon();
+		//this.feuillePrincipale = genererMapDonjon();
 		//this.zone = new Zone(new Coord(0,0), Feuille.getMap(), this.screen);
 		this.zone = new Zone(new Coord(0,0), m.getMap(), this.screen);
 		this.screen.addComponent(this.zone);

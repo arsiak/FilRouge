@@ -118,6 +118,7 @@ public class Zone extends Layer implements KeyListener{
 		   int codeDeLaTouche = e.getKeyCode();
 	        Coord caseSuivante = null;
 	        //Personnage personnage = getPersonnage();
+	        try {
 	        switch (codeDeLaTouche) // Les valeurs sont contenue dans KeyEvent. Elles commencent par VK_ et finissent par le nom de la touche
 	        {
 	        
@@ -146,6 +147,9 @@ public class Zone extends Layer implements KeyListener{
 						this.coinHautGauche.setX(1);
 					}
 	                break;
+	        }}
+	        catch(ArrayIndexOutOfBoundsException e1) {
+	        	e1.getMessage();
 	        }
 	        this.updateZone(this.map);
 	        this.updateLayerTiles();

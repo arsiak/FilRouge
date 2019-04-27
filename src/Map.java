@@ -9,22 +9,22 @@ public class Map{
 	
 	public static final int MAP_SIZE = 100;
 	private MapTile[][] map;
-	float chanceToHaveWall = 0.45f;
+	double chanceToHaveFloor = 0.75;
 	
 	private int deathLimit= 4;
 	private int birthLimit = 6 ;
-	private int numberOfSteps= 4;
+	private int numberOfSteps= 2;
 	
 	public Map() {
 		//initialiseMap();
 		generateMap();
 	}
 	
-	public MapTile[][] initialiseMap(){
+	public void initialiseMap(){
 		this.map = new MapTile[MAP_SIZE][MAP_SIZE];
 	    for(int x=0; x<MAP_SIZE; x++){
 	        for(int y=0; y<MAP_SIZE; y++){
-	            if(Math.random() < chanceToHaveWall){
+	            if(Math.random() < chanceToHaveFloor){
 	                this.map[x][y] = new MapTile(DecorElement.FLOOR);
 	            }else {
 	            	this.map[x][y] = new MapTile(DecorElement.WALL);
@@ -32,14 +32,14 @@ public class Map{
 	            }
 	        }
 	    }
-	    return map;
+	    //return map;
 	}
 
 	public void initMap() {
 		this.map = new MapTile[MAP_SIZE][MAP_SIZE];
 		 for(int x=0; x<MAP_SIZE; x++){
 		      for(int y=0; y<MAP_SIZE; y++){
-		          if(Math.random() < chanceToHaveWall){
+		          if(Math.random() < chanceToHaveFloor){
 		              this.map[x][y] = new MapTile(DecorElement.FLOOR);
 		          }else {
 		        	  this.map[x][y] = new MapTile(DecorElement.WALL);
@@ -52,7 +52,7 @@ public class Map{
 	    //Create a new map
 	    this.map = new MapTile[MAP_SIZE][MAP_SIZE];
 	    //Set up the map with random values
-	    initMap();
+	    initialiseMap();
 	    //And now run the simulation for a set number of steps
 	    for(int i=0; i<numberOfSteps; i++){
 	        doSimulationStep();
@@ -62,7 +62,7 @@ public class Map{
 	//Returns the number of cells in a ring around (x,y) that are alive.
 	public int countAliveNeighbours(int x, int y){
 	    int count = 0;
-	    if(x > 0 && x < this.map.length-1 && y > 0 && y < this.map.length-1  ) {
+	    //if(x > 0 && x < this.map.length-1 && y > 0 && y < this.map.length-1  ) {
 	    for(int i=-1; i<2; i++){
 	        for(int j=-1; j<2; j++){
 	            int neighbour_x = x+i;
@@ -81,12 +81,12 @@ public class Map{
 	                count = count + 1;
 	            }
 	        }
-	    }
+	   // }
 	    }
 	    return count;
 	}
 	
-	public MapTile[][] doSimulationStep(){
+	public void doSimulationStep(){
 	    MapTile[][] newMap = new MapTile[MAP_SIZE][MAP_SIZE];
 	    //Loop over each row and column of the map
 	    for(int x=0; x<this.map.length; x++){
@@ -112,7 +112,8 @@ public class Map{
 	            }
 	        }
 	    }
-	    return newMap;
+	    this.map = newMap;
+	    //return newMap;
 	}
 	
 	public void afficherMap() {
