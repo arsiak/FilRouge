@@ -5,7 +5,7 @@ public enum DecorElement {
     WALL((char)'#', Color.green),
     BOUNDS('x', Color.black),
 	PLAYER('@', Color.blue);
-
+	
     private char glyph;
     public char glyph() { return glyph; }
 
@@ -19,7 +19,6 @@ public enum DecorElement {
 
 
 	public Color getForegroundColor() {
-		// TODO Auto-generated method stub
 		return this.color;
 	}
 
