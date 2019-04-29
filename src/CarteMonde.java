@@ -1,6 +1,3 @@
-
-import javax.swing.JPanel;
-
 public class CarteMonde extends Carte {
 
 	public CarteMonde() {

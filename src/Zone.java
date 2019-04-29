@@ -1,11 +1,8 @@
 
-import java.awt.Color;
 import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
-import java.util.Arrays;
-import java.util.Scanner;
 
 import com.valkryst.VTerminal.Screen;
 import com.valkryst.VTerminal.Tile;

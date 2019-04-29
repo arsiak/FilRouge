@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Orc extends Perso{
 	int parerOrc;
 	

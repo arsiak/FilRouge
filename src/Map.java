@@ -1,9 +1,5 @@
 import java.awt.Color;
-import java.awt.Dimension;
 import java.util.Random;
-import java.util.Scanner;
-
-import com.valkryst.VTerminal.component.Layer;
 
 public class Map{
 	

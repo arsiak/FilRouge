@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.lang.Object;
 
 public class Combat {
 	

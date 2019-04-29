@@ -1,9 +1,5 @@
-import java.awt.Dimension;
-import java.awt.Font;
 import java.io.IOException;
-
 import com.valkryst.VTerminal.Screen;
-import com.valkryst.VTerminal.Tile;
 
 
 public class Fenetre {
