@@ -1,6 +1,3 @@
-
-import javax.swing.JPanel;
-
 public class Carte {
 
 	protected int xPerso;

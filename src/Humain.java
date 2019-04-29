@@ -1,5 +1,3 @@
-import java.util.ArrayList;
-
 public class Humain extends Perso {
 	
 	public Humain(String nom, String lettre, int positionX, int positionY, Artefact[] listeArtefact, boolean armure) {
