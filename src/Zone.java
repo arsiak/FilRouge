@@ -30,8 +30,8 @@ public class Zone extends Layer implements KeyListener{
 		// Initialize the MapTiles array.
 		
 		//La zone ne fait que la taille de l'écran
-		this.zone = new MapTile[s.getWidth()][s.getHeight()];
 		
+		this.zone = new MapTile[s.getWidth()][s.getHeight()];
 		//Ajouter le personnage dans la premiere case vide
 		
 		ajouterPersonnage(new Personnage(getCenter()));

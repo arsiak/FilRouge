@@ -9,9 +9,8 @@ public class Map{
 	
 	public static final int MAP_SIZE = 100;
 	private MapTile[][] map;
-	double chanceToHaveFloor = 0.75;
-	
-	private int deathLimit= 4;
+	double chanceToHaveFloor = 0.7;
+	private int deathLimit= 5;
 	private int birthLimit = 6 ;
 	private int numberOfSteps= 2;
 	
