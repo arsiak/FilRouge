@@ -30,7 +30,7 @@ public class Carte extends JPanel {
 	public Carte() {
 		
 		try {
-			personnage = ImageIO.read(new File("Images/prince.png"));
+			personnage = ImageIO.read(new File("src/Images/prince.png"));
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -85,6 +85,15 @@ public class Carte extends JPanel {
 		
 	}
 	
+	public void placer(Coord coord, char lettre) {
+		
+		carte[coord.getY()][coord.getX()] = lettre;
+	}
+	
+	public void enlever(Coord coord) {
+		
+		carte[coord.getY()][coord.getX()] = ' ';
+	}
 	
 	 public void setDeplacementPerso(Perso perso) {
 		 
@@ -126,12 +135,15 @@ public class Carte extends JPanel {
 		return coordEntreeSortie;
 	} 
 	
-public void afficher() {
+	public void afficher() {
 		
-	int nbcol = 47, nbligne=45;
+	int cadreGauche = perso.getCoord().getX() - 3, cadreDroit = perso.getCoord().getX() + 3;
+	int cadreHaut = perso.getCoord().getY() - 3, cadreBas = perso.getCoord().getY() + 3;
+	
 		System.out.println();
-		for (int i = 0; i <nbligne; i++) {
-			for (int j = 0; j <nbcol; j++) {
+		
+		for (int i = cadreHaut; i < cadreBas; i++) {
+			for (int j = cadreGauche; j < cadreDroit; j++) {
 				System.out.print(carte[i][j]);
 			}
 		System.out.println();

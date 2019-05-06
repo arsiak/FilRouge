@@ -60,11 +60,11 @@ public class CarteMonde extends Carte {
 			  */
 			  try {
 			    	
-			      obstacle = ImageIO.read(new File("Images/arbre.png"));
-			      entree = ImageIO.read(new File("Images/chateau.png"));
-			      eau = ImageIO.read(new File("Images/eau.png"));
+			      obstacle = ImageIO.read(new File("src/Images/arbre.png"));
+			      entree = ImageIO.read(new File("src/Images/chateau.png"));
+			      eau = ImageIO.read(new File("src/Images/eau.png"));
 			      
-			      sol = ImageIO.read(new File("Images/terre.png"));
+			      sol = ImageIO.read(new File("src/Images/terre.png"));
 			      
 			 }
 			 catch (IOException e) {

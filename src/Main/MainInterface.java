@@ -3,26 +3,27 @@ package Main;
 import java.awt.Container;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
+import java.io.IOException;
 import java.util.Arrays;
 
 import javax.swing.JFrame;
 import javax.swing.JPanel;
 
 import Cartes.Carte;
-import Cartes.CarteChateau;
+import Cartes.CarteDonjon;
 import Cartes.CarteMonde;
 import Cartes.Coord;
 import Personnages.Perso;
 
-public class Fenetre extends JFrame implements KeyListener {
+public class MainInterface extends JFrame implements KeyListener {
 	
 	Perso p = new Perso(new Coord(22, 14));	
 	//CarteMonde carteM = new CarteMonde();
 	//CarteChateau carteC = new CarteChateau();
 	Carte carte = new CarteMonde();
-	char[][] cart;
+	//char[][] cart;
 	
-	  public Fenetre() {   
+	  public MainInterface() {   
 		
 	    this.setTitle("Test de map");
 	    this.setSize(500, 500);
@@ -77,7 +78,7 @@ public class Fenetre extends JFrame implements KeyListener {
 		    break;
 		  }
 		if (carte.estChange(p) == true) { 
-			carte = new CarteChateau(); 
+			carte = new CarteDonjon(); 
 			p.setCoord(carte.getCoordEntreeSortie());
 			this.setContentPane(carte); 
 			this.setVisible(true);
@@ -91,6 +92,16 @@ public class Fenetre extends JFrame implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 		
-	}     
+	}   
+	
+	public static void main(String[] args) throws IOException {
+		MainInterface fen = new MainInterface();
+	}
 
 }
+
+
+
+	
+
+
