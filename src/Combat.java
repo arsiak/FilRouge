@@ -1,5 +1,4 @@
 import java.util.Scanner;
-import java.lang.Object;
 
 public class Combat {
 	
@@ -14,23 +13,37 @@ public class Combat {
 		Bouclier bouclier=new Bouclier("bouclier");
 		Armure armure=new Armure("armure");
 		PotionDeVie potiondevie=new PotionDeVie("potion");
-		Artefact[] artefactAnduyn= {epee};
-		Artefact[] artefactThrall= {epee, bouclier};
-		Artefact[] artefactLegolas= {epee, potiondevie};
+		Artefact[] artefact1= {epee};
+		Artefact[] artefact2= {epee, bouclier};
+		Artefact[] artefact3= {epee, potiondevie};
+		
+		//Metier
+		Metier guerrier=new Guerrier("Guerrier");
+		Metier mage=new Mage("Mage");
 		
 		//Personnages
 		Equipe equipe=new Equipe();
-		Perso Anduyn=new Humain("Anduyn","@", 4, 8, artefactAnduyn, true);
-		Perso Thrall=new Orc("Thrall", "@", 6, 8, artefactThrall, false);
-		Perso Legolas= new Elfe("Legolas", "@", 8, 8, artefactLegolas, false);
+		Perso Anduyn=new Humain("Anduyn","@", 4, 8, artefact1, true, guerrier);
+		Perso Thrall=new Orc("Thrall", "@", 6, 8, artefact2, false, guerrier);
+		Perso Legolas= new Elfe("Legolas", "@", 8, 8, artefact3, false, mage);
 		equipe.listePersonnage.add(Anduyn);
 		equipe.listePersonnage.add(Thrall);
 		equipe.listePersonnage.add(Legolas);
 		
+		//Triage selon vitesse
+		/** for(int i=0; i<equipe.listePersonnage.size(); i++) {
+			Perso temporaire;
+			if(equipe.listePersonnage.get(i).pointVitesse<equipe.listePersonnage.get(i+1).pointVitesse) {
+				temporaire=equipe.listePersonnage.get(i);
+				equipe.listePersonnage.remove(i);
+				equipe.listePersonnage.add(temporaire);
+			}
+		} **/
+		
 		EquipeMonstre equipeMonstre=new EquipeMonstre();
-		Monstre monstre1=new Monstre("monstre1");
-		Monstre monstre2=new Monstre("monstre2");
-		Monstre monstre3=new Monstre("monstre3");
+		Monstre monstre1=new Monstre("monstre1", artefact1, true);
+		Monstre monstre2=new Monstre("monstre2", artefact2, false);
+		Monstre monstre3=new Monstre("monstre3", artefact3, false);
 		equipeMonstre.listeMonstre.add(monstre1);
 		equipeMonstre.listeMonstre.add(monstre2);
 		equipeMonstre.listeMonstre.add(monstre3);
@@ -58,6 +71,13 @@ public class Combat {
 			}
 		}
 		
+		for(int i=0; i<equipeMonstre.listeMonstre.size(); i++) {
+			if(equipeMonstre.listeMonstre.get(i).armure==true) {
+				equipeMonstre.listeMonstre.get(i).setPointDefense(equipeMonstre.listeMonstre.get(i).pointDefense+5);
+				System.out.println(equipeMonstre.listeMonstre.get(i).nom+" utilise l'armure");
+			}
+		}
+		
 		//Boucle de combat
 		while((equipe.pointVieGlobal>0) && (equipeMonstre.pointVieGlobal>0)) {
 			for (int j=0; j<100;j++) {
@@ -73,8 +93,19 @@ public class Combat {
 				for (int j=0; j<equipe.listePersonnage.get(i).equipement.length; j++) {
 					rand=Math.random();
 					if(rand>=0.5) {
-						equipe.listePersonnage.get(i).equipement[j].utiliser(equipe.listePersonnage.get(i));
+						equipe.listePersonnage.get(i).equipement[j].Utiliser(equipe.listePersonnage.get(i));
 						System.out.println(equipe.listePersonnage.get(i).nom+" utilise "+equipe.listePersonnage.get(i).equipement[j].identifiant);
+					}	
+				}
+			}
+			
+			for(int i=0; i<equipeMonstre.listeMonstre.size(); i++) {
+				Double rand;
+				for (int j=0; j<equipeMonstre.listeMonstre.get(i).equipement.length; j++) {
+					rand=Math.random();
+					if(rand>=0.5) {
+						equipeMonstre.listeMonstre.get(i).equipement[j].Utiliser(equipeMonstre.listeMonstre.get(i));
+						System.out.println(equipeMonstre.listeMonstre.get(i).nom+" utilise "+equipeMonstre.listeMonstre.get(i).equipement[j].identifiant);
 					}	
 				}
 			}
@@ -120,32 +151,53 @@ public class Combat {
 					
 					//Reset utilisation des objets
 					if((equipe.listePersonnage.get(i) instanceof Humain)) {
-						equipe.listePersonnage.get(i).pointAttaque=10;
+						if(equipe.listePersonnage.get(i).metier instanceof Guerrier) {
+							equipe.listePersonnage.get(i).pointAttaque=10;
+						}
+						else {
+							equipe.listePersonnage.get(i).pointMagie=10;
+						}
 						if(equipe.listePersonnage.get(i).armure==true) {
 							equipe.listePersonnage.get(i).pointDefense=11;
 						}
 						else {
 							equipe.listePersonnage.get(i).pointDefense=5;
+							equipe.listePersonnage.get(i).pointResistance=5;
 						}
 					}
-					if (equipe.listePersonnage.get(i) instanceof Elfe) {
-						equipe.listePersonnage.get(i).pointAttaque=12-((Elfe)equipe.listePersonnage.get(i)).parerElfe;
+					if(equipe.listePersonnage.get(i) instanceof Elfe) {
+						if(equipe.listePersonnage.get(i).metier instanceof Guerrier) {
+							equipe.listePersonnage.get(i).pointAttaque=12-((Elfe)equipe.listePersonnage.get(i)).parerElfe;
+						}
+						else {
+							equipe.listePersonnage.get(i).pointMagie=12-((Elfe)equipe.listePersonnage.get(i)).parerElfe;
+						}
 						if(equipe.listePersonnage.get(i).armure==true) {
 							equipe.listePersonnage.get(i).pointDefense=10;
 						}
 						else {
 							equipe.listePersonnage.get(i).pointDefense=5;
+							equipe.listePersonnage.get(i).pointResistance=5;
 						}
 					}
 					if((equipe.listePersonnage.get(i) instanceof Orc) ) {
-						equipe.listePersonnage.get(i).pointAttaque=12;
+						if(equipe.listePersonnage.get(i).metier instanceof Guerrier) {
+							equipe.listePersonnage.get(i).pointAttaque=12;
+						}
+						else {
+							equipe.listePersonnage.get(i).pointMagie=8;
+						}
 						if(equipe.listePersonnage.get(i).armure==true) {
 							equipe.listePersonnage.get(i).pointDefense=12-((Orc)equipe.listePersonnage.get(i)).parerOrc;
 						}
 						else {
 							equipe.listePersonnage.get(i).pointDefense=7-((Orc)equipe.listePersonnage.get(i)).parerOrc;
+							equipe.listePersonnage.get(i).pointResistance=7-((Orc)equipe.listePersonnage.get(i)).parerOrc;
 						}
 					}
+					
+					equipeMonstre.listeMonstre.get(j).pointAttaque=10;
+					equipeMonstre.listeMonstre.get(j).pointDefense=5;
 					
 					System.out.println();
 				}
@@ -164,6 +216,7 @@ public class Combat {
 			
 			for(int i=0; i<equipe.listePersonnage.size(); i++) {
 				if(equipe.listePersonnage.get(i).pointVie<=0) {
+					System.out.println(equipe.listePersonnage.get(i).nom+" est KO");
 					equipe.listePersonnage.remove(i);
 					break;
 				}
@@ -171,6 +224,7 @@ public class Combat {
 			
 			for(int i=0; i<equipeMonstre.listeMonstre.size(); i++) {
 				if(equipeMonstre.listeMonstre.get(i).pointVie<=0) {
+					System.out.println(equipeMonstre.listeMonstre.get(i).nom+" a été neutralisé");
 					equipeMonstre.listeMonstre.remove(i);
 					break;
 				}
@@ -184,6 +238,14 @@ public class Combat {
 		if(fuite==false) {
 			if (equipe.pointVieGlobal>0) {
 				System.out.println(equipe.nom+" est le vainqueur !");
+				for(int i=0; i<equipe.listePersonnage.size(); i++) {
+					if(equipe.listePersonnage.get(i).pointVie>0) {
+						equipe.listePersonnage.get(i).XP=equipe.listePersonnage.get(i).XP+10;
+					}
+					else {
+						equipe.listePersonnage.get(i).XP=equipe.listePersonnage.get(i).XP+5; 
+					}
+				}
 			}
 			if (equipeMonstre.pointVieGlobal>0) {
 				System.out.println(equipeMonstre.nom+" est le vainqueur !");

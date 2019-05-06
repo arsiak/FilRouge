@@ -2,9 +2,18 @@ import java.util.ArrayList;
 
 public class Humain extends Perso {
 	
-	public Humain(String nom, String lettre, int positionX, int positionY, Artefact[] listeArtefact, boolean armure) {
-		super(nom, lettre, positionX, positionY, listeArtefact, armure);
+	public Humain(String nom, String lettre, int positionX, int positionY, Artefact[] listeArtefact, boolean armure, Metier metier) {
+		super(nom, lettre, positionX, positionY, listeArtefact, armure, metier);
+		this.pointVitesse=5;
 		this.criGuerre="A l'attaque !!";
+		if(metier instanceof Guerrier) {
+			this.pointAttaque=10;
+			this.pointMagie=0;
+		}
+		if(metier instanceof Mage) {
+			this.pointAttaque=0;
+			this.pointMagie=10;
+		}
 	}
 	
 	void lancerCriGuerre(String criGuerre) {
@@ -26,6 +35,6 @@ public class Humain extends Perso {
 	}
 	
 	public String toString() {
-		return "Nom : "+nom +" | Point de vie : "+pointVie+" | Point d'attaque : "+pointAttaque+" | Point de défense : "+pointDefense;
+		return "Nom : "+nom +" | Vie : "+pointVie+" | Attaque : "+pointAttaque+" | Défense : "+pointDefense+" | Magie : "+pointMagie+" | Résistance : "+pointResistance+" | Vitesse : "+pointVitesse;
 	}
 }

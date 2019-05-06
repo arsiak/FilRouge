@@ -3,12 +3,20 @@ import java.util.ArrayList;
 public class Elfe extends Perso{
 	int parerElfe;
 	
-	public Elfe(String nom, String lettre, int positionX, int positionY, Artefact[] listeArtefact, boolean armure) {
-		super(nom, lettre, positionX, positionY, listeArtefact, armure);
-		this.pointAttaque=12;
+	public Elfe(String nom, String lettre, int positionX, int positionY, Artefact[] listeArtefact, boolean armure, Metier metier) {
+		super(nom, lettre, positionX, positionY, listeArtefact, armure, metier);
 		this.pointDefense=2;
+		this.pointVitesse=7;
 		this.criGuerre="A l'attaque !!";
 		this.parerElfe=0;
+		if(metier instanceof Guerrier) {
+			this.pointAttaque=12;
+			this.pointMagie=0;
+		}
+		if(metier instanceof Mage) {
+			this.pointAttaque=0;
+			this.pointMagie=12;
+		}
 	}	
 	
 	void lancerCriGuerre(String criGuerre) {
@@ -26,6 +34,6 @@ public class Elfe extends Perso{
 	}
 	
 	public String toString() {
-		return "Nom : "+nom +" | Point de vie : "+pointVie+" | Point d'attaque : "+pointAttaque+" | Point de défense : "+pointDefense;
+		return "Nom : "+nom +" | Vie : "+pointVie+" | Attaque : "+pointAttaque+" | Défense : "+pointDefense+" | Magie : "+pointMagie+" | Résistance : "+pointResistance+" | Vitesse : "+pointVitesse;
 	}
 }
