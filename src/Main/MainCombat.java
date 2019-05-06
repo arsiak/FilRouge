@@ -16,7 +16,7 @@ import Personnages.Orc;
 import Personnages.Perso;
 
 
-public class Combat {
+public class MainCombat {
 	
 	public static void main(String[] Args) throws InterruptedException {
 		Scanner sc=new Scanner(System.in);
