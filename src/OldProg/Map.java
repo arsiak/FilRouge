@@ -1,16 +1,16 @@
+package OldProg;
 import java.awt.Color;
 import java.util.Random;
 
 import Cartes.Coord;
-import OldProg.DecorElement;
-import OldProg.MapTile;
 
 public class Map{
 	
 	public static final int MAP_SIZE = 100;
 	private MapTile[][] map;
-	double chanceToHaveFloor = 0.7;
-	private int deathLimit= 5;
+	double chanceToHaveFloor = 0.75;
+	
+	private int deathLimit= 4;
 	private int birthLimit = 6 ;
 	private int numberOfSteps= 2;
 	

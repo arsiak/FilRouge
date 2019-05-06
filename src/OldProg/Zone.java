@@ -1,27 +1,16 @@
+package OldProg;
 
-import java.awt.Dimension;
-import java.awt.event.KeyEvent;
-import java.awt.event.KeyListener;
-import java.io.IOException;
 
-import com.valkryst.VTerminal.Screen;
-import com.valkryst.VTerminal.Tile;
-import com.valkryst.VTerminal.component.Layer;
-
-import Cartes.Coord;
-import OldProg.DecorElement;
-import OldProg.MapTile;
-import Personnages.Perso;
-
+/*
 public class Zone extends Layer implements KeyListener{
 	private Coord coinHautGauche;
 	private int zoneWidth;
 	private int zoneHeight;
-	private Perso p;
+	private Personnage p;
 	private MapTile[][] zone;
 	private MapTile[][] map;
 	private Screen s;
-	
+
 	public Zone(Coord positionHautGauche, MapTile[][] mapTiles, Screen s) throws IOException {
 		super(new Dimension(s.getWidth(),s.getHeight()));
 		this.s = s;
@@ -32,11 +21,11 @@ public class Zone extends Layer implements KeyListener{
 		// Initialize the MapTiles array.
 		
 		//La zone ne fait que la taille de l'écran
-		
 		this.zone = new MapTile[s.getWidth()][s.getHeight()];
+		
 		//Ajouter le personnage dans la premiere case vide
 		
-		ajouterPersonnage(new Perso(getCenter()));
+		ajouterPersonnage(new Personnage(getCenter()));
 	    this.updateZone(mapTiles);
 	    this.updateLayerTiles();
 	    this.s.addListener(this);
@@ -44,7 +33,7 @@ public class Zone extends Layer implements KeyListener{
 	}
 	
 	
-	/** Updates the Map's Layer, so that any changes made to the Map's tiles are displayed on the Layer. */
+	// Updates the Map's Layer, so that any changes made to the Map's tiles are displayed on the Layer. 
     public void updateLayerTiles() {
         for (int x = 0 ; x < this.zoneWidth ; x++) {
             for (int y = 0 ; y <  this.zoneHeight ; y++) {
@@ -64,7 +53,7 @@ public class Zone extends Layer implements KeyListener{
         return super.tiles.getHeight();
     }
 	
-	public Perso getPersonnage() {
+	public Personnage getPersonnage() {
 		return this.p;
 	}
 
@@ -80,7 +69,7 @@ public class Zone extends Layer implements KeyListener{
 		return new Coord((this.zoneWidth) / 2, (this.zoneHeight) / 2 );
 	}
 	
-	public void ajouterPersonnage(Perso p ) {
+	public void ajouterPersonnage(Personnage p ) {
 		this.p = p;
 		this.zone[p.getPosition().getX()][p.getPosition().getY()] = new MapTile(DecorElement.PLAYER);
 	}
@@ -163,7 +152,6 @@ public class Zone extends Layer implements KeyListener{
 		// TODO Auto-generated method stub
 		
 	}
-
-	
 	
 }
+*/
