@@ -2,44 +2,44 @@ package Personnages;
 import java.util.ArrayList;
 
 public class EquipeMonstre {
-	private String nom;
-	private ArrayList<Monstre> listeMonstre=new ArrayList<Monstre>();
-	private int pointVieGlobal;
-	
+	private String equipeMonstre_nom;
+	private ArrayList<Monstre> equipeMonstre_listeMonstre=new ArrayList<Monstre>();
+	private int equipeMonstre_pointVieGlobal;
+
 	public EquipeMonstre() {
 		this.setNom("L'équipe de monstre");
 	}
-	
+
 	public int CalculerPointVieGlobal() {
 		setPointVieGlobal(0);
 		for(int i=0; i<getListeMonstre().size(); i++) {
-			setPointVieGlobal(getPointVieGlobal()+getListeMonstre().get(i).pointVie);
+			setPointVieGlobal(getPointVieGlobal()+getListeMonstre().get(i).getPointVie());
 		}
 		return getPointVieGlobal();
-		
+
 	}
 
 	public ArrayList<Monstre> getListeMonstre() {
-		return listeMonstre;
+		return equipeMonstre_listeMonstre;
 	}
 
 	public void setListeMonstre(ArrayList<Monstre> listeMonstre) {
-		this.listeMonstre = listeMonstre;
+		this.equipeMonstre_listeMonstre = listeMonstre;
 	}
 
 	public int getPointVieGlobal() {
-		return pointVieGlobal;
+		return equipeMonstre_pointVieGlobal;
 	}
 
 	public void setPointVieGlobal(int pointVieGlobal) {
-		this.pointVieGlobal = pointVieGlobal;
+		this.equipeMonstre_pointVieGlobal = pointVieGlobal;
 	}
 
 	public String getNom() {
-		return nom;
+		return equipeMonstre_nom;
 	}
 
 	public void setNom(String nom) {
-		this.nom = nom;
+		this.equipeMonstre_nom = nom;
 	}
 }

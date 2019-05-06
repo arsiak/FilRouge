@@ -6,13 +6,12 @@ import java.io.IOException;
 import javax.imageio.ImageIO;
 
 public class CarteMonde extends Carte {
-	
+
 	public CarteMonde() {
-		
-		carte = new char [45][47];
-		
+		carte = new char[45][47];
+		//super();
 		this.deserializeCarte("src/Cartes/carteMonde.txt");
-		
+
 		/*carte = new String[][] {{"X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X"},
 			{"X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X"},
 			{"X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X"},
@@ -57,20 +56,20 @@ public class CarteMonde extends Carte {
 			{"X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X"},
 			{"X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X"},
 			{"X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X","X"}};
-			  */
-			  try {
-			    	
-			      obstacle = ImageIO.read(new File("src/Images/arbre.png"));
-			      entree = ImageIO.read(new File("src/Images/chateau.png"));
-			      eau = ImageIO.read(new File("src/Images/eau.png"));
-			      
-			      sol = ImageIO.read(new File("src/Images/terre.png"));
-			      
-			 }
-			 catch (IOException e) {
-		      e.printStackTrace();
-			 }  
-			   
+		 */
+		try {
+
+			carte_obstacle = ImageIO.read(new File("src/Images/arbre.png"));
+			carte_entree = ImageIO.read(new File("src/Images/chateau.png"));
+			carte_eau = ImageIO.read(new File("src/Images/eau.png"));
+
+			carte_sol = ImageIO.read(new File("src/Images/terre.png"));
+
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}  
+
 	}	
-	
+
 }

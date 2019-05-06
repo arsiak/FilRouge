@@ -1,15 +1,15 @@
 package Personnages;
 import Cartes.Coord;
-import Equipements.Artefact;
+import Equipements.Equipement;
 
-public class Elfe extends Perso{
+public class Elfe extends Personnage{
 	private int parerElfe;
 	
-	public Elfe(String nom, Coord coord, Artefact[] listeArtefact, boolean armure) {
-		super(nom, coord, listeArtefact, armure);
-		this.pointAttaque=12;
-		this.pointDefense=2;
-		this.criGuerre="A l'attaque !!";
+	public Elfe(String elfe_nom, Coord elfe_coord, Equipement[] elfe_listeEquipements, boolean elfe_hasArmure) {
+		super(elfe_nom, elfe_coord, elfe_listeEquipements, elfe_hasArmure);
+		this.personnage_pointAttaque=12;
+		this.personnage_pointDefense=2;
+		this.personnage_criGuerre="A l'attaque !!";
 		this.setParerElfe(0);
 	}	
 	
@@ -22,13 +22,13 @@ public class Elfe extends Perso{
 		setPointDefense(pointDefense+2);
 	}
 	
-	public void Parer(Monstre monstre) {
-		System.out.println(this.nom+" pare "+monstre.nom+" !");
+	public void parer(Monstre monstre) {
+		System.out.println(this.personnage_nom+" pare "+monstre.getNom()+" !");
 		this.setParerElfe(getParerElfe()+1);
 	}
 	
 	public String toString() {
-		return "Nom : "+nom +" | Point de vie : "+pointVie+" | Point d'attaque : "+pointAttaque+" | Point de défense : "+pointDefense;
+		return "Nom : "+personnage_nom +" | Point de vie : "+personnage_pointVie+" | Point d'attaque : "+personnage_pointAttaque+" | Point de défense : "+personnage_pointDefense;
 	}
 
 	public int getParerElfe() {

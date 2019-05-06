@@ -1,13 +1,13 @@
 package Equipements;
-public class PotionDeVie extends Artefact {
+public class PotionDeVie extends Equipement {
 	
-	public PotionDeVie(String identifiant) {
-		super(identifiant);
+	public PotionDeVie(String potionDeVie_id) {
+		super(potionDeVie_id);
 		// TODO Auto-generated constructor stub
-		this.sante=5;
+		this.equipement_sante=5;
 	}
 	
 	public void utiliserBouclier(int pointVie) {
-		setSante(pointVie+sante);
+		setSante(pointVie+equipement_sante);
 	}
 }
