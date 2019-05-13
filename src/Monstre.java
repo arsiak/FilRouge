@@ -11,6 +11,7 @@ public class Monstre {
 	String criGuerre;
 	Artefact[] equipement=new Artefact[3];
 	boolean armure;
+	Metier metier;
 	
 	public Monstre(String nom, Artefact[] equipement, boolean armure) {
 		this.nom=nom;

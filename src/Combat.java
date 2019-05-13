@@ -13,9 +13,11 @@ public class Combat {
 		Bouclier bouclier=new Bouclier("bouclier");
 		Armure armure=new Armure("armure");
 		PotionDeVie potiondevie=new PotionDeVie("potion");
-		Artefact[] artefact1= {epee};
+		BouclierMage bouclierMage=new BouclierMage("bouclier de mage");
+		SceptreMage sceptreMage=new SceptreMage("sceptre de mage");
+		Artefact[] artefact1= {epee, potiondevie};
 		Artefact[] artefact2= {epee, bouclier};
-		Artefact[] artefact3= {epee, potiondevie};
+		Artefact[] artefact3= {sceptreMage, bouclierMage};
 		
 		//Metier
 		Metier guerrier=new Guerrier("Guerrier");
