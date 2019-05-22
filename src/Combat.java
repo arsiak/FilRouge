@@ -9,25 +9,19 @@ public class Combat {
 		boolean fuite=false;
 		
 		//Objets
-		Epee epee=new Epee("epee");
-		Bouclier bouclier=new Bouclier("bouclier");
-		Armure armure=new Armure("armure");
-		PotionDeVie potiondevie=new PotionDeVie("potion");
-		BouclierMage bouclierMage=new BouclierMage("bouclier de mage");
-		SceptreMage sceptreMage=new SceptreMage("sceptre de mage");
-		Artefact[] artefact1= {epee, potiondevie};
-		Artefact[] artefact2= {epee, bouclier};
-		Artefact[] artefact3= {sceptreMage, bouclierMage};
+		Arme[] sac1= {Arme.Epee, Arme.Potion};
+		Arme[] sac2= {Arme.Epee, Arme.Arc};
+		Arme[] sac3= {Arme.Sceptre, Arme.GrandeEpee};
 		
-		//Metier
-		Metier guerrier=new Guerrier("Guerrier");
-		Metier mage=new Mage("Mage");
+		Armure[] armure1= {Armure.Bouclier};
+		Armure[] armure2= {Armure.Plastron}; 
+		Armure[] armure3= {Armure.BouclierMagique};
 		
 		//Personnages
 		Equipe equipe=new Equipe();
-		Perso Anduyn=new Humain("Anduyn","@", 4, 8, artefact1, true, guerrier);
-		Perso Thrall=new Orc("Thrall", "@", 6, 8, artefact2, false, guerrier);
-		Perso Legolas= new Elfe("Legolas", "@", 8, 8, artefact3, false, mage);
+		Perso Anduyn=new Paladin("Anduyn","@", 4, 8, sac1, armure1);
+		Perso Thrall=new Guerrier("Thrall", "@", 6, 8, sac2, armure2);
+		Perso Legolas= new Mage("Legolas", "@", 8, 8, sac3, armure3);
 		equipe.listePersonnage.add(Anduyn);
 		equipe.listePersonnage.add(Thrall);
 		equipe.listePersonnage.add(Legolas);
@@ -43,9 +37,9 @@ public class Combat {
 		} **/
 		
 		EquipeMonstre equipeMonstre=new EquipeMonstre();
-		Monstre monstre1=new Monstre("monstre1", artefact1, true);
-		Monstre monstre2=new Monstre("monstre2", artefact2, false);
-		Monstre monstre3=new Monstre("monstre3", artefact3, false);
+		Monstre monstre1=new Assassin("monstre1", "M", 4, 12, sac1, armure1);
+		Monstre monstre2=new Chamane("monstre2", "M", 6, 12, sac2, armure2);
+		Monstre monstre3=new GuerrierNecromancien("monstre3", "M", 8, 12, sac3, armure3);
 		equipeMonstre.listeMonstre.add(monstre1);
 		equipeMonstre.listeMonstre.add(monstre2);
 		equipeMonstre.listeMonstre.add(monstre3);
@@ -64,21 +58,6 @@ public class Combat {
 			System.out.println(equipeMonstre.listeMonstre.get(i).toString());
 			System.out.println(equipeMonstre.listeMonstre.get(i).getCriGuerre());
 		}
-			
-		//Armure
-		for(int i=0; i<equipe.listePersonnage.size(); i++) {
-			if(equipe.listePersonnage.get(i).armure==true) {
-				equipe.listePersonnage.get(i).setPointDefense(equipe.listePersonnage.get(i).pointDefense+5);
-				System.out.println(equipe.listePersonnage.get(i).nom+" utilise l'armure");
-			}
-		}
-		
-		for(int i=0; i<equipeMonstre.listeMonstre.size(); i++) {
-			if(equipeMonstre.listeMonstre.get(i).armure==true) {
-				equipeMonstre.listeMonstre.get(i).setPointDefense(equipeMonstre.listeMonstre.get(i).pointDefense+5);
-				System.out.println(equipeMonstre.listeMonstre.get(i).nom+" utilise l'armure");
-			}
-		}
 		
 		//Boucle de combat
 		while((equipe.pointVieGlobal>0) && (equipeMonstre.pointVieGlobal>0)) {
@@ -92,22 +71,45 @@ public class Combat {
 			//Utilisation des objets
 			for(int i=0; i<equipe.listePersonnage.size(); i++) {
 				Double rand;
-				for (int j=0; j<equipe.listePersonnage.get(i).equipement.length; j++) {
+				for (int j=0; j<equipe.listePersonnage.get(i).sacArme.length; j++) {
 					rand=Math.random();
 					if(rand>=0.5) {
-						equipe.listePersonnage.get(i).equipement[j].Utiliser(equipe.listePersonnage.get(i));
-						System.out.println(equipe.listePersonnage.get(i).nom+" utilise "+equipe.listePersonnage.get(i).equipement[j].identifiant);
+						equipe.listePersonnage.get(i).sacArme[j].Utiliser(equipe.listePersonnage.get(i));
+						System.out.println(equipe.listePersonnage.get(i).nom+" utilise "+equipe.listePersonnage.get(i).sacArme[j]);
 					}	
 				}
 			}
 			
 			for(int i=0; i<equipeMonstre.listeMonstre.size(); i++) {
 				Double rand;
-				for (int j=0; j<equipeMonstre.listeMonstre.get(i).equipement.length; j++) {
+				for (int j=0; j<equipeMonstre.listeMonstre.get(i).sacArme.length; j++) {
 					rand=Math.random();
 					if(rand>=0.5) {
-						equipeMonstre.listeMonstre.get(i).equipement[j].Utiliser(equipeMonstre.listeMonstre.get(i));
-						System.out.println(equipeMonstre.listeMonstre.get(i).nom+" utilise "+equipeMonstre.listeMonstre.get(i).equipement[j].identifiant);
+						equipeMonstre.listeMonstre.get(i).sacArme[j].Utiliser(equipeMonstre.listeMonstre.get(i));
+						System.out.println(equipeMonstre.listeMonstre.get(i).nom+" utilise "+equipeMonstre.listeMonstre.get(i).sacArme[j]);
+					}	
+				}
+			}
+			
+			//Utilisation des objets d'armures
+			for(int i=0; i<equipe.listePersonnage.size(); i++) {
+				Double rand;
+				for (int j=0; j<equipe.listePersonnage.get(i).armure.length; j++) {
+					rand=Math.random();
+					if(rand>=0.5) {
+						equipe.listePersonnage.get(i).armure[j].Utiliser(equipe.listePersonnage.get(i));
+						System.out.println(equipe.listePersonnage.get(i).nom+" utilise "+equipe.listePersonnage.get(i).armure[j]);
+					}	
+				}
+			}
+			
+			for(int i=0; i<equipeMonstre.listeMonstre.size(); i++) {
+				Double rand;
+				for (int j=0; j<equipeMonstre.listeMonstre.get(i).armure.length; j++) {
+					rand=Math.random();
+					if(rand>=0.5) {
+						equipeMonstre.listeMonstre.get(i).armure[j].Utiliser(equipeMonstre.listeMonstre.get(i));
+						System.out.println(equipeMonstre.listeMonstre.get(i).nom+" utilise "+equipeMonstre.listeMonstre.get(i).armure[j]);
 					}	
 				}
 			}
@@ -120,86 +122,90 @@ public class Combat {
 					System.out.println(equipeMonstre.listeMonstre.get(j).toString());
 					
 					System.out.println("Saissez A pour attaquer ou P pour parer");
-					if(equipe.listePersonnage.get(i) instanceof Humain) {
-						System.out.println("!! Parer peut ne pas fonctionner (1/2) !!");
+					if(equipe.listePersonnage.get(i) instanceof Paladin) {
+						System.out.println("!! Parer fait perdre un point de rage et de mana !!");
 					}
-					if(equipe.listePersonnage.get(i) instanceof Orc) {
-						System.out.println("!! Parer fait perdre 1 point de défense !!");
+					if(equipe.listePersonnage.get(i) instanceof Guerrier) {
+						System.out.println("!! Parer fait perdre 1 point de rage !!");
 					}
-					if(equipe.listePersonnage.get(i) instanceof Elfe) {
-						System.out.println("!! Parer fait perdre 1 point d'attaque !!");
+					if(equipe.listePersonnage.get(i) instanceof Mage) {
+						System.out.println("!! Parer fait perdre 1 point de mana !!");
 					}
 
 					option=sc.next().charAt(0);
 					if(option=='A') {
-						equipe.listePersonnage.get(i).Attaquer(equipeMonstre.listeMonstre.get(j));
-						equipeMonstre.listeMonstre.get(j).Attaquer(equipe.listePersonnage.get(i));
+						if(equipe.listePersonnage.get(i) instanceof Guerrier) {
+							((Guerrier)equipe.listePersonnage.get(i)).Attaquer(equipeMonstre.listeMonstre.get(j));	
+						}
+						if(equipe.listePersonnage.get(i) instanceof Mage) {
+							((Mage)equipe.listePersonnage.get(i)).Attaquer(equipeMonstre.listeMonstre.get(j));
+						}
+						if(equipe.listePersonnage.get(i) instanceof Paladin) {
+							((Paladin)equipe.listePersonnage.get(i)).Attaquer(equipeMonstre.listeMonstre.get(j));
+						}
+						
+						if(equipeMonstre.listeMonstre.get(j) instanceof Assassin) {
+							((Assassin)equipeMonstre.listeMonstre.get(j)).Attaquer(equipe.listePersonnage.get(i));	
+						}
+						if(equipeMonstre.listeMonstre.get(j) instanceof Chamane) {
+							((Chamane)equipeMonstre.listeMonstre.get(j)).Attaquer(equipe.listePersonnage.get(i));
+						}
+						if(equipeMonstre.listeMonstre.get(j) instanceof GuerrierNecromancien) {
+							((GuerrierNecromancien)equipeMonstre.listeMonstre.get(j)).Attaquer(equipe.listePersonnage.get(i));
+						}
 					}
 					else {
-						if(equipe.listePersonnage.get(i) instanceof Humain) {
-							boolean parer;
-							parer=((Humain)equipe.listePersonnage.get(i)).Parer(equipeMonstre.listeMonstre.get(j));
-							if(parer==false) {
-								equipeMonstre.listeMonstre.get(j).Attaquer(equipe.listePersonnage.get(i));
-							}
+						if(equipe.listePersonnage.get(i) instanceof Guerrier) {
+							((Guerrier)equipe.listePersonnage.get(i)).Parer(equipeMonstre.listeMonstre.get(j));	
 						}
-						if(equipe.listePersonnage.get(i) instanceof Orc) {
-							((Orc)equipe.listePersonnage.get(i)).Parer(equipeMonstre.listeMonstre.get(j));
+						if(equipe.listePersonnage.get(i) instanceof Mage) {
+							((Mage)equipe.listePersonnage.get(i)).Parer(equipeMonstre.listeMonstre.get(j));
 						}
-						if(equipe.listePersonnage.get(i) instanceof Elfe) {
-							((Elfe)equipe.listePersonnage.get(i)).Parer(equipeMonstre.listeMonstre.get(j));
+						if(equipe.listePersonnage.get(i) instanceof Paladin) {
+							((Paladin)equipe.listePersonnage.get(i)).Parer(equipeMonstre.listeMonstre.get(j));
 						}
 					}
 					
 					//Reset utilisation des objets
-					if((equipe.listePersonnage.get(i) instanceof Humain)) {
-						if(equipe.listePersonnage.get(i).metier instanceof Guerrier) {
-							equipe.listePersonnage.get(i).pointAttaque=10;
-						}
-						else {
-							equipe.listePersonnage.get(i).pointMagie=10;
-						}
-						if(equipe.listePersonnage.get(i).armure==true) {
-							equipe.listePersonnage.get(i).pointDefense=11;
-						}
-						else {
-							equipe.listePersonnage.get(i).pointDefense=5;
-							equipe.listePersonnage.get(i).pointResistance=5;
-						}
+					if(equipe.listePersonnage.get(i) instanceof Guerrier) {
+						((Guerrier)equipe.listePersonnage.get(i)).pointRage=10-((Guerrier)equipe.listePersonnage.get(i)).parerGuerrier;
+						equipe.listePersonnage.get(i).pointMana=0;
+						equipe.listePersonnage.get(i).pointDefense=5;
+						equipe.listePersonnage.get(i).pointResistance=5;
+						
 					}
-					if(equipe.listePersonnage.get(i) instanceof Elfe) {
-						if(equipe.listePersonnage.get(i).metier instanceof Guerrier) {
-							equipe.listePersonnage.get(i).pointAttaque=12-((Elfe)equipe.listePersonnage.get(i)).parerElfe;
-						}
-						else {
-							equipe.listePersonnage.get(i).pointMagie=12-((Elfe)equipe.listePersonnage.get(i)).parerElfe;
-						}
-						if(equipe.listePersonnage.get(i).armure==true) {
-							equipe.listePersonnage.get(i).pointDefense=10;
-						}
-						else {
-							equipe.listePersonnage.get(i).pointDefense=5;
-							equipe.listePersonnage.get(i).pointResistance=5;
-						}
+					if(equipe.listePersonnage.get(i) instanceof Mage) {
+						equipe.listePersonnage.get(i).pointRage=0;
+						((Mage)equipe.listePersonnage.get(i)).pointMana=10-((Mage)equipe.listePersonnage.get(i)).parerMage;
+						equipe.listePersonnage.get(i).pointDefense=5;
+						equipe.listePersonnage.get(i).pointResistance=5;
 					}
-					if((equipe.listePersonnage.get(i) instanceof Orc) ) {
-						if(equipe.listePersonnage.get(i).metier instanceof Guerrier) {
-							equipe.listePersonnage.get(i).pointAttaque=12;
-						}
-						else {
-							equipe.listePersonnage.get(i).pointMagie=8;
-						}
-						if(equipe.listePersonnage.get(i).armure==true) {
-							equipe.listePersonnage.get(i).pointDefense=12-((Orc)equipe.listePersonnage.get(i)).parerOrc;
-						}
-						else {
-							equipe.listePersonnage.get(i).pointDefense=7-((Orc)equipe.listePersonnage.get(i)).parerOrc;
-							equipe.listePersonnage.get(i).pointResistance=7-((Orc)equipe.listePersonnage.get(i)).parerOrc;
-						}
+					if(equipe.listePersonnage.get(i) instanceof Paladin) {
+						((Paladin)equipe.listePersonnage.get(i)).pointRage=10-((Paladin)equipe.listePersonnage.get(i)).parerPaladin;
+						((Paladin)equipe.listePersonnage.get(i)).pointMana=10-((Paladin)equipe.listePersonnage.get(i)).parerPaladin;
+						equipe.listePersonnage.get(i).pointDefense=5;
+						equipe.listePersonnage.get(i).pointResistance=5;
 					}
 					
-					equipeMonstre.listeMonstre.get(j).pointAttaque=10;
-					equipeMonstre.listeMonstre.get(j).pointDefense=5;
+					if(equipeMonstre.listeMonstre.get(i) instanceof Assassin) {
+						equipeMonstre.listeMonstre.get(i).pointRage=10;
+						equipeMonstre.listeMonstre.get(i).pointMana=0;
+						equipeMonstre.listeMonstre.get(i).pointDefense=5;
+						equipeMonstre.listeMonstre.get(i).pointResistance=5;
+						
+					}
+					if(equipeMonstre.listeMonstre.get(i) instanceof Chamane) {
+						equipeMonstre.listeMonstre.get(i).pointRage=0;
+						equipeMonstre.listeMonstre.get(i).pointMana=10;
+						equipeMonstre.listeMonstre.get(i).pointDefense=5;
+						equipeMonstre.listeMonstre.get(i).pointResistance=5;
+					}
+					if(equipeMonstre.listeMonstre.get(i) instanceof GuerrierNecromancien) {
+						equipeMonstre.listeMonstre.get(i).pointRage=10;
+						equipeMonstre.listeMonstre.get(i).pointMana=10;
+						equipeMonstre.listeMonstre.get(i).pointDefense=5;
+						equipeMonstre.listeMonstre.get(i).pointResistance=5;
+					}
 					
 					System.out.println();
 				}

@@ -1,53 +1,49 @@
 import java.util.Scanner;
 
 public class Perso {
-
+	protected String nom;
 	protected String lettre;
 	protected int positionX;
 	protected int positionY;
-	protected String nom;
 	protected int pointVie;
-	protected int pointAttaque;
+	protected int pointRage;
 	protected int pointDefense;
-	protected int pointMagie;
+	protected int pointMana;
 	protected int pointResistance;
 	protected int pointVitesse;
 	protected String criGuerre;
-	protected Artefact[] equipement= new Artefact[3];
-	Metier metier;
-	public boolean armure;
+	protected Arme[] sacArme = new Arme[3];
+	protected Armure[] armure = new Armure[3];
 	public int XP;
 
-	public Perso() {
+	/**public Perso() {
 		lettre = "@";
 		positionX = 6;
 		positionY = 8;
 		this.pointVie=100;
-		this.pointAttaque=10;
+		this.pointRage=10;
 		this.pointDefense=5;
-		this.pointMagie=10;
+		this.pointMana=10;
 		this.pointResistance=5;
 		this.criGuerre="A l'attaque !!";
-		this.equipement=null;
-	}
+	}**/
 	
-	public Perso(String nom, String lettre, int positionX, int positionY, Artefact[] listeArtefact, boolean armure, Metier metier) {
+	public Perso(String nom, String lettre, int positionX, int positionY, Arme[] sacArme, Armure[] armure) {
 		this.nom=nom;
 		this.lettre=lettre;
 		this.positionX=positionX;
 		this.positionY=positionY;
 		this.pointVie=100;
-		this.pointAttaque=10;
+		this.pointRage=10;
 		this.pointDefense=5;
-		this.pointMagie=10;
+		this.pointMana=10;
 		this.pointResistance=5;
 		this.criGuerre="A l'attaque !!";
-		this.equipement=listeArtefact;
+		this.sacArme=sacArme;
 		this.armure=armure;
-		this.metier=metier;
 		this.XP=0;
 	}
-	
+
 	public int getPositionY() {
 		return positionY;
 	}
@@ -104,12 +100,12 @@ public class Perso {
 		this.pointVie=pointVie;
 	}
 	
-	public int getPointAttaque() {
-		return this.pointAttaque;
+	public int getPointRage() {
+		return this.pointRage;
 	}
 	
-	public void setPointAttaque(int pointAttaque) {
-		this.pointAttaque=pointAttaque;
+	public void setPointRage(int pointRage) {
+		this.pointRage=pointRage;
 	}
 	
 	public int getPointDefense() {
@@ -120,12 +116,12 @@ public class Perso {
 		this.pointDefense=pointDefense;
 	}
 	
-	public int getPointMagie() {
-		return this.pointMagie;
+	public int getPointMana() {
+		return this.pointMana;
 	}
 	
-	public void setPointMagie(int pointMagie) {
-		this.pointMagie=pointMagie;
+	public void setPointMana(int pointMana) {
+		this.pointMana=pointMana;
 	}
 	
 	public int getPointResistance() {
@@ -150,35 +146,5 @@ public class Perso {
 	
 	public void setCriGuerre(String criGuerre) {
 		this.criGuerre=criGuerre;
-	}
-	
-	void Attaquer(Monstre monstre) {
-		System.out.println(this.nom+" attaque "+monstre.nom+" !");
-		int degat;
-		if(this.metier instanceof Guerrier) {
-			degat=monstre.pointVie+monstre.pointDefense-this.pointAttaque;
-			if(monstre.pointDefense>this.pointAttaque) {
-				degat=monstre.pointVie;
-			}
-			if(degat<0) {
-				degat=0;
-			}
-		}
-		else {
-			degat=monstre.pointVie+monstre.pointResistance-this.pointMagie;
-			if(monstre.pointResistance>this.pointMagie) {
-				degat=monstre.pointVie;
-			}
-			if(degat<0) {
-				degat=0;
-			}
-		}
-		monstre.setPointVie(degat);
-		if(this.pointAttaque-monstre.pointDefense>0) {
-			System.out.println(monstre.nom+" perd "+(this.pointAttaque-monstre.pointDefense)+" point(s) de vie !");
-		}
-		else {
-			System.out.println(monstre.nom+" ne perd pas de point de vie !");
-		}	
 	}
 }

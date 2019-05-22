@@ -1,28 +1,33 @@
 import java.util.Scanner;
 
 public class Monstre {
-	String nom;
-	int pointVie;
-	int pointAttaque;
-	int pointDefense;
-	protected int pointMagie;
+	protected String nom;
+	protected String lettre;
+	protected int positionX;
+	protected int positionY;
+	protected int pointVie;
+	protected int pointRage;
+	protected int pointDefense;
+	protected int pointMana;
 	protected int pointResistance;
 	protected int pointVitesse;
-	String criGuerre;
-	Artefact[] equipement=new Artefact[3];
-	boolean armure;
-	Metier metier;
+	protected String criGuerre;
+	protected Arme[] sacArme = new Arme[3];
+	protected Armure[] armure = new Armure[3];
 	
-	public Monstre(String nom, Artefact[] equipement, boolean armure) {
+	public Monstre(String nom, String lettre, int positionX, int positionY, Arme[] sacArme, Armure[] armure) {
 		this.nom=nom;
+		this.lettre=lettre;
+		this.positionX=positionX;
+		this.positionY=positionY;
 		this.pointVie=100;
-		this.pointAttaque=10;
+		this.pointRage=10;
 		this.pointDefense=5;
-		this.pointMagie=10;
+		this.pointMana=10;
 		this.pointResistance=5;
 		this.pointVitesse=5;
 		this.criGuerre="mlll wwouogrouroulou !!";
-		this.equipement=equipement;
+		this.sacArme=sacArme;
 		this.armure=armure;
 	}
 	
@@ -42,12 +47,12 @@ public class Monstre {
 		this.pointVie=pointVie;
 	}
 	
-	Integer getPointAttaque() {
-		return pointAttaque;
+	Integer getPointRage() {
+		return pointRage;
 	}
 	
-	void setPointAttaque(int pointAttaque) {
-		this.pointAttaque=pointAttaque;
+	void setPointRage(int pointRage) {
+		this.pointRage=pointRage;
 	}
 	
 	Integer getPointDefense() {
@@ -58,12 +63,12 @@ public class Monstre {
 		this.pointDefense=pointDefense;
 	}
 	
-	public int getPointMagie() {
-		return this.pointMagie;
+	public int getPointMana() {
+		return this.pointMana;
 	}
 	
-	public void setPointMagie(int pointMagie) {
-		this.pointMagie=pointMagie;
+	public void setPointMana(int pointMana) {
+		this.pointMana=pointMana;
 	}
 	
 	public int getPointResistance() {
@@ -90,39 +95,4 @@ public class Monstre {
 		this.criGuerre=criGuerre;
 	}
 	
-	void Attaquer(Perso personnage) {
-		System.out.println(this.nom+" attaque "+personnage.nom+" !");
-		int degat;
-		double choix;
-		choix=Math.random();
-		if(choix<0.5) {
-			degat=personnage.pointVie+personnage.pointDefense-this.pointAttaque;
-			if(personnage.pointDefense>this.pointAttaque) {
-				degat=personnage.pointVie;
-			}
-			if(degat<0) {
-				degat=0;
-			}
-		}
-		else {
-			degat=personnage.pointVie+personnage.pointResistance-this.pointMagie;
-			if(personnage.pointResistance>this.pointMagie) {
-				degat=personnage.pointVie;
-			}
-			if(degat<0) {
-				degat=0;
-			}
-		}
-		personnage.setPointVie(degat);
-		if(this.pointAttaque-personnage.pointDefense>0) {
-			System.out.println(personnage.nom+" perd "+(this.pointAttaque-personnage.pointDefense)+" point(s) de vie !");
-		}
-		else {
-			System.out.println(personnage.nom+" ne perd pas de point de vie !");
-		}	
-	}
-	
-	public String toString() {
-		return "Nom : "+nom +" | Vie : "+pointVie+" | Attaque : "+pointAttaque+" | Défense : "+pointDefense+" | Magie : "+pointMagie+" | Résistance : "+pointResistance+" | Vitesse : "+pointVitesse;
-	}
 }
