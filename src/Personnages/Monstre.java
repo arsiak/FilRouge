@@ -1,74 +1,74 @@
 package Personnages;
 public class Monstre {
-	String nom;
-	public int pointVie;
-	int pointAttaque;
-	int pointDefense;
-	String criGuerre;
-	
+	String monstre_nom;
+	public int monstre_pointVie;
+	int monstre_pointAttaque;
+	int monstre_pointDefense;
+	String monstre_criGuerre;
+
 	public Monstre(String nom) {
-		this.nom=nom;
-		this.pointVie=100;
-		this.pointAttaque=10;
-		this.pointDefense=5;
-		this.criGuerre="mlll wwouogrouroulou !!";
+		this.monstre_nom=nom;
+		this.monstre_pointVie=100;
+		this.monstre_pointAttaque=10;
+		this.monstre_pointDefense=5;
+		this.monstre_criGuerre="mlll wwouogrouroulou !!";
 	}
-	
+
 	public String getNom() {
-		return nom;
+		return monstre_nom;
 	}
-	
-	void setNom(String nom) {
-		this.nom=nom;
+
+	public void setNom(String nom) {
+		this.monstre_nom=nom;
 	}
-	
-	Integer getPointVie() {
-		return pointVie;
+
+	public int getPointVie() {
+		return monstre_pointVie;
 	}
-	
-	void setPointVie(int pointVie) {
-		this.pointVie=pointVie;
+
+	public void setPointVie(int pointVie) {
+		this.monstre_pointVie=pointVie;
 	}
-	
-	Integer getPointAttaque() {
-		return pointAttaque;
+
+	public int getPointAttaque() {
+		return monstre_pointAttaque;
 	}
-	
-	void setPointAttaque(int pointAttaque) {
-		this.pointAttaque=pointAttaque;
+
+	public void setPointAttaque(int pointAttaque) {
+		this.monstre_pointAttaque=pointAttaque;
 	}
-	
-	Integer getPointDefense() {
-		return pointDefense;
+
+	public int getPointDefense() {
+		return monstre_pointDefense;
 	}
-	
-	void setPointDefense(int pointDefense) {
-		this.pointDefense=pointDefense;
+
+	public void setPointDefense(int pointDefense) {
+		this.monstre_pointDefense=pointDefense;
 	}
-	
+
 	public String getCriGuerre() {
-		return criGuerre;
+		return monstre_criGuerre;
 	}
-	
-	void setCriGuerre(String criGuerre) {
-		this.criGuerre=criGuerre;
+
+	public void setCriGuerre(String criGuerre) {
+		this.monstre_criGuerre=criGuerre;
 	}
-	
-	public void Attaquer(Perso personnage) {
-		System.out.println(this.nom+" attaque "+personnage.nom+" !");
+
+	public void attaquer(Personnage personnage) {
+		System.out.println(this.monstre_nom+" attaque "+personnage.getNom()+" !");
 		int degat;
-		degat=personnage.pointVie+personnage.pointDefense-this.pointAttaque;
-		if(personnage.pointDefense>this.pointAttaque) {
-			degat=personnage.pointVie;
+		degat=personnage.personnage_pointVie+personnage.personnage_pointDefense-this.monstre_pointAttaque;
+		if(personnage.personnage_pointDefense>this.monstre_pointAttaque) {
+			degat=personnage.personnage_pointVie;
 		}
 		if(degat<0) {
 			degat=0;
 		}
 		personnage.setPointVie(degat);
-		System.out.println(personnage.nom+" perd "+(this.pointAttaque-personnage.pointDefense)+" point(s) de vie !");
+		System.out.println(personnage.getNom()+" perd "+(this.monstre_pointAttaque-personnage.personnage_pointDefense)+" point(s) de vie !");
 	}
-	
+
 	public String toString() {
-		return "Nom : "+nom +" | Point de vie : "+pointVie+" | Point d'attaque : "+pointAttaque+" | Point de défense : "+pointDefense;
+		return "Nom : "+monstre_nom +" | Point de vie : "+monstre_pointVie+" | Point d'attaque : "+monstre_pointAttaque+" | Point de défense : "+monstre_pointDefense;
 	}
 }

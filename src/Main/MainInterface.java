@@ -14,17 +14,14 @@ import Cartes.CarteDonjon;
 import Cartes.CarteMonde;
 import Cartes.CarteVillage;
 import Cartes.Coord;
-import Personnages.Perso;
+import Personnages.Personnage;
 
 public class MainInterface extends JFrame implements KeyListener {
-	
-	Perso p = new Perso(new Coord(22, 14));	
-	//CarteMonde carteM = new CarteMonde();
-	//CarteChateau carteC = new CarteChateau();
+
+	Personnage p = new Personnage(new Coord(22, 14));	
 	Carte carte = new CarteMonde();
-	//char[][] cart;
 	
-	  public MainInterface() {   
+	public MainInterface() {   
 		
 	    this.setTitle("Test de map");
 	    this.setSize(450, 470);
@@ -40,22 +37,20 @@ public class MainInterface extends JFrame implements KeyListener {
 	    addKeyListener (this);
 	    
 	    this.setVisible(true);
-	  }
+	}
 
-	  
-	  
 	@Override
 	public void keyTyped(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override
 	public void keyPressed(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 		int key = e.getKeyCode();
-		
+
 		switch (key) {
 		
 		  case KeyEvent.VK_UP:
@@ -82,6 +77,7 @@ public class MainInterface extends JFrame implements KeyListener {
 			  if (carte.bloque(p) == true) { p.mvtGauche(); }
 		    break;
 		  }
+
 		if (carte.estChange(p) == true) { 
 			carte = carte.changementCarte(p);
 			this.setContentPane(carte); 
@@ -89,15 +85,15 @@ public class MainInterface extends JFrame implements KeyListener {
 		}
 		carte.setDeplacementPerso(p);
 		carte.repaint();
-		
+
 	}
 
 	@Override
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
-		
+
 	}   
-	
+
 	public static void main(String[] args) throws IOException {
 		MainInterface fen = new MainInterface();
 	}
@@ -106,6 +102,6 @@ public class MainInterface extends JFrame implements KeyListener {
 
 
 
-	
+
 
 

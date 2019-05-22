@@ -1,14 +1,14 @@
 package Equipements;
-public class Bouclier extends Artefact{
+public class Bouclier extends Equipement{
 
-	public Bouclier(String identifiant) {
-		super(identifiant);
+	public Bouclier(String bouclier_id) {
+		super(bouclier_id);
 		// TODO Auto-generated constructor stub
-		this.defense=2;
+		this.equipement_defense=2;
 	}
-	
+
 	public void utiliserBouclier(int pointDefense) {
-		setDefense(pointDefense+defense);
+		setDefense(pointDefense+equipement_defense);
 	}
 
 }

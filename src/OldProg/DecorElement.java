@@ -3,7 +3,7 @@ import java.awt.Color;
 
 public enum DecorElement {
     FLOOR((char)' ', Color.yellow),
-    WALL((char)'#', Color.green),
+    WALL((char)'X', Color.green),
     BOUNDS('x', Color.black),
 	PLAYER('@', Color.blue);
 	

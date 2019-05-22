@@ -3,7 +3,6 @@ import java.util.Scanner;
 
 import Cartes.Carte;
 import Cartes.CarteMonde;
-import Personnages.Perso;
 
 /*
 public class OldMain2 {

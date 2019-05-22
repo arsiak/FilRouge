@@ -1,10 +1,10 @@
 package Cartes;
 
 public class Coord {
-	
+
 	private int x;
 	private int y;
-	
+
 	public Coord(int x, int y) {
 		this.x = x;
 		this.y = y;
@@ -36,4 +36,20 @@ public class Coord {
 	    	return false;	    	
 	    }
 	}
+
+	/*
+	public boolean equals(Object other) {
+	
+		if (other == null) return false;
+		if (other == this) return true;
+		if (!(other instanceof Coord))return false;
+		Coord otherCoord = (Coord)other;
+		if(otherCoord.getX() == this.x && otherCoord.getY() == this.y) {
+			return true;
+		}else {
+			return false;	    	
+		}
+
+	}
+	*/
 }

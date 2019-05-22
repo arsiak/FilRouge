@@ -2,48 +2,48 @@ package Personnages;
 import java.util.ArrayList;
 
 public class Equipe {
-	private String nom;
-	private ArrayList<Perso> listePersonnage=new ArrayList<Perso>();
-	private int pointVieGlobal;
-	
+	private String equipe_nom;
+	private ArrayList<Personnage> equipe_listePersonnage=new ArrayList<Personnage>();
+	private int equipe_pointVieGlobal;
+
 	public Equipe() {
-		nom = "L'équipe des héros";
+		equipe_nom = "L'équipe des héros";
 	}
-	
+
 	public int CalculerPointVieGlobal() {
 		setPointVieGlobal(0);
 		for(int i=0; i<getListePersonnage().size(); i++) {
-			setPointVieGlobal(getPointVieGlobal()+getListePersonnage().get(i).pointVie);
+			setPointVieGlobal(getPointVieGlobal()+getListePersonnage().get(i).personnage_pointVie);
 		}
-		return pointVieGlobal;
-		
+		return equipe_pointVieGlobal;
+
 	}
 
-	public void setListePersonnage(ArrayList<Perso> listePersonnage) {
-		this.listePersonnage = listePersonnage;
+	public void setListePersonnage(ArrayList<Personnage> listePersonnage) {
+		this.equipe_listePersonnage = listePersonnage;
 	}
 
-	public ArrayList<Perso> getListePersonnage() {
+	public ArrayList<Personnage> getListePersonnage() {
 		// TODO Auto-generated method stub
-		return listePersonnage;
+		return equipe_listePersonnage;
 	}
 
 	public int getPointVieGlobal() {
-		return pointVieGlobal;
+		return equipe_pointVieGlobal;
 	}
 
 	public void setPointVieGlobal(int pointVieGlobal) {
-		this.pointVieGlobal = pointVieGlobal;
+		this.equipe_pointVieGlobal = pointVieGlobal;
 	}
 
 
 	public void setNom(String nom) {
-		this.nom = nom;
+		this.equipe_nom = nom;
 	}
 
 	public String getNom() {
 		// TODO Auto-generated method stub
-		return nom;
+		return equipe_nom;
 	}
 
 }

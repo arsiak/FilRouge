@@ -2,7 +2,6 @@ package OldProg;
 import java.util.Scanner;
 
 import Cartes.CarteMonde;
-import Personnages.Perso;
 		
 		/*final JEditorPane editeur;
 

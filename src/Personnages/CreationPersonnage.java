@@ -12,6 +12,6 @@ public class CreationPersonnage {
 		typePerso=sc.nextLine();
 		
 		FactoryPersonnage factory=new FactoryPersonnage();
-		Perso perso=factory.getPerso(typePerso);
+		Personnage perso=factory.getPerso(typePerso);
 	}
 }

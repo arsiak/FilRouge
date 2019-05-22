@@ -1,14 +1,14 @@
 package Equipements;
-public class Armure extends Artefact{
+public class Armure extends Equipement{
 
-	public Armure(String identifiant) {
-		super(identifiant);
+	public Armure(String armure_id) {
+		super(armure_id);
 		// TODO Auto-generated constructor stub
-		this.defense=5;
+		this.equipement_defense=5;
 	}
-	
+
 	public void utiliserArmure(int pointDefense) {
-		setDefense(pointDefense+defense);
+		setDefense(pointDefense+equipement_defense);
 	}
-	
+
 }
