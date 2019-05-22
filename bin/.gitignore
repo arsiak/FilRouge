@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 # Compiled class file
 *.class
 
@@ -28,12 +27,3 @@ hs_err_pid*
 .classpath*
 .project
 /Cartes/
-=======
-/Cartes/
-/Equipements/
-/JsonPack/
-/Main/
-/OldProg/
-/Personnages/
->>>>>>> branch 'develop' of https://github.com/devlog-fil-rouge/FilRouge.git
-/Experiment/
