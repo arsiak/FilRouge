@@ -12,6 +12,7 @@ import javax.swing.JPanel;
 import Cartes.Carte;
 import Cartes.CarteDonjon;
 import Cartes.CarteMonde;
+import Cartes.CarteVillage;
 import Cartes.Coord;
 import Personnages.Perso;
 
@@ -26,7 +27,7 @@ public class MainInterface extends JFrame implements KeyListener {
 	  public MainInterface() {   
 		
 	    this.setTitle("Test de map");
-	    this.setSize(500, 500);
+	    this.setSize(450, 470);
 	    this.setLocationRelativeTo(null); 
 	    //this.setResizable(false);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -58,28 +59,31 @@ public class MainInterface extends JFrame implements KeyListener {
 		switch (key) {
 		
 		  case KeyEvent.VK_UP:
+			  carte.setImagePersonnage("src/Images/personnageHaut.png");
 			  p.mvtHaut();
 			  if (carte.bloque(p) == true) { p.mvtBas(); }
 			  break;
 		  
 		  case KeyEvent.VK_DOWN:
+			  carte.setImagePersonnage("src/Images/personnageBas.png");
 			  p.mvtBas();
 			  if (carte.bloque(p) == true) { p.mvtHaut(); }
 		    break;
 		  
 		  case KeyEvent.VK_LEFT:
+			  carte.setImagePersonnage("src/Images/personnageGauche.png");
 			  p.mvtGauche();
 			  if (carte.bloque(p) == true) { p.mvtDroite(); }
 		    break;
 		  
 		  case KeyEvent.VK_RIGHT:
+			  carte.setImagePersonnage("src/Images/personnageDroit.png");
 			  p.mvtDroite();
 			  if (carte.bloque(p) == true) { p.mvtGauche(); }
 		    break;
 		  }
 		if (carte.estChange(p) == true) { 
-			carte = new CarteDonjon(); 
-			p.setCoord(carte.getCoordEntreeSortie());
+			carte = carte.changementCarte(p);
 			this.setContentPane(carte); 
 			this.setVisible(true);
 		}

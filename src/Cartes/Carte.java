@@ -9,6 +9,7 @@ import java.io.FileReader;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.HashMap;
 
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
@@ -22,19 +23,14 @@ import Personnages.*;
 public class Carte extends JPanel {
 
 	protected Perso perso = new Perso();
-	protected Coord coordEntreeSortie;
+	public String nomCarte;
 	protected char [][] carte;
-	protected int largeurCarte, longueurCarte;
-	protected Image personnage, obstacle, sol, pnj, entree, eau;
+	protected HashMap<String,Coord> ensembleEntreeSortie;
+	protected Coord coordEntreeSortie;
+	protected Image sol, obstacle_1, obstacle_2, entree_1,entree_2, sortie, pnj_1, pnj_2, boss, tresor, personnage;
 	
 	public Carte() {
 		
-		try {
-			personnage = ImageIO.read(new File("src/Images/prince.png"));
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
 	}
 	
 	public void deserializeCarte(String path) {
@@ -64,7 +60,16 @@ public class Carte extends JPanel {
 	         System.out.println("plouf");
 	      }
 	       
-	}      
+	}  
+	
+	public void setImagePersonnage(String cheminImage) {
+		try {
+			personnage = ImageIO.read(new File(cheminImage));
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
  
 	public Boolean bloque(Perso perso) {
 		
@@ -78,10 +83,37 @@ public class Carte extends JPanel {
 	public Boolean estChange(Perso perso) {
 		
 		Boolean change = false;
-		if (carte[perso.getCoord().getY()][perso.getCoord().getX()] ==  'D') { 
+		if (carte[perso.getCoord().getY()][perso.getCoord().getX()] ==  'D' || carte[perso.getCoord().getY()][perso.getCoord().getX()] ==  'V' ||
+			carte[perso.getCoord().getY()][perso.getCoord().getX()] ==  'S') { 
 			change = true; 
 		}
 		return change;
+		
+	}
+	
+	public Carte changementCarte(Perso perso) {
+		
+		if (carte[perso.getCoord().getY()][perso.getCoord().getX()] ==  'V') {
+			this.perso.setCoord(ensembleEntreeSortie.get("EntreeVillage"));
+			perso.setCoord(ensembleEntreeSortie.get("EntreeVillage"));
+			return new CarteVillage();
+		}
+		else if (carte[perso.getCoord().getY()][perso.getCoord().getX()] ==  'D') {
+			for (int i=0; i<ensembleEntreeSortie.size();i++) {
+				if (this.perso.getCoord().equals(ensembleEntreeSortie.get("Donjon" +(i+1)))) {
+					this.perso.setCoord(ensembleEntreeSortie.get("EntreeDonjon"));
+					perso.setCoord(ensembleEntreeSortie.get("EntreeDonjon"));
+					return new CarteDonjon(i+1);
+				}
+			}
+		}
+		else if (carte[perso.getCoord().getY()][perso.getCoord().getX()] ==  'S') {
+			this.perso.setCoord(ensembleEntreeSortie.get(nomCarte));
+			perso.setCoord(ensembleEntreeSortie.get(nomCarte));
+			return new CarteMonde();
+		}
+		
+		return null;
 		
 	}
 	
@@ -103,52 +135,63 @@ public class Carte extends JPanel {
 	
 	 public void paintComponent(Graphics g){
 		
-			    int cadreGauche = perso.getCoord().getX() - 2, cadreDroit = perso.getCoord().getX() + 2;
-				int cadreHaut = perso.getCoord().getY() - 2, cadreBas = perso.getCoord().getY() + 2;
+			    int cadreGauche = perso.getCoord().getX() - 4, cadreDroit = perso.getCoord().getX() + 4;
+				int cadreHaut = perso.getCoord().getY() - 4, cadreBas = perso.getCoord().getY() + 4;
 				
 				int x=0, y=0;
-		      
-				System.out.println(perso.getCoord().getX());
-				//this.afficher();
+			
 				for(int i = cadreHaut; i <= cadreBas; i++ ){  
 					
 					for(int j = cadreGauche; j <= cadreDroit; j++){  
 						
-						g.drawImage(sol,x ,y, 100, 100, this);
-						if (carte[i][j] == 'X') { g.drawImage(obstacle, x, y, 100, 100, this); } 
-						if (carte[i][j] == 'D') { g.drawImage(entree, x, y, 100, 100, this); } 
-						if (carte[i][j] == 'O') { g.drawImage(eau, x, y, 100, 100, this); }
-						x+=100;
+						g.drawImage(sol,x ,y, 50, 50, this);
+						if (carte[i][j] == 'X') { g.drawImage(obstacle_1, x, y, 50, 50, this); } 
+						if (carte[i][j] == 'O') { g.drawImage(obstacle_2, x, y, 50, 50, this); }
+						if (carte[i][j] == 'D') { g.drawImage(entree_1, x, y, 50, 50, this); } 
+						if (carte[i][j] == 'V') { g.drawImage(entree_2, x, y, 50, 50, this); } 
+						if (carte[i][j] == 'S') { g.drawImage(sortie, x, y, 50, 50, this); }
+						if (carte[i][j] == 'M') { g.drawImage(pnj_1, x, y, 50, 50, this); }
+						if (carte[i][j] == 'N') { g.drawImage(pnj_2, x, y, 50, 50, this); }
+						if (carte[i][j] == 'T') { g.drawImage(tresor, x, y, 50, 50, this); }
+						if (carte[i][j] == 'B') { g.drawImage(boss, x, y, 50, 50, this); }
+						
+						x+=50;
 						
 					}
-					y+=100;
+					y+=50;
 					x=0;
 				}
 			  
-		      g.drawImage(personnage, 200, 200, 100, 100, this);
+		      g.drawImage(personnage, 200, 200, 50, 50, this);
 		    
 		     
 		  }
 
-	public Coord getCoordEntreeSortie() {
+	public HashMap<String,Coord> getEnsembleEntreeSortie() {
 		// TODO Auto-generated method stub
-		return coordEntreeSortie;
+		return ensembleEntreeSortie;
 	} 
 	
 	public void afficher() {
 		
-	int cadreGauche = perso.getCoord().getX() - 3, cadreDroit = perso.getCoord().getX() + 3;
-	int cadreHaut = perso.getCoord().getY() - 3, cadreBas = perso.getCoord().getY() + 3;
-	
-		System.out.println();
+		int cadreGauche = perso.getCoord().getX() - 10, cadreDroit = perso.getCoord().getX() + 10;
+		int cadreHaut = perso.getCoord().getY() - 10, cadreBas = perso.getCoord().getY() + 10;
 		
+		System.out.println();
+			
 		for (int i = cadreHaut; i < cadreBas; i++) {
 			for (int j = cadreGauche; j < cadreDroit; j++) {
+				try {
 				System.out.print(carte[i][j]);
+				}
+				catch (Exception e){ 
+				System.out.print(' ');
+				}
 			}
 		System.out.println();
 		}
 		System.out.println();
+
 	}
 	 
 }
