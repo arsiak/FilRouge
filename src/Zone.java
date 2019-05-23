@@ -4,9 +4,7 @@ import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
 
-import com.valkryst.VTerminal.Screen;
-import com.valkryst.VTerminal.Tile;
-import com.valkryst.VTerminal.component.Layer;
+
 
 import Cartes.Coord;
 import OldProg.DecorElement;

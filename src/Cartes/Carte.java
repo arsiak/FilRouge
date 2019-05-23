@@ -13,6 +13,7 @@ import java.io.InputStreamReader;
 import javax.imageio.ImageIO;
 import javax.swing.JPanel;
 
+import Cartes.Coord;
 import JsonPack.JSONArray;
 import JsonPack.JSONObject;
 import OldProg.Map;
