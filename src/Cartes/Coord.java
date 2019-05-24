@@ -25,9 +25,21 @@ public class Coord {
 	public void setY(int y) {
 		this.y += y;
 	}
+	
+	public boolean equals(Coord otherCoord) {
+		
+		if (otherCoord == null) return false;
+	    if (otherCoord.getX() == this.x && otherCoord.getY() == this.y) {
+	    	return true;
+	    }
+	    else {
+	    	return false;	    	
+	    }
+	}
 
-	@Override
+	/*
 	public boolean equals(Object other) {
+	
 		if (other == null) return false;
 		if (other == this) return true;
 		if (!(other instanceof Coord))return false;
@@ -37,5 +49,7 @@ public class Coord {
 		}else {
 			return false;	    	
 		}
+
 	}
+	*/
 }

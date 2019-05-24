@@ -5,6 +5,7 @@ import java.util.Scanner;
 import Cartes.Carte;
 import Cartes.CarteDonjon;
 import Cartes.CarteMonde;
+import Cartes.CarteVillage;
 import Cartes.Coord;
 import Personnages.Personnage;
 
@@ -54,10 +55,10 @@ public class MainConsole {
 
 			//carte.setDeplacementPerso(p);
 			if (carte.estChange(perso) == true) { 
-				carte = new CarteDonjon();
-				perso.setCoord(carte.getCoordEntreeSortie());
+				
+				carte = carte.changementCarte(perso);
 				carte.setDeplacementPerso(perso);
-				System.out.println("Vous êtes entré dans le donjon test.");
+				
 			}
 		}
 		sc.close();
