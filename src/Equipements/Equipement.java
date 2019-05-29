@@ -2,17 +2,23 @@ package Equipements;
 import Personnages.Humain;
 import Personnages.Personnage;
 
-public class Equipement {
+public class Equipement extends Objet {
+	
 	public String equipement_id;
 	public int equipement_attaque;
 	public int equipement_defense;
 	public int equipement_sante;
 	
 	public Equipement(String equipement_id) {
+		super(equipement_id);
 		this.equipement_id=equipement_id;
 		this.equipement_attaque=0;
 		this.equipement_defense=0;
 		this.equipement_sante=0;
+	}
+	
+	String getId() {
+		return equipement_id;
 	}
 	
 	int getAttaque() {

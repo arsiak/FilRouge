@@ -1,6 +1,8 @@
 package Personnages;
 import Cartes.Coord;
 import Equipements.Equipement;
+import Equipements.Objet;
+import Quetes.Pnj;
 
 public class Personnage {
 	
@@ -10,7 +12,8 @@ public class Personnage {
 	protected int personnage_pointAttaque;
 	protected int personnage_pointDefense;
 	protected String personnage_criGuerre;
-	private Equipement[] equipement= new Equipement[3];
+	protected Boolean personnage_pnjTrouve;
+	private Objet[] equipements= new Objet[3];
 	public boolean armure;
 
 	public Personnage() {
@@ -44,6 +47,14 @@ public class Personnage {
 
 	public void setCoord(Coord coord) {
 		this.personnage_coord = coord;
+	}
+	
+	public Boolean getPnjTrouve() {
+		return personnage_pnjTrouve;
+	}
+
+	public void setPnjTrouve(Boolean pnjTrouve) {
+		this.personnage_pnjTrouve = pnjTrouve;
 	}
 	
 	public void mvtGauche () {
@@ -116,12 +127,42 @@ public class Personnage {
 		System.out.println(monstre.getNom()+" perd "+(this.personnage_pointAttaque-monstre.getPointDefense())+" point(s) de vie !");
 	}
 
-	public Equipement[] getEquipement() {
-		return equipement;
+	public Objet[] getEquipement() {
+		return equipements;
+	}
+	
+	public void ajouterEquipement(Objet equipement) {
+		
+		for (int i=0; i<equipements.length; i++) {
+			
+			if (equipements[i] == null) {
+				equipements[i] = equipement;
+			}
+		}
+	}
+	
+	public Boolean verifieEquipement(Objet objet) {
+		
+		for (int i=0; i<equipements.length; i++) {
+			if (equipements[i].objet_id.equals(objet.objet_id)) {
+				//equipement_id.equals)
+				return true;
+			}
+		}
+		return false;
+	}
+	
+	public Boolean verifiePnjTrouve() {
+		
+		if(personnage_pnjTrouve) {
+			return true;
+		}
+		return false;
+		
 	}
 
-	public void setEquipement(Equipement[] equipement) {
-		this.equipement = equipement;
+	public void setEquipement(Equipement[] equipements) {
+		this.equipements = equipements;
 	}
 
 	public Coord getPosition() {

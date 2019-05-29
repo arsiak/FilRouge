@@ -88,8 +88,8 @@ public class MainCombat {
 				for (int j=0; j<equipe.getListePersonnage().get(i).getEquipement().length; j++) {
 					rand=Math.random();
 					if(rand>=0.5) {
-						equipe.getListePersonnage().get(i).getEquipement()[j].utiliser(equipe.getListePersonnage().get(i));
-						System.out.println(equipe.getListePersonnage().get(i).getNom()+" utilise "+equipe.getListePersonnage().get(i).getEquipement()[j].equipement_id);
+						//equipe.getListePersonnage().get(i).getEquipement()[j].utiliser(equipe.getListePersonnage().get(i));
+						//System.out.println(equipe.getListePersonnage().get(i).getNom()+" utilise "+equipe.getListePersonnage().get(i).getEquipement()[j].equipement_id);
 					}	
 				}
 			}

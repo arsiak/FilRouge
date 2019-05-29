@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.util.Arrays;
 
 import javax.swing.JFrame;
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 import Cartes.Carte;
@@ -14,11 +15,21 @@ import Cartes.CarteDonjon;
 import Cartes.CarteMonde;
 import Cartes.CarteVillage;
 import Cartes.Coord;
+import Equipements.Equipement;
 import Personnages.Personnage;
+import Quetes.Pnj;
+import Quetes.PnjKaramel;
+import Quetes.PnjPerlin;
+import Tresors.Tresor;
 
 public class MainInterface extends JFrame implements KeyListener {
 
-	Personnage p = new Personnage(new Coord(22, 14));	
+	Personnage p = new Personnage(new Coord(22, 14));
+	Pnj pnjKaramel = new PnjKaramel();
+	PnjPerlin pnjPerlin = new PnjPerlin();
+	//Pnj pnjMaria = new PnjMaria();
+	//Pnj pnjRomuald = new PnjRomuald();
+	Tresor tresor = new Tresor("Donjon4", new Equipement("Le Bouclier de Perlin"));
 	Carte carte = new CarteMonde();
 	
 	public MainInterface() {   
@@ -56,13 +67,33 @@ public class MainInterface extends JFrame implements KeyListener {
 		  case KeyEvent.VK_UP:
 			  carte.setImagePersonnage("src/Images/personnageHaut.png");
 			  p.mvtHaut();
-			  if (carte.bloque(p) == true) { p.mvtBas(); }
+			  if (carte.bloque(p) == true) { 
+				  //System.out.println(carte.elementCarte(p));
+				  if (carte.elementCarte(p).equals("Karamel")) {
+					 pnjKaramel.deroulementQuete(this, p);
+					 //System.out.println(pnjKaramel.pnj_numero_quete_actuel);
+				  }
+				  if (carte.elementCarte(p).equals("Perlin") && pnjKaramel.getListe_quetes().get(1).getActive()) {
+					  pnjPerlin.boucleSansQuete(this);
+					  pnjPerlin.donnerObjet(this, p);
+					  //p.setPnjTrouve(true);
+				  }
+				  if (carte.elementCarte(p).equals("tresor")) {
+					  for (int i=0; i<carte.getCarte_liste_tresor().size(); i++) {
+						  if (carte.getCarte_liste_tresor().get(i).getCarte_nom().equals(carte.getCarte_nom()))
+							  carte.getCarte_liste_tresor().get(i).ouvrir(this, p);
+				      }
+				  }
+				  p.mvtBas(); 
+			  }
 			  break;
 		  
 		  case KeyEvent.VK_DOWN:
 			  carte.setImagePersonnage("src/Images/personnageBas.png");
 			  p.mvtBas();
-			  if (carte.bloque(p) == true) { p.mvtHaut(); }
+			  if (carte.bloque(p) == true) { 
+				  p.mvtHaut();
+			  }
 		    break;
 		  
 		  case KeyEvent.VK_LEFT:
