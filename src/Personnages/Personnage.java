@@ -1,4 +1,6 @@
 package Personnages;
+import java.util.Arrays;
+
 import Cartes.Coord;
 import Equipements.Equipement;
 import Equipements.Objet;
@@ -12,7 +14,6 @@ public class Personnage {
 	protected int personnage_pointAttaque;
 	protected int personnage_pointDefense;
 	protected String personnage_criGuerre;
-	protected Boolean personnage_pnjTrouve;
 	private Objet[] equipements= new Objet[3];
 	public boolean armure;
 
@@ -47,14 +48,6 @@ public class Personnage {
 
 	public void setCoord(Coord coord) {
 		this.personnage_coord = coord;
-	}
-	
-	public Boolean getPnjTrouve() {
-		return personnage_pnjTrouve;
-	}
-
-	public void setPnjTrouve(Boolean pnjTrouve) {
-		this.personnage_pnjTrouve = pnjTrouve;
 	}
 	
 	public void mvtGauche () {
@@ -137,28 +130,40 @@ public class Personnage {
 			
 			if (equipements[i] == null) {
 				equipements[i] = equipement;
+				i=equipements.length;
 			}
 		}
+		System.out.println(Arrays.toString(equipements));
+		
 	}
 	
-	public Boolean verifieEquipement(Objet objet) {
+	public void retirerEquipement(Objet equipement) {
 		
 		for (int i=0; i<equipements.length; i++) {
-			if (equipements[i].objet_id.equals(objet.objet_id)) {
-				//equipement_id.equals)
-				return true;
+			
+			if (equipements[i].objet_id.equals(equipement.objet_id)) {
+				equipements[i] = null;
+				i=equipements.length;
 			}
 		}
-		return false;
+		System.out.println(Arrays.toString(equipements));
+		
 	}
 	
-	public Boolean verifiePnjTrouve() {
+	public Boolean verifieEquipement(Objet equipement) {
 		
-		if(personnage_pnjTrouve) {
-			return true;
+		Boolean verification = false;
+		for (int i=0; i<equipements.length; i++) {
+			
+			try {
+				if (equipements[i].objet_id.equals(equipement.objet_id)) {
+					verification = true;
+				}
+			
+			}catch (NullPointerException e) {}
+			
 		}
-		return false;
-		
+		return verification;
 	}
 
 	public void setEquipement(Equipement[] equipements) {

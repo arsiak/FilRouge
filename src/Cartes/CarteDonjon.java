@@ -36,8 +36,10 @@ public class CarteDonjon extends Carte {
 		carte_coord_entree_sortie.put("Donjon12", new Coord(40,38));
 				
 		carte_liste_tresor = new ArrayList<Tresor>(); 
-		carte_liste_tresor.add(new Tresor("Donjon4",new Objet("Le journal d'indice")));
+		carte_liste_tresor.add(new Tresor("Donjon4",new Objet("La main d'Atlas")));
+		carte_liste_tresor.add(new Tresor("Donjon5",new Objet("Le collier de Maria")));
 		carte_liste_tresor.add(new Tresor("Donjon6",new Objet("Le Bouclier de Perlin")));
+		carte_liste_tresor.add(new Tresor("Donjon7",new Objet("Les assiettes en argent")));
 		/*carte_liste_tresor.add(new Tresor("Donjon1",new Armure("Le Vaillant")));
 		carte_liste_tresor.add(new Tresor("Donjon1",new Armure("Le Vaillant")));
 		carte_liste_tresor.add(new Tresor("Donjon1",new Armure("Le Vaillant")));
