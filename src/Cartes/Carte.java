@@ -17,8 +17,6 @@ import javax.swing.JPanel;
 
 import JsonPack.JSONArray;
 import JsonPack.JSONObject;
-import OldProg.Map;
-import OldProg.MapTile;
 import Personnages.*;
 import Tresors.Tresor;
 

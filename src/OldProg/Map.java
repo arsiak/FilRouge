@@ -3,7 +3,7 @@ import java.awt.Color;
 import java.util.Random;
 
 import Cartes.Coord;
-
+/*
 public class Map{
 	
 	public static final int MAP_SIZE = 100;
@@ -147,7 +147,5 @@ public class Map{
 		return decorElement;
 	}
 
-	
-
-
 }
+*/

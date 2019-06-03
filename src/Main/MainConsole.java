@@ -2,11 +2,7 @@ package Main;
 import java.io.IOException;
 import java.util.Scanner;
 
-import Cartes.Carte;
-import Cartes.CarteDonjon;
-import Cartes.CarteMonde;
-import Cartes.CarteVillage;
-import Cartes.Coord;
+import Cartes.*;
 import Personnages.Personnage;
 import Quetes.Pnj;
 import Quetes.PnjKaramel;

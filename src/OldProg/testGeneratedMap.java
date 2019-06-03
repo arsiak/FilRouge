@@ -1,5 +1,5 @@
 package OldProg;
-
+/*
 public class testGeneratedMap {
 
 	public static void main(String[] args) {
@@ -13,3 +13,4 @@ public class testGeneratedMap {
 	}
 
 }
+*/

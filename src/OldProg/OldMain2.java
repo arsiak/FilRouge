@@ -1,7 +1,6 @@
 package OldProg;
 import java.util.Scanner;
 
-import Cartes.Carte;
 import Cartes.CarteMonde;
 
 /*

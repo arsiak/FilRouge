@@ -1,10 +1,7 @@
 package OldProg;
 import java.awt.Dimension;
 
-import com.valkryst.VTerminal.component.Layer;
-
-import lombok.Data;
-
+/*
 @Data
 public class MapTile extends Layer {
 	
@@ -28,3 +25,4 @@ public class MapTile extends Layer {
 		return this.visible;
 	}
 }
+*/

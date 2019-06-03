@@ -5,12 +5,7 @@ import java.awt.Rectangle;
 import java.util.ArrayList;
 import java.util.Random;
 
-import com.valkryst.VTerminal.Screen;
-import com.valkryst.VTerminal.Tile;
-import com.valkryst.VTerminal.component.Layer;
-import com.valkryst.VTerminal.printer.RectanglePrinter;
-import com.valkryst.VTerminal.printer.RectangleType;
-
+/*
 public class Feuille extends Layer {
 	
 	private int TAILLE_MINIMUM_RECTANGLE = 12;
@@ -59,7 +54,7 @@ public class Feuille extends Layer {
         printer.printFilled(this.s.getTiles(), new Point((int)this.room.getMinX(), (int)this.room.getMinY()));
 	}
 	
-	/** Updates the Map's Layer, so that any changes made to the Map's tiles are displayed on the Layer. */
+	
     public void updateLayerTiles() {
         for (int x = 0 ; x < this.width ; x++) {
             for (int y = 0 ; y <  this.height ; y++) {
@@ -325,10 +320,5 @@ public class Feuille extends Layer {
 	public static MapTile[][] getMap() {
 		return map;
 	}
-	
-
-	
-	
-	
-	
 }
+*/

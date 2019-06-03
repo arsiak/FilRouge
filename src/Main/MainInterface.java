@@ -10,10 +10,7 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
-import Cartes.Carte;
-import Cartes.CarteDonjon;
-import Cartes.CarteMonde;
-import Cartes.CarteVillage;
+import Cartes.*;
 import Cartes.Coord;
 import Equipements.Equipement;
 import Personnages.Personnage;
