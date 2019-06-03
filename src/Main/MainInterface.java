@@ -19,16 +19,20 @@ import Equipements.Equipement;
 import Personnages.Personnage;
 import Quetes.Pnj;
 import Quetes.PnjKaramel;
+import Quetes.PnjMaria;
 import Quetes.PnjPerlin;
+import Quetes.PnjPoppy;
+import Quetes.PnjRomuald;
 import Tresors.Tresor;
 
 public class MainInterface extends JFrame implements KeyListener {
 
 	Personnage p = new Personnage(new Coord(22, 14));
 	Pnj pnjKaramel = new PnjKaramel();
-	PnjPerlin pnjPerlin = new PnjPerlin();
-	//Pnj pnjMaria = new PnjMaria();
-	//Pnj pnjRomuald = new PnjRomuald();
+	Pnj pnjPerlin = new PnjPerlin();
+	Pnj pnjMaria = new PnjMaria();
+	Pnj pnjPoppy = new PnjPoppy();
+	Pnj pnjRomuald = new PnjRomuald();
 	Tresor tresor = new Tresor("Donjon4", new Equipement("Le Bouclier de Perlin"));
 	Carte carte = new CarteMonde();
 	
@@ -37,7 +41,7 @@ public class MainInterface extends JFrame implements KeyListener {
 	    this.setTitle("Test de map");
 	    this.setSize(450, 470);
 	    this.setLocationRelativeTo(null); 
-	    //this.setResizable(false);
+	    this.setResizable(false);
 	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    this.setContentPane(carte);
 	    carte.setDeplacementPerso(p);
@@ -70,14 +74,22 @@ public class MainInterface extends JFrame implements KeyListener {
 			  if (carte.bloque(p) == true) { 
 				  //System.out.println(carte.elementCarte(p));
 				  if (carte.elementCarte(p).equals("Karamel")) {
-					 pnjKaramel.deroulementQuete(this, p);
-					 //System.out.println(pnjKaramel.pnj_numero_quete_actuel);
+					 pnjKaramel.deroulementQuete(this, p); 
 				  }
-				  if (carte.elementCarte(p).equals("Perlin") && pnjKaramel.getListe_quetes().get(1).getActive()) {
-					  pnjPerlin.boucleSansQuete(this);
-					  pnjPerlin.donnerObjet(this, p);
-					  //p.setPnjTrouve(true);
+				  
+				  if (carte.elementCarte(p).equals("Perlin")) {
+					  if (pnjKaramel.getListe_quetes().get(1).getActive())
+						  pnjPerlin.boucleQuete(this, p);
+					  else 
+						  pnjPerlin.boucleSansQuete(this, p);
 				  }
+				  if (carte.elementCarte(p).equals("Poppy")) {
+					  if (pnjKaramel.getListe_quetes().get(1).getActive())
+						  pnjPoppy.boucleQuete(this, p);
+					  else 
+						  pnjPoppy.boucleSansQuete(this, p);
+				  } 
+					  
 				  if (carte.elementCarte(p).equals("tresor")) {
 					  for (int i=0; i<carte.getCarte_liste_tresor().size(); i++) {
 						  if (carte.getCarte_liste_tresor().get(i).getCarte_nom().equals(carte.getCarte_nom()))
@@ -99,13 +111,41 @@ public class MainInterface extends JFrame implements KeyListener {
 		  case KeyEvent.VK_LEFT:
 			  carte.setImagePersonnage("src/Images/personnageGauche.png");
 			  p.mvtGauche();
-			  if (carte.bloque(p) == true) { p.mvtDroite(); }
+			  if (carte.bloque(p) == true) { 
+				  if (carte.elementCarte(p).equals("Poppy")) {
+					  if (pnjMaria.getListe_quetes().get(1).getActive())
+						  pnjPoppy.boucleQuete(this, p);
+					  else 
+						  pnjPoppy.boucleSansQuete(this, p);
+				  }
+				  if (carte.elementCarte(p).equals("Romuald")) {
+						 pnjRomuald.deroulementQuete(this, p); 
+				  }
+				  if (carte.elementCarte(p).equals("tresor")) {
+					  for (int i=0; i<carte.getCarte_liste_tresor().size(); i++) {
+						  if (carte.getCarte_liste_tresor().get(i).getCarte_nom().equals(carte.getCarte_nom()))
+							  carte.getCarte_liste_tresor().get(i).ouvrir(this, p);
+				      }
+				  }
+				  p.mvtDroite(); 
+			  }
 		    break;
 		  
 		  case KeyEvent.VK_RIGHT:
 			  carte.setImagePersonnage("src/Images/personnageDroit.png");
 			  p.mvtDroite();
-			  if (carte.bloque(p) == true) { p.mvtGauche(); }
+			  if (carte.bloque(p) == true) { 
+				  if (carte.elementCarte(p).equals("Maria")) {
+						 pnjMaria.deroulementQuete(this, p); 
+				  }
+				  if (carte.elementCarte(p).equals("tresor")) {
+					  for (int i=0; i<carte.getCarte_liste_tresor().size(); i++) {
+						  if (carte.getCarte_liste_tresor().get(i).getCarte_nom().equals(carte.getCarte_nom()))
+							  carte.getCarte_liste_tresor().get(i).ouvrir(this, p);
+				      }
+				  }
+				  p.mvtGauche(); 
+			  }
 		    break;
 		  }
 
@@ -130,9 +170,3 @@ public class MainInterface extends JFrame implements KeyListener {
 	}
 
 }
-
-
-
-
-
-
