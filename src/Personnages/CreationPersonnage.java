@@ -11,7 +11,7 @@ public class CreationPersonnage {
 		System.out.println("Sélectionnez la race que vous souhaitez (Humain / Orc / Elfe) : ");
 		typePerso=sc.nextLine();
 		
-		FactoryPersonnage factory=new FactoryPersonnage();
-		Personnage perso=factory.getPerso(typePerso);
+		//FactoryPersonnage factory=new FactoryPersonnage();
+		//Personnage perso=factory.getPerso(typePerso);
 	}
 }

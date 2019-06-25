@@ -9,6 +9,7 @@ import javax.swing.JOptionPane;
 
 import Cartes.Coord;
 import Equipements.Objet;
+import Personnages.Equipe;
 import Personnages.Personnage;
 
 public class Pnj {
@@ -16,10 +17,11 @@ public class Pnj {
 	protected String pnj_nom;
 	protected Coord pnj_coord;
 	protected Objet pnj_objet;
-	public static int pnj_numero_quete_actuel;
+	protected int pnj_numero_quete_actuel;
 	protected String pnj_dialogue_presentation;
 	protected String pnj_dialogue_boucle_quete;
 	protected String pnj_dialogue_boucle_sans_quete;
+	protected boolean pnj_rejoindreEquipe;
 	protected ArrayList<Quete> liste_quetes = new ArrayList<Quete>();
 	
 	public Pnj() { }
@@ -27,6 +29,7 @@ public class Pnj {
 		pnj_nom=nom;
 		pnj_coord=coord;
 		liste_quetes=liste;
+		pnj_rejoindreEquipe = false;
 	}
 	
 	public String getNom() {
@@ -40,7 +43,7 @@ public class Pnj {
 	public void donnerObjet(JFrame jf,Personnage perso) {
 		
 		JOptionPane.showMessageDialog(jf,
-				  pnj_objet.objet_id,
+				  pnj_objet.getNom(),
 				  this.pnj_nom +" donne : ",
 				  JOptionPane.PLAIN_MESSAGE);
 		perso.ajouterEquipement(pnj_objet);
@@ -63,6 +66,7 @@ public class Pnj {
 			  }
 		  }
 		 else {
+			  
 			  this.boucleSansQuete(jf, perso);
 		 }
 	
@@ -104,7 +108,7 @@ public class Pnj {
 	public void getPresentationC() {
 		
 		System.out.println(this.pnj_nom +" dit : "+ this.pnj_dialogue_presentation +"\n");
-		System.out.println(this.pnj_nom +" dit : "+ liste_quetes.get(pnj_numero_quete_actuel).getDialogue_final());
+		System.out.println(this.pnj_nom +" dit : "+ liste_quetes.get(pnj_numero_quete_actuel).getDialogue_initial());
 		
 		System.out.println(pnj_nom +" demande : "+ this.pnj_dialogue_boucle_quete);
 		System.out.println("Saisissez : 'oui' ou 'non'");
@@ -208,7 +212,7 @@ public class Pnj {
 				  this.pnj_nom,
 				  JOptionPane.PLAIN_MESSAGE);
 		this.donnerObjet(jf,perso);
-		if (!(Arrays.asList(perso.getEquipement()).contains(pnj_objet)))
+		if (!(Arrays.asList(perso.getSac()).contains(pnj_objet)))
 			perso.ajouterEquipement(pnj_objet);
 	}
 	
@@ -235,6 +239,14 @@ public class Pnj {
 			pnj_numero_quete_actuel++;
 			this.debutQueteC();
 		}		
+	}
+	
+	public void rejoindreEquipe(JFrame jf, Equipe equipe) {
+		equipe.ajouterPersonnage(new Personnage());
+		JOptionPane.showMessageDialog(jf,
+				  this.pnj_nom + " a rejoint votre équipe.",
+				  this.pnj_nom,
+				  JOptionPane.PLAIN_MESSAGE);
 	}
 	
 }

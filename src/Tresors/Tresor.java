@@ -6,7 +6,6 @@ import javax.swing.JFrame;
 import javax.swing.JOptionPane;
 
 import Cartes.Coord;
-import Equipements.Equipement;
 import Equipements.Objet;
 import Personnages.Personnage;
 
@@ -21,10 +20,10 @@ public class Tresor {
 		tresor_contenu=objet;
 	}
 	
-	public Tresor(Coord coord, String carte_nom, Equipement contenu) {
+	public Tresor(Coord coord, String carte_nom, Objet objet) {
 		tresor_coord=coord;
 		tresor_carte_nom=carte_nom;
-		tresor_contenu=contenu;
+		tresor_contenu=objet;
 	}
 	
 	public Coord getCoord() {
@@ -37,16 +36,16 @@ public class Tresor {
 	
 	public void ouvrir(JFrame jf,Personnage perso) {
 		
-		if (!(Arrays.asList(perso.getEquipement()).contains(tresor_contenu))) {
+		if (!(Arrays.asList(perso.getSac()).contains(tresor_contenu))) {
 			JOptionPane.showMessageDialog(jf,
-					  tresor_contenu.objet_id,
+					  tresor_contenu.getNom(),
 					  "Le coffre contient : ",
 					  JOptionPane.PLAIN_MESSAGE);
 			perso.ajouterEquipement(tresor_contenu);
 		}
 		else {
 			JOptionPane.showMessageDialog(jf,
-					  "vide",
+					  "        vide",
 					  "Le coffre contient : ",
 					  JOptionPane.PLAIN_MESSAGE);
 		}

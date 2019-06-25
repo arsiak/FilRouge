@@ -2,7 +2,6 @@ package Quetes;
 
 import java.util.ArrayList;
 import Cartes.Coord;
-import Equipements.Equipement;
 import Equipements.Objet;
 
 public class PnjMaria extends Pnj {

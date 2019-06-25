@@ -1,17 +1,44 @@
 package Equipements;
-import Personnages.Humain;
+
+import Monstres.Monstre;
 import Personnages.Personnage;
 
 public class Objet {
 	
-	public String objet_id;
+	protected String objet_nom;
 	
-	
-	public Objet(String objet_id) {
-		this.objet_id=objet_id;
+	public Objet() {
+
 	}
 	
-	String getId() {
-		return objet_id;
+	public Objet(String objet_nom) {
+		this.objet_nom=objet_nom;
 	}
+	
+	public String getNom() {
+		return objet_nom;
+	}
+	
+	public String getPresentationMenu() {
+		return objet_nom;
+	}
+	
+	public String getDescription() {
+		return "";
+		
+	}
+	
+	public void setNom(String objet_nom) {
+		this.objet_nom=objet_nom;
+	}
+	
+
+	public void utiliser(Personnage personnage) {
+		// TODO Auto-generated method stub
+	}
+	
+	public void utiliser(Monstre monstre) {
+		// TODO Auto-generated method stub
+	}
+
 }

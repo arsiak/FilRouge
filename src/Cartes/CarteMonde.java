@@ -14,7 +14,7 @@ public class CarteMonde extends Carte {
 		
 		carte = new char [47][49];
 		
-		this.deserializeCarte("src/Cartes/carte" +carte_nom+ ".txt");
+		this.deserializeCarte("Ressources/Cartes/carte" +carte_nom+ ".txt");
 		
 		carte_coord_entree_sortie = new HashMap<String,Coord>();	
 		carte_coord_entree_sortie.put("EntreeVillage", new Coord(5,5));
@@ -34,14 +34,14 @@ public class CarteMonde extends Carte {
 		
 		try {
 			
-			carte_personnage = ImageIO.read(new File("src/Images/personnageBas.png"));
-			carte_pnj_1 = ImageIO.read(new File("src/Images/PoppyDos.png"));
-			carte_pnj_2 = ImageIO.read(new File("src/Images/TerribleDragonNoir.png"));
-			carte_obstacle_1 = ImageIO.read(new File("src/Images/arbre.png"));
-			carte_obstacle_2 = ImageIO.read(new File("src/Images/eau.png"));
-			carte_entree_1 = ImageIO.read(new File("src/Images/chateau.png"));
-			carte_entree_2 = ImageIO.read(new File("src/Images/maison.png"));
-			carte_sol = ImageIO.read(new File("src/Images/terre.png"));
+			carte_personnage = ImageIO.read(new File("Ressources/Images/personnageBas.png"));
+			carte_pnj_1 = ImageIO.read(new File("Ressources/Images/PoppyDos.png"));
+			carte_pnj_2 = ImageIO.read(new File("Ressources/Images/TerribleDragonNoir.png"));
+			carte_obstacle_1 = ImageIO.read(new File("Ressources/Images/arbre.png"));
+			carte_obstacle_2 = ImageIO.read(new File("Ressources/Images/eau.png"));
+			carte_entree_1 = ImageIO.read(new File("Ressources/Images/chateau.png"));
+			carte_entree_2 = ImageIO.read(new File("Ressources/Images/maison.png"));
+			carte_sol = ImageIO.read(new File("Ressources/Images/terre.png"));
 			      
 		}
 		catch (IOException e) {

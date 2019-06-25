@@ -1,18 +1,30 @@
 package Main;
 
+import java.awt.Button;
+import java.awt.Color;
 import java.awt.Container;
+import java.awt.Dimension;
 import java.awt.event.KeyEvent;
 import java.awt.event.KeyListener;
 import java.io.IOException;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.util.ArrayList;
 import java.util.Arrays;
 
+import javax.swing.JButton;
 import javax.swing.JFrame;
+import javax.swing.JLabel;
 import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
+import Bdd.ChargementParam;
 import Cartes.*;
 import Cartes.Coord;
-import Equipements.Equipement;
+import Panneau.MenuScenario;
+import Personnages.Equipe;
+import Personnages.Guerrier;
 import Personnages.Personnage;
 import Quetes.Pnj;
 import Quetes.PnjKaramel;
@@ -24,27 +36,32 @@ import Tresors.Tresor;
 
 public class MainInterface extends JFrame implements KeyListener {
 
-	Personnage p = new Personnage(new Coord(22, 14));
+	ChargementParam param = new ChargementParam();
+	Personnage p = new Guerrier("Elias", '@', param.getCoordPerso());
+	Equipe equipe = new Equipe ("Votre équipe", new ArrayList<Personnage>());
 	Pnj pnjKaramel = new PnjKaramel();
 	Pnj pnjPerlin = new PnjPerlin();
 	Pnj pnjMaria = new PnjMaria();
 	Pnj pnjPoppy = new PnjPoppy();
 	Pnj pnjRomuald = new PnjRomuald();
-	Tresor tresor = new Tresor("Donjon4", new Equipement("Le Bouclier de Perlin"));
-	Carte carte = new CarteMonde();
+	Carte carte = param.getCoordCarte();
+	MenuScenario scenario = new MenuScenario(this);
+	JLabel label = new JLabel();
 	
 	public MainInterface() {   
 		
-	    this.setTitle("Test de map");
+	    this.setTitle("Début de jeux");
 	    this.setSize(450, 470);
 	    this.setLocationRelativeTo(null); 
-	    this.setResizable(false);
-	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+	    //this.setResizable(false);
+	    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 	    this.setContentPane(carte);
+	    //this.setContentPane(scenario);
+	    equipe.ajouterPersonnage(p);
 	    carte.setDeplacementPerso(p);
 	    
 	    carte.repaint();
-	    
+	    this.setTitle(carte.getCarte_nom());
 	    
 	    addKeyListener (this);
 	    
@@ -66,7 +83,7 @@ public class MainInterface extends JFrame implements KeyListener {
 		switch (key) {
 		
 		  case KeyEvent.VK_UP:
-			  carte.setImagePersonnage("src/Images/personnageHaut.png");
+			  carte.setImagePersonnage("Ressources/Images/personnageHaut.png");
 			  p.mvtHaut();
 			  if (carte.bloque(p) == true) { 
 				  //System.out.println(carte.elementCarte(p));
@@ -98,7 +115,7 @@ public class MainInterface extends JFrame implements KeyListener {
 			  break;
 		  
 		  case KeyEvent.VK_DOWN:
-			  carte.setImagePersonnage("src/Images/personnageBas.png");
+			  carte.setImagePersonnage("Ressources/Images/personnageBas.png");
 			  p.mvtBas();
 			  if (carte.bloque(p) == true) { 
 				  p.mvtHaut();
@@ -106,7 +123,7 @@ public class MainInterface extends JFrame implements KeyListener {
 		    break;
 		  
 		  case KeyEvent.VK_LEFT:
-			  carte.setImagePersonnage("src/Images/personnageGauche.png");
+			  carte.setImagePersonnage("Ressources/Images/personnageGauche.png");
 			  p.mvtGauche();
 			  if (carte.bloque(p) == true) { 
 				  if (carte.elementCarte(p).equals("Poppy")) {
@@ -129,7 +146,7 @@ public class MainInterface extends JFrame implements KeyListener {
 		    break;
 		  
 		  case KeyEvent.VK_RIGHT:
-			  carte.setImagePersonnage("src/Images/personnageDroit.png");
+			  carte.setImagePersonnage("Ressources/Images/personnageDroit.png");
 			  p.mvtDroite();
 			  if (carte.bloque(p) == true) { 
 				  if (carte.elementCarte(p).equals("Maria")) {
@@ -144,10 +161,15 @@ public class MainInterface extends JFrame implements KeyListener {
 				  p.mvtGauche(); 
 			  }
 		    break;
+		    
+		  case KeyEvent.VK_ESCAPE:
+			  dispose();
+			  break;
 		  }
 
 		if (carte.estChange(p) == true) { 
 			carte = carte.changementCarte(p);
+			this.setTitle(carte.getCarte_nom());
 			this.setContentPane(carte); 
 			this.setVisible(true);
 		}
@@ -160,7 +182,14 @@ public class MainInterface extends JFrame implements KeyListener {
 	public void keyReleased(KeyEvent e) {
 		// TODO Auto-generated method stub
 
-	}   
+	}  
+	
+	public void dispose() {
+		param.saveCoordPerso(p);
+		  param.saveCoordCarte(carte);
+		  System.exit(0);
+	}
+	
 
 	public static void main(String[] args) throws IOException {
 		MainInterface fen = new MainInterface();

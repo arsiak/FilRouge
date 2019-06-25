@@ -1,13 +1,16 @@
-package Personnages;
+package Monstres;
 import java.util.ArrayList;
 
 public class EquipeMonstre {
+	
 	private String equipeMonstre_nom;
-	private ArrayList<Monstre> equipeMonstre_listeMonstre=new ArrayList<Monstre>();
+	private ArrayList<Monstre> equipeMonstre_listeMonstre;
 	private int equipeMonstre_pointVieGlobal;
 
 	public EquipeMonstre() {
 		this.setNom("L'équipe de monstre");
+		equipeMonstre_listeMonstre=new ArrayList<Monstre>();
+		
 	}
 
 	public int CalculerPointVieGlobal() {
@@ -42,4 +45,5 @@ public class EquipeMonstre {
 	public void setNom(String nom) {
 		this.equipeMonstre_nom = nom;
 	}
+	
 }

@@ -3,11 +3,7 @@ import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
-
 import javax.imageio.ImageIO;
-
-import Equipements.Armure;
-import Equipements.Equipement;
 import Equipements.Objet;
 import Tresors.Tresor;
 
@@ -19,7 +15,7 @@ public class CarteDonjon extends Carte {
 		
 		carte = new char [24][40];
 
-		this.deserializeCarte("src/Cartes/carte" +carte_nom+ ".txt");
+		this.deserializeCarte("Ressources/Cartes/carte" +carte_nom+ ".txt");
 		
 		carte_coord_entree_sortie = new HashMap<String,Coord>();		
 		carte_coord_entree_sortie.put("Donjon1", new Coord(4,7));
@@ -53,14 +49,14 @@ public class CarteDonjon extends Carte {
 
 		try {
 			    	
-			carte_obstacle_1 = ImageIO.read(new File("src/Images/murDonjon.png"));
-			carte_personnage = ImageIO.read(new File("src/Images/personnageHaut.png"));
-			carte_pnj_1 = ImageIO.read(new File("src/Images/PerlinFace.png"));
-			carte_sortie = ImageIO.read(new File("src/Images/porte.png"));
-			carte_sol = ImageIO.read(new File("src/Images/solDonjon.png"));
-			carte_sol_exterieur = ImageIO.read(new File("src/Images/terre.png"));
-			carte_boss = ImageIO.read(new File("src/Images/bossDos.png"));
-			carte_tresor = ImageIO.read(new File("src/Images/tresor.png"));
+			carte_obstacle_1 = ImageIO.read(new File("Ressources/Images/murDonjon.png"));
+			carte_personnage = ImageIO.read(new File("Ressources/Images/personnageHaut.png"));
+			carte_pnj_1 = ImageIO.read(new File("Ressources/Images/PerlinFace.png"));
+			carte_sortie = ImageIO.read(new File("Ressources/Images/porte.png"));
+			carte_sol = ImageIO.read(new File("Ressources/Images/solDonjon.png"));
+			carte_sol_exterieur = ImageIO.read(new File("Ressources/Images/terre.png"));
+			carte_boss = ImageIO.read(new File("Ressources/Images/bossDos.png"));
+			carte_tresor = ImageIO.read(new File("Ressources/Images/tresor.png"));
 			      
 		}
 		catch (IOException e) {

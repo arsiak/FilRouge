@@ -1,15 +1,13 @@
 package Equipements;
 
-import Personnages.Personnage;
 
-public class Epee extends Equipement {
-	public Epee(String identifiant) {
-		super(identifiant);
-		// TODO Auto-generated constructor stub
-		this.equipement_attaque=4;
-	}
+public class Epee extends Arme {
 
-	public void utiliserArmure(Personnage personnage) {
-		setDefense(personnage.getPointAttaque()+equipement_attaque);
+
+	public Epee() {
+		objet_nom = "épée";
+		objet_description = "Une lame bien affûtée dans les côtes.";
+		objet_rage = 10;
 	}
+	
 }

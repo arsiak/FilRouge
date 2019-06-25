@@ -1,6 +1,5 @@
 package Quetes;
 
-import Equipements.Equipement;
 import Equipements.Objet;
 
 public class Quete {
