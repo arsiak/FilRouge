@@ -16,7 +16,6 @@ public abstract class Arme extends Objet {
 	
 	
 	public Arme (String nom, String description, int rage, int mana, int defense) {
-		super(nom);
 		objet_nom = nom;
 		objet_description = description;
 		objet_rage = rage;
@@ -46,7 +45,7 @@ public abstract class Arme extends Objet {
 	}
 	   
 	public String getPresentationMenu(){
-		return (objet_nom+ " Att " +objet_rage);
+		return (objet_nom+ " Rage " +objet_rage+ " Mana " +objet_mana);
 	}
 	  
 	public String getDescription(){

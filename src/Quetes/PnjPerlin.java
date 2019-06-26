@@ -1,6 +1,7 @@
 package Quetes;
 
 import Equipements.Objet;
+import Equipements.ObjetQuete;
 
 public class PnjPerlin extends Pnj {
 	
@@ -8,7 +9,7 @@ public class PnjPerlin extends Pnj {
 		
 		pnj_nom = "Perlin";
 		
-		pnj_objet = new Objet("Le journal d'indice");
+		pnj_objet = new ObjetQuete("Le journal d'indice");
 		
 		//pnj_coord = new Coord(8,9);
 		

@@ -6,6 +6,8 @@ public class Equipe {
 	private ArrayList<Personnage> equipe_listePersonnage=new ArrayList<Personnage>();
 	private int equipe_pointVieGlobal;
 
+	public Equipe() {}
+	
 	public Equipe(String nom, Personnage perso) {
 		equipe_nom = nom;
 		equipe_listePersonnage.add(perso);

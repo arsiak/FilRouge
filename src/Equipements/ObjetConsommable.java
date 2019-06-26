@@ -15,7 +15,6 @@ public abstract class ObjetConsommable extends Objet {
 	}
 	
 	public ObjetConsommable(String nom, String desc, int rage, int def, int mana, int res, int vie, int vit) {
-		super(nom);
 		objetConsommable_nom=nom;
 		objetConsommable_description=desc;
 		objetConsommable_rage=rage;
@@ -41,6 +40,10 @@ public abstract class ObjetConsommable extends Objet {
 
 	public void setDescription(String description) {
 		objetConsommable_description = description;
+	}
+	
+	public String getPresentationMenu() {
+		return (objet_nom);
 	}
 
 	public int getRage() {

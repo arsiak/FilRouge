@@ -6,6 +6,6 @@ public class BouclierMagique extends Armure {
 		super();
 		armure_nom = "Bouclier magique";
 		armure_description = "Protège de la magie ";
-		armure_resistance = 10;
+		armure_resistance = 20;
 	}
 }

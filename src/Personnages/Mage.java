@@ -8,8 +8,8 @@ import Monstres.Monstre;
 public class Mage extends Personnage{
 	private int parerMage;
 	
-	public Mage(String nom, char lettre, Objet[] sac) {
-		super(nom, lettre, sac);
+	public Mage(String nom, char lettre) {
+		super(nom, lettre);
 		this.setPointRage(0);
 	}
 	

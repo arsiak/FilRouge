@@ -13,11 +13,13 @@ import Equipements.Bouclier;
 import Equipements.Casque;
 import Equipements.Epee;
 import Equipements.Objet;
+import Equipements.ObjetQuete;
 import Panneau.Menu;
 import Panneau.MenuEquipe;
 import Panneau.MenuInitialisation;
 import Personnages.Equipe;
 import Personnages.Guerrier;
+import Personnages.Mage;
 import Personnages.Paladin;
 import Personnages.Personnage;
 import Quetes.Pnj;
@@ -32,7 +34,6 @@ public class MainConsole {
 
 		Personnage perso = new Personnage();
 		Carte carte = new Carte();
-		Equipe equipe = new Equipe ("Votre équipe", perso);
 		Pnj pnjKaramel = new PnjKaramel();
 		Pnj pnjMaria = new PnjKaramel();
 		Pnj pnjRomuald = new PnjRomuald();
@@ -41,12 +42,20 @@ public class MainConsole {
 		
 		ChargementParam param = new ChargementParam();
 		MenuInitialisation init = new MenuInitialisation(param);
-		init.accueil();
-		init.demarrage(perso,carte);
-		//equipe.ajouterPersonnage(new Paladin("Poppy",'P', new Objet[] {new Epee(), new Bouclier()}));
 		perso = new Guerrier("Elias",'@', param.getCoordPerso());
 		perso.ajouterEquipement(new Epee());
 		perso.ajouterEquipement(new Casque());
+		perso.ajouterEquipement(new ObjetQuete("blablabla"));
+		Equipe equipe = new Equipe ("Votre équipe", perso);
+		//init.accueil();
+		init.demarrage(perso,carte);
+		Paladin poppy = new Paladin("Poppy",'P');
+		poppy.ajouterEquipement(new Epee());
+		poppy.ajouterEquipement(new Bouclier());
+		Mage maria = new Mage("Maria",'M');
+		maria.ajouterEquipement(new Amulette());
+		equipe.ajouterPersonnage(poppy);
+		equipe.ajouterPersonnage(maria);
 		carte = param.getCoordCarte();
 		Combat combat;
 

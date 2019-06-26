@@ -10,8 +10,8 @@ import Monstres.Monstre;
 public class Paladin extends Personnage{
 	private int parerPaladin;
 	
-	public Paladin(String nom, char lettre, Objet[] sac) {
-		super(nom, lettre, sac);
+	public Paladin(String nom, char lettre) {
+		super(nom, lettre);
 	}
 	
 	public void Attaquer(Monstre monstre) {

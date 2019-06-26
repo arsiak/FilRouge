@@ -1,5 +1,7 @@
 package Personnages;
 
+import java.util.Arrays;
+
 import Cartes.Coord;
 import Equipements.Objet;
 import Monstres.Monstre;
@@ -40,7 +42,7 @@ public class Personnage {
 	}
 	
 	
-	public Personnage(String nom,char lettre,Objet[] sac) {
+	public Personnage(String nom,char lettre) {
 		this.personnage_nom=nom;
 		this.personnage_lettre=lettre;
 		this.personnage_pointVie=100;
@@ -50,7 +52,6 @@ public class Personnage {
 		this.personnage_pointResistance=5;
 		this.personnage_pointVitesse=5;
 		this.personnage_criGuerre="A l'attaque !!";
-		this.personnage_sac=sac;
 		
 	}
 	
@@ -228,10 +229,12 @@ public class Personnage {
 			if (personnage_sac[i] == null) {
 				personnage_sac[i] = equipement;
 				i=personnage_sac.length;
+				
 			}
 		}
 		equipement.utiliser(this);
-		//System.out.println(Arrays.toString(personnage_sacArme));
+		//System.out.println(personnage_sac.length);
+		//System.out.println(Arrays.toString(equipement));
 		
 	}
 	
@@ -270,6 +273,20 @@ public class Personnage {
 	
 	public Objet[] getSac() {
 		return personnage_sac;
+	}
+	
+	public int nombreObjetDansSac() {
+		
+		int nombreObjet = 0;
+		for (int i=0; i<personnage_sac.length; i++) {
+
+			try {
+				if (!(personnage_sac[i] == null)) {
+					nombreObjet++;
+				}
+			}catch (NullPointerException e) {}
+		}
+		return nombreObjet;
 	}
 	
 }

@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
 import Equipements.Objet;
+import Equipements.ObjetQuete;
 import Tresors.Tresor;
 
 public class CarteDonjon extends Carte {
@@ -32,10 +33,10 @@ public class CarteDonjon extends Carte {
 		carte_coord_entree_sortie.put("Donjon12", new Coord(40,38));
 				
 		carte_liste_tresor = new ArrayList<Tresor>(); 
-		carte_liste_tresor.add(new Tresor("Donjon4",new Objet("La main d'Atlas")));
-		carte_liste_tresor.add(new Tresor("Donjon5",new Objet("Le collier de Maria")));
-		carte_liste_tresor.add(new Tresor("Donjon6",new Objet("Le Bouclier de Perlin")));
-		carte_liste_tresor.add(new Tresor("Donjon7",new Objet("Les assiettes en argent")));
+		carte_liste_tresor.add(new Tresor("Donjon4",new ObjetQuete("La main d'Atlas")));
+		carte_liste_tresor.add(new Tresor("Donjon5",new ObjetQuete("Le collier de Maria")));
+		carte_liste_tresor.add(new Tresor("Donjon6",new ObjetQuete("Le Bouclier de Perlin")));
+		carte_liste_tresor.add(new Tresor("Donjon7",new ObjetQuete("Les assiettes en argent")));
 		/*carte_liste_tresor.add(new Tresor("Donjon1",new Armure("Le Vaillant")));
 		carte_liste_tresor.add(new Tresor("Donjon1",new Armure("Le Vaillant")));
 		carte_liste_tresor.add(new Tresor("Donjon1",new Armure("Le Vaillant")));

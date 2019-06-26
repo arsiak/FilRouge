@@ -6,7 +6,7 @@ public class Casque extends Armure {
 		super();
 		objet_nom = "Casque";
 		armure_description = "Protège la tête ";
-		armure_defense = 5;
+		armure_defense = 10;
 	}
 
 }

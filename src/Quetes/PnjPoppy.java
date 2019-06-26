@@ -1,6 +1,7 @@
 package Quetes;
 
 import Equipements.Objet;
+import Equipements.ObjetQuete;
 
 public class PnjPoppy extends Pnj {
 	
@@ -8,7 +9,7 @@ public class PnjPoppy extends Pnj {
 		
 		pnj_nom = "Poppy";
 		
-		pnj_objet = new Objet("Le poisson de Poppy");
+		pnj_objet = new ObjetQuete("Le poisson de Poppy");
 		
 		//pnj_coord = new Coord(8,9);
 		

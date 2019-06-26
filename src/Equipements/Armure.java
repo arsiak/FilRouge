@@ -25,7 +25,6 @@ public abstract class Armure extends Objet {
 	}
 	
 	public Armure (String nom, String description, int  defense, int resistance){
-		super(nom);
 	    armure_description = description;
 	    armure_defense = defense;
 	    armure_resistance=resistance;
@@ -44,7 +43,7 @@ public abstract class Armure extends Objet {
 	}
 	  
 	public String getPresentationMenu(){
-		return (objet_nom+ " Def " +armure_defense);
+		return (objet_nom+ " Def " +armure_defense+ " Res " +armure_resistance);
 	}
 	
 	public String getDescription(){
