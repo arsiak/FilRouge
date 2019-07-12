@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 import javax.swing.JPanel;
 
-import Equipements.Objet;
+import Objets.Objet;
 import Personnages.Equipe;
 
 public class MenuEquipe extends JPanel {
@@ -88,7 +88,8 @@ public class MenuEquipe extends JPanel {
 				
 			}
 		}
-		System.out.println("----------------------------------------------------------------------------------\n");		   
+		System.out.println("----------------------------------------------------------------------------------\n");	
+		System.out.println("\n| z : haut | s : bas | ");
 				 		   
 	}
 

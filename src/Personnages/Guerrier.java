@@ -1,14 +1,15 @@
 package Personnages;
 
+import java.awt.Image;
+
 import Cartes.Coord;
 import Monstres.Monstre;
 
 
 public class Guerrier extends Personnage {
 	
-	private int parerGuerrier=0;
-	
-	public Guerrier() {
+	public Guerrier(String nom) {
+		personnage_nom=nom;
 		personnage_lettre='G';
 		personnage_pointVie=120;
 	}
@@ -19,19 +20,22 @@ public class Guerrier extends Personnage {
 		personnage_pointVie=120;
 	}
 	
-	/*
-	public Guerrier(String nom, Objet[] sac) {
-		super(nom, sac);
-		this.setPointMana(0);
+	public Guerrier(String nom, Image image, Coord coord) {
+		super(nom, image,coord);
+		personnage_image=image;
+		personnage_pointVie=120;
 	}
-	*/
 	
-	public void Attaquer(Monstre monstre) {
+	public void attaquer(Monstre monstre) {
 		System.out.println(this.getNom()+" attaque "+monstre.getNom()+" !");
 		int degat;
+		
+		if (monstre.getParade()) this.setPointRage(this.getPointRage()/2);
+		
 		degat=monstre.getPointVie()+monstre.getPointDefense()-this.getPointRage();
 		if(monstre.getPointDefense()>this.getPointRage()) {
 			degat=monstre.getPointVie();
+			monstre.setPointDefense(monstre.getPointDefense()-this.getPointRage());
 		}
 		if(degat<0) {
 			degat=0;
@@ -39,23 +43,20 @@ public class Guerrier extends Personnage {
 		monstre.setPointVie(degat);
 		if(this.getPointRage()-monstre.getPointDefense()>0) {
 			System.out.println(monstre.getNom()+" perd "+(this.getPointRage()-monstre.getPointDefense())+" point(s) de vie !");
+			monstre.setPointDefense(0);
 		}
 		else {
-			System.out.println(monstre.getNom()+" ne perd pas de point de vie !");
-		}	
+			System.out.println(monstre.getNom()+" perd " +(monstre.getPointDefense()-this.getPointRage())+" point(s) de défense !");
+		}
+		if (monstre.getParade()) {
+			this.setPointRage(this.getPointRage()/2);
+			monstre.setParade(false);
+		}
 	}
 	
-	public void Parer() {
-		System.out.println(this.getNom()+" pare !");
-		this.setParerGuerrier(getParerGuerrier()+1);
-	}		
-
-	public int getParerGuerrier() {
-		return parerGuerrier;
-	}
-
-	public void setParerGuerrier(int parerGuerrier) {
-		this.parerGuerrier = parerGuerrier;
-	}
+	public void parer() {
+		super.parer();
+		this.personnage_pointRage++;
+	}			
 
 }

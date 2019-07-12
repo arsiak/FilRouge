@@ -1,16 +1,22 @@
 package Cartes;
+
 import java.io.File;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import javax.imageio.ImageIO;
-import Equipements.Objet;
-import Equipements.ObjetQuete;
+
+import Monstres.Assassin;
+import Monstres.Chamane;
+import Monstres.Monstre;
+import Monstres.Necromancien;
+import Objets.*;
+import Quetes.Quete;
 import Tresors.Tresor;
 
 public class CarteDonjon extends Carte {
 	
-	public CarteDonjon(int i ) {
+	public CarteDonjon(int i) {
 		
 		carte_nom = "Donjon" +i;
 		
@@ -31,22 +37,20 @@ public class CarteDonjon extends Carte {
 		carte_coord_entree_sortie.put("Donjon10", new Coord(6,40));
 		carte_coord_entree_sortie.put("Donjon11", new Coord(23,40));
 		carte_coord_entree_sortie.put("Donjon12", new Coord(40,38));
-				
-		carte_liste_tresor = new ArrayList<Tresor>(); 
-		carte_liste_tresor.add(new Tresor("Donjon4",new ObjetQuete("La main d'Atlas")));
-		carte_liste_tresor.add(new Tresor("Donjon5",new ObjetQuete("Le collier de Maria")));
-		carte_liste_tresor.add(new Tresor("Donjon6",new ObjetQuete("Le Bouclier de Perlin")));
-		carte_liste_tresor.add(new Tresor("Donjon7",new ObjetQuete("Les assiettes en argent")));
-		/*carte_liste_tresor.add(new Tresor("Donjon1",new Armure("Le Vaillant")));
-		carte_liste_tresor.add(new Tresor("Donjon1",new Armure("Le Vaillant")));
-		carte_liste_tresor.add(new Tresor("Donjon1",new Armure("Le Vaillant")));
-		carte_liste_tresor.add(new Tresor("Donjon1",new Armure("Le Vaillant")));
-		carte_liste_tresor.add(new Tresor("Donjon1",new Armure("Le Vaillant")));
-		carte_liste_tresor.add(new Tresor("Donjon1",new Armure("Le Vaillant")));
-		carte_liste_tresor.add(new Tresor("Donjon1",new Armure("Le Vaillant")));
-		carte_liste_tresor.add(new Tresor("Donjon1",new Armure("Le Vaillant")));
-		carte_liste_tresor.add(new Tresor("Donjon1",new Armure("Le Vaillant")));
-		carte_liste_tresor.add(new Tresor("Donjon1",new Armure("Le Vaillant")));*/
+		
+		carte_boss = new HashMap<String,Monstre>();		
+		carte_boss.put("Donjon1", new Assassin("Timon Le Borgne", 'B', new Objet[]{new Epee()}, 200,7, 0, 0, 0, 0, "Tu vas déguster"));
+		carte_boss.put("Donjon2", new Necromancien("Ghoul L'infâme", 'B', new Objet[]{new Epee()}, 200,7, 0, 0, 0, 0, "Tu vas rejoindre ma collection de cadavre"));
+		carte_boss.put("Donjon3", new Chamane("Molan L'une des soeurs jumelles", 'B', new Objet[]{new Amulette(), new PotionVie()}, 200,7, 0, 0, 0, 0, "Touche pas à ma soeur"));
+		carte_boss.put("Donjon4", new Chamane("Noïran L'une des soeurs jumelles", 'B', new Objet[]{new Amulette(), new PotionVie()}, 200,7, 0, 0, 0, 0, "Touche pas à ma soeur"));
+		carte_boss.put("Donjon5", new Necromancien("Rapia Le grand fou", 'B', new Objet[]{new Epee()}, 200,7, 0, 0, 0, 0, "Tu vas rejoindre ma collection de cadavre"));
+		carte_boss.put("Donjon6", new Necromancien("Kao Le manipulateur d'âme", 'B', new Objet[]{new Epee()}, 200,50, 10, 10, 10, 5, "Je vais te montrer ce qu'est la folie"));
+		carte_boss.put("Donjon7", new Assassin("Lourou La muraille", 'B', new Objet[]{new Epee()}, 200,7, 0, 0, 0, 0, "Tu vas te casser les dents sur mon corp"));
+		carte_boss.put("Donjon8", new Chamane("Yoll Le fanatique", 'B', new Objet[]{new Epee()}, 200,7, 0, 0, 0, 0, "Je vais prendre soin de toi. Non, je rigole"));
+		carte_boss.put("Donjon9", new Assassin("Bauror Le faiseur de veuve", 'B', new Objet[]{new Epee()}, 200,7, 0, 0, 0, 0, "Personne ne mérite de vivre, toi encore moins"));
+		carte_boss.put("Donjon10", new Assassin("Vidal Le Sanguinaire", 'B', new Objet[]{new Epee()}, 200,7, 0, 0, 0, 0, "Je vais extraire tout ton sang de ton petit être"));
+		carte_boss.put("Donjon11", new Necromancien("Escap Le presqu'mort", 'B', new Objet[]{new Epee()}, 200,7, 0, 0, 0, 0, "J'ai survécu à bien pire que toi"));
+		carte_boss.put("Donjon12", new Chamane("Garakol L'ensorcelleuse", 'B', new Objet[]{new Epee()}, 200,7, 0, 0, 0, 0, "Ton destin est scellé, je vois ta défaite"));
 
 		try {
 			    	
@@ -54,20 +58,16 @@ public class CarteDonjon extends Carte {
 			carte_personnage = ImageIO.read(new File("Ressources/Images/personnageHaut.png"));
 			carte_pnj_1 = ImageIO.read(new File("Ressources/Images/PerlinFace.png"));
 			carte_sortie = ImageIO.read(new File("Ressources/Images/porte.png"));
-			carte_sol = ImageIO.read(new File("Ressources/Images/solDonjon.png"));
+			carte_sol = (ImageIO.read(new File("Ressources/Images/solDonjon.png")));
 			carte_sol_exterieur = ImageIO.read(new File("Ressources/Images/terre.png"));
-			carte_boss = ImageIO.read(new File("Ressources/Images/bossDos.png"));
-			carte_tresor = ImageIO.read(new File("Ressources/Images/tresor.png"));
+			carte_img_tresor = ImageIO.read(new File("Ressources/Images/tresor.png"));
+			carte_img_boss = carte_boss.get(carte_nom).getImage();
 			      
 		}
 		catch (IOException e) {
 		      e.printStackTrace();
 		}
 		
-	}
-	
-	public ArrayList<Tresor> getListe_carte_tresor() {
-		return carte_liste_tresor;
 	}
 
 }

@@ -1,7 +1,14 @@
 package Quetes;
 
-import Equipements.Objet;
-import Equipements.ObjetQuete;
+import java.util.Arrays;
+
+import javax.swing.JFrame;
+import javax.swing.JOptionPane;
+
+import Objets.Objet;
+import Objets.ObjetQuete;
+import Personnages.Equipe;
+import Personnages.Personnage;
 
 public class PnjPoppy extends Pnj {
 	
@@ -20,5 +27,27 @@ public class PnjPoppy extends Pnj {
 		pnj_dialogue_boucle_sans_quete = "Pour l'instant les poissons ne mordent pas beaucoup. Mais je reste vigilant.";
 		
 	}
+	
+	
+	public void boucleFinListeQuete(JFrame jf, Equipe equipe, Pnj maria) {
+		
+		if (maria.getQueteActuel() > 2) {
+			this.rejoindreEquipe(jf, equipe);
+		}
+		else {
+			super.boucleFinListeQuete(jf, equipe.getListePersonnage().get(0));
+		}
+	}
+	
+	public void boucleFinListeQuete(Equipe equipe, Pnj maria) {
+		
+		if (maria.getQueteActuel() > 2) {
+			this.rejoindreEquipe(equipe);
+		}
+		else {
+			super.boucleFinListeQuete(equipe.getListePersonnage().get(0));
+		}
+	}
+	
 
 }

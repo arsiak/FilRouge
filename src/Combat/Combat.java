@@ -2,12 +2,14 @@ package Combat;
 import java.util.Random;
 import java.util.Scanner;
 
-import Equipements.Objet;
+import Cartes.Carte;
 import Monstres.Assassin;
 import Monstres.Chamane;
 import Monstres.EquipeMonstre;
 import Monstres.FactoryMonstre;
 import Monstres.Necromancien;
+import Objets.Objet;
+import Objets.ObjetQuete;
 import Personnages.Equipe;
 import Personnages.Guerrier;
 import Personnages.Mage;
@@ -18,22 +20,33 @@ import Personnages.Personnage;
 public class Combat {
 	
 	Scanner sc;
-	int tour;
+	int tour=0, equipePointVieGlobal=0, equipeMonstrePointVieGlobal=0;
 	char option;
-	boolean gameOver = false;
+	boolean gameOver = false, fuite = false;
 	Equipe equipe;
 	EquipeMonstre equipeMonstre;
+	Carte carte;
+	//Création de personnages et monstres doublure pour éviter réinitiliser les paramètres en fin de combat
+	Personnage[] combattants;
+	Monstre[] monstres;
 	
-	//Objets des monstres
-	
-	Objet[] sacVide = {};
-	
-	public Combat(Equipe equipe) throws Exception {
+	public Combat(Scanner sc, Equipe equipe) throws Exception {
 		
 		this.equipe=equipe;
-		sc=new Scanner(System.in);
-		tour=0;
+		this.sc=sc;
 		this.initMonstre();
+		this.initialisation(equipe);
+		this.deroulementCombat();
+
+	}
+	
+	public Combat(Equipe equipe, Carte carte) throws Exception {
+		
+		this.equipe=equipe;
+		this.carte=carte;
+		sc=new Scanner(System.in);
+		this.initBoss(carte);
+		this.initialisation(equipe);
 		this.deroulementCombat();
 
 	}
@@ -42,67 +55,65 @@ public class Combat {
 		return gameOver;
 	}
 	
-	public void affichageCombattants() {
+	public void initialisation(Equipe equipe) {
 		
-		
-		
-		int bordGauche = 75, petitBordGauche = 3, rogne;
-		Personnage combattant1 =  this.equipe.getListePersonnage().get(0), combattant2 = null, combattant3 = null;
-		Monstre monstre1 =  equipeMonstre.getListeMonstre().get(0), monstre2 = null, monstre3 = null;
-	
-		switch (equipe.getListePersonnage().size()) {
-			case 2 : combattant2 = equipe.getListePersonnage().get(1); break;
-			case 3 : combattant2 = equipe.getListePersonnage().get(1); 
-					 combattant3 = equipe.getListePersonnage().get(2);
-		}
-		
-		switch (equipeMonstre.getListeMonstre().size()) {
-			case 2 : monstre2 = equipeMonstre.getListeMonstre().get(1); break;
-			case 3 : monstre2 = equipeMonstre.getListeMonstre().get(1); 
-					 monstre3 = equipeMonstre.getListeMonstre().get(2);
+		combattants = new Personnage[equipe.getListePersonnage().size()];
+			for (int i=0; i<equipe.getListePersonnage().size(); i++) {
+				combattants[i] = equipe.getListePersonnage().get(i);
+			}
+			
+		monstres = new Monstre[equipeMonstre.getListeMonstre().size()];
+			for (int i=0; i<equipeMonstre.getListeMonstre().size(); i++) {
+				monstres[i] = equipeMonstre.getListeMonstre().get(i);
+			}
+
 	}
 	
-			
-		for (int i=0; i<bordGauche; i++) { System.out.print(" "); }
-			System.out.println("|                  |");
-			rogne = combattant1.toString().length();
-		for (int i=0; i<bordGauche-rogne-petitBordGauche; i++) { System.out.print(" "); } 
-			System.out.print(combattant1.toString());
-			System.out.print("   |    " +combattant1.getLettre()+ "        " +monstre1.getLettre()+ "    |   ");
-			System.out.println(monstre1.toString());
-			
-		for (int i=0; i<bordGauche; i++) { System.out.print(" "); }
-			System.out.println("|                  |");
-			if (combattant2 == null) rogne = 0;
-			else rogne = combattant2.toString().length();
-		for (int i=0; i<bordGauche-rogne-petitBordGauche; i++) { System.out.print(" "); } 
-			if (combattant2 != null) System.out.print(combattant2.toString());
-			System.out.print("   |    ");
-			if (combattant2 == null) System.out.print(" ");
-			else System.out.print(combattant2.getLettre());
-			System.out.print("        ");
-			if (monstre2 == null) System.out.print(" ");
-			else System.out.print(monstre2.getLettre());
-			System.out.print("    |   ");
-			if (monstre2 != null) System.out.println(monstre2.toString());
-			else System.out.println();
-			
-		for (int i=0; i<bordGauche; i++) { System.out.print(" "); }
-			System.out.println("|                  |");
-			if (combattant3 == null) rogne = 0;
-			else rogne = combattant3.toString().length();
-		for (int i=0; i<bordGauche-rogne-petitBordGauche; i++) { System.out.print(" "); } 
-			if (combattant3 != null) System.out.print(combattant3.toString());
-			System.out.print("   |    ");
-			if (combattant3 == null) System.out.print(" ");
-			else System.out.print(combattant3.getLettre());
-			System.out.print("        ");
-			if (monstre3 == null) System.out.print(" ");
-			else System.out.print(monstre3.getLettre());
-			System.out.print("    |   ");
-			if (monstre3 != null) System.out.println(monstre3.toString()+"\n");
-			else System.out.println("\n");
+	public void affichageCombattants() {
 		
+		// écriture des paramètres pour chaque combattants et monstres
+		for (int i=0; i<3; i++) {
+			
+			// initialisation 
+			int bordGauche = 75, petitBordGauche = 3, rognePresentation = 0, rogneCri = 0;
+			String presentationC = "", presentationM = "", criC = "", criM = "";
+			char lettreC = ' ', lettreM = ' ';
+			
+			if (combattants.length>i && combattants[i].getEstVivant()) { 
+				rognePresentation = combattants[i].toString().length();
+				rogneCri = combattants[i].getCriGuerre().length();
+				presentationC = combattants[i].toString();
+				lettreC = combattants[i].getLettre();
+				criC = combattants[i].getCriGuerre();
+			}
+	
+			if (monstres.length>i && monstres[i].getEstVivant()) { 
+				presentationM = monstres[i].toString();
+				lettreM = monstres[i].getLettre();
+				criM = monstres[i].getCriGuerre();
+			}
+			
+			// première ligne
+			for (int j=0; j<bordGauche; j++) { System.out.print(" "); }
+			System.out.println("|                  |");
+							
+			// deuxième ligne
+			for (int j=0; j<bordGauche-rognePresentation-petitBordGauche; j++) { System.out.print(" "); } 
+			System.out.println(presentationC+ "   |    " +lettreC+ "        " +lettreM+ "    |   " +presentationM);
+						
+			// troisième ligne
+			for (int j=0; j<bordGauche-rogneCri-petitBordGauche; j++) { System.out.print(" "); } 
+			System.out.println(criC+ "   |                  |      " +criM);
+						
+			// quatrième ligne
+			for (int j=0; j<bordGauche; j++) { System.out.print(" "); }
+			System.out.println("|                  |");
+		}
+		
+		
+		
+			
+			
 	}
 	
 	public void initMonstre() throws Exception {
@@ -113,16 +124,18 @@ public class Combat {
 			FactoryMonstre monstre = new FactoryMonstre();
 			equipeMonstre.getListeMonstre().add(monstre.getTypeMonstre());
 		}
+	
+	}
+	
+	public void initBoss(Carte carte) throws Exception {
 		
-		/*Monstre monstre1=new Assassin("Delios","A" ,sacVide);
-		Monstre monstre2=new Chamane("Chakoros","C" , sacVide);
-		Monstre monstre3=new Necromancien("Neckralos","N" , sacVide);
-		equipeMonstre.getListeMonstre().add(monstre1);
-		equipeMonstre.getListeMonstre().add(monstre2);
-		equipeMonstre.getListeMonstre().add(monstre3);*/
+		equipeMonstre = new EquipeMonstre();
+		equipeMonstre.getListeMonstre().add(carte.getCarte_boss().get(carte.getCarte_nom()));
+	
 	}
 	
 	public void attente() {
+
 		for (int j=0; j<100;j++) {
 			try {
 				Thread.sleep(20);
@@ -133,231 +146,247 @@ public class Combat {
 			System.out.print("-");
 		}
 		System.out.println();
+
 	}
 	
 	public void deroulementCombat() {
 		
 		System.out.println("Vous êtes attaqués !!!");
 		
-		equipe.CalculerPointVieGlobal();
-		equipeMonstre.CalculerPointVieGlobal();
-		
-		//Initialisation
-		/*for(int i=0; i<equipe.getListePersonnage().size(); i++) {
-			System.out.println(equipe.getListePersonnage().get(i).toString());
-			System.out.println(equipe.getListePersonnage().get(i).getCriGuerre());
+		//Calcul des points de vie global pour les monstres et l'équipe
+		for (int i=0; i<monstres.length; i++) {
+				equipeMonstrePointVieGlobal += monstres[i].getPointVie();
 		}
 		
-		for(int i=0; i<equipeMonstre.getListeMonstre().size(); i++) {
-			System.out.println(equipeMonstre.getListeMonstre().get(i).toString());
-			System.out.println(equipeMonstre.getListeMonstre().get(i).getCriGuerre());
-		}*/
+		for (int i=0; i<combattants.length; i++) {
+				equipePointVieGlobal += combattants[i].getPointVie();
+		}
+
+		//Affectation des différents points des armes et armures pour les mosntres
+		for(int i=0; i<monstres.length; i++) {			
+			for (int j=0; j<monstres[i].nombreObjetDansSac(); j++) {
+				if (monstres[i].getSac()[j] != null) {
+					if (monstres[i].getSac()[j].getType().equals("Arme") || monstres[i].getSac()[j].getType().equals("Armure"))
+						monstres[i].getSac()[j].utiliser(monstres[i]);
+				}
+			}
+		}
 		
 		//Boucle de combat
-		while((equipe.getPointVieGlobal()>0) && (equipeMonstre.getPointVieGlobal()>0)) {
+		while((equipePointVieGlobal>0) && (equipeMonstrePointVieGlobal>0) && fuite == false) {
 			
 			this.attente();
 			tour++;
-			System.out.println("Tour "+tour);
+			System.out.println("Tour "+tour+ "\n");
 			
-			//Utilisation des objets
-			for(int i=0; i<equipe.getListePersonnage().size(); i++) {
-				
-				for (int j=0; j<equipe.getListePersonnage().get(i).getSac().length; j++) {
-					if (equipe.getListePersonnage().get(i).getSac()[j] != null) {
-						//System.out.println(equipe.getListePersonnage().get(i).getSac()[j]);
-						equipe.getListePersonnage().get(i).getSac()[j].utiliser(equipe.getListePersonnage().get(i));
-						//
-						System.out.println(equipe.getListePersonnage().get(i).getNom()+" utilise "+equipe.getListePersonnage().get(i).getSac()[j].getNom());
+			//Affichage des armes et armures utilisé et des possessions du sac pour les personnages
+			for(int i=0; i<combattants.length; i++) {
+				for (int j=0; j<combattants[i].nombreObjetDansSac(); j++) {
+					if (combattants[i].getSac()[j] != null && combattants[i].getEstVivant()) {
+						if (combattants[i].getSac()[j].getType().equals("Arme") || combattants[i].getSac()[j].getType().equals("Armure")) {
+							System.out.println(combattants[i].getNom()+" utilise "+combattants[i].getSac()[j].getNom());
+						}
+						else {
+							System.out.println(combattants[i].getNom()+" possède "+combattants[i].getSac()[j].getNom());
+						}
 					}
 					
 				}
-				
 			}
 			
-			for(int i=0; i<equipeMonstre.getListeMonstre().size(); i++) {
-				Double rand;
-				for (int j=0; j<equipeMonstre.getListeMonstre().get(i).getSac().length; j++) {
-					rand=Math.random();
-					if(rand>=0.5) {
-						equipeMonstre.getListeMonstre().get(i).getSac()[j].utiliser(equipeMonstre.getListeMonstre().get(i));
-						System.out.println(equipeMonstre.getListeMonstre().get(i).getNom()+" utilise "+equipeMonstre.getListeMonstre().get(i).getSac()[j].getNom());
-					}	
+			//Affichage des armes et armures utilisé et des possessions du sac pour les monstres
+			for(int i=0; i<monstres.length; i++) {
+				for (int j=0; j<monstres[i].nombreObjetDansSac(); j++) {
+					if (monstres[i].getSac()[j] != null && monstres[i].getEstVivant()) {
+						if (monstres[i].getSac()[j].getType().equals("Arme") || monstres[i].getSac()[j].getType().equals("Armure")) {
+							System.out.println(monstres[i].getNom()+" utilise "+monstres[i].getSac()[j].getNom());
+						}
+						else {
+							System.out.println(monstres[i].getNom()+" possède "+monstres[i].getSac()[j].getNom());
+						}
+					}
 				}
 			}
-			
 			
 			//Combat
-			for(int i=0; i<equipe.getListePersonnage().size(); i++) {	
+			for(int i=0; i<combattants.length; i++) {	
 				
-				this.affichageCombattants();
+				this.affichageCombattants(); 
 				
-				System.out.println(equipe.getListePersonnage().get(i).getNom()+ " attend vos ordre");
-				System.out.println("Saisissez A pour attaquer ou P pour parer");
-				if(equipe.getListePersonnage().get(i) instanceof Paladin) {
+				System.out.println(combattants[i].getNom()+ " attend vos ordre");
+				//Choix : attaquer, parer, objet, fuir
+				System.out.println("Saisissez A pour attaquer, P pour parer, O pour objet ou F pour tenter de fuir");
+				if(combattants[i] instanceof Paladin) {
 					System.out.println("!! Parer fait gagner un point de rage et de mana !!");
 				}
-				if(equipe.getListePersonnage().get(i) instanceof Guerrier) {
+				if(combattants[i] instanceof Guerrier) {
 					System.out.println("!! Parer fait gagner 1 point de rage !!");
 				}
-				if(equipe.getListePersonnage().get(i) instanceof Mage) {
+				if(combattants[i] instanceof Mage) {
 					System.out.println("!! Parer fait gagner 1 point de mana !!");
 				}
 
 				option=sc.next().charAt(0);
+				//Option Attaquer choisi
 				if(option=='A' || option=='a') {
 					String cible="";
 					boolean verifCible=false;
 					while(verifCible==false) {
-						Scanner scAttaque=new Scanner(System.in);
+						//Scanner sc=new Scanner(System.in);
 						System.out.println("Saisissez le nom de la cible");
-						cible=scAttaque.nextLine();
-						for(int j=0; j<equipeMonstre.getListeMonstre().size(); j++) {
-							if(cible.equals(equipeMonstre.getListeMonstre().get(j).getNom())) {
+						cible=sc.next();
+						for(int j=0; j<monstres.length; j++) {
+							if(cible.equals(monstres[j].getNom())) {
 								verifCible=true;
-								System.out.println(equipe.getListePersonnage().get(i).getNom()+" vs "+equipeMonstre.getListeMonstre().get(j).getNom());
+								System.out.println(combattants[i].getNom()+" vs "+monstres[j].getNom());
 								System.out.println();
-								if(equipe.getListePersonnage().get(i) instanceof Guerrier) {
-									((Guerrier)equipe.getListePersonnage().get(i)).Attaquer(equipeMonstre.getListeMonstre().get(j));
-									break;
+								if(combattants[i] instanceof Guerrier) {
+									((Guerrier)combattants[i]).attaquer(monstres[j]);
 								}
-								if(equipe.getListePersonnage().get(i) instanceof Mage) {
-									((Mage)equipe.getListePersonnage().get(i)).Attaquer(equipeMonstre.getListeMonstre().get(j));
-									break;
+								else if(combattants[i] instanceof Mage) {
+									((Mage)combattants[i]).attaquer(monstres[j]);
 								}
-								if(equipe.getListePersonnage().get(i) instanceof Paladin) {
-									((Paladin)equipe.getListePersonnage().get(i)).Attaquer(equipeMonstre.getListeMonstre().get(j));
-									break;
+								else if(combattants[i] instanceof Paladin) {
+									((Paladin)combattants[i]).attaquer(monstres[j]);
+								}
+								if(monstres[j].getPointVie()<=0) {
+									System.out.println(monstres[j].getNom()+" a été neutralisé");
+									monstres[j].setEstVivant(false);
 								}
 							}
 						}
 					}
+					
 				}
+				//Option Parer choisi
 				else if (option=='P' || option=='p'){
-					if(equipe.getListePersonnage().get(i) instanceof Guerrier) {
-						((Guerrier)equipe.getListePersonnage().get(i)).Parer();	
-						break;
+					
+					combattants[i].parer();	
+					
+				}
+				//Option Objet choisi
+				else if (option=='O' || option=='o'){
+					
+					String objet;
+					int nombreConsommable = 0;
+					boolean consommablePresent = false;
+					
+					for (int j=0; j<combattants[i].nombreObjetDansSac(); j++) {
+						if (combattants[i].getSac()[j].getType().equals("Consommable")) {
+							consommablePresent = true;
+						}
 					}
-					if(equipe.getListePersonnage().get(i) instanceof Mage) {
-						((Mage)equipe.getListePersonnage().get(i)).Parer();
-						break;
+					if (consommablePresent == false) {
+						System.out.println(combattants[i].getNom()+ " ne possède aucun objet consommable");
 					}
-					if(equipe.getListePersonnage().get(i) instanceof Paladin) {
-						((Paladin)equipe.getListePersonnage().get(i)).Parer();
-						break;
+					else {
+						System.out.println("Liste des objets consommables de " +combattants[i].getNom()+ " : ");
+						for (int j=0; j<combattants[i].nombreObjetDansSac(); j++) {
+							if (combattants[i].getSac()[j].getType().equals("Consommable")) {
+								System.out.println(combattants[i].getSac()[j].getNom());
+								nombreConsommable++;
+							}
+						}
+						System.out.println("Saisissez le nom de l'objet que vous voulez utiliser : ");
+						Scanner scObjet=new Scanner(System.in);
+						objet = scObjet.nextLine();
+						
+						//System.out.println(objet);
+						for (int j=0; j<3; j++) {
+							
+							try {
+								if (combattants[i].getSac()[j].getNom().equals(objet)) {
+									combattants[i].getSac()[j].utiliser(combattants[i]);
+									System.out.println(combattants[i].getNom()+ "a utilisé " +combattants[i].getSac()[j].getNom());
+									combattants[i].retirerEquipement(combattants[i].getSac()[j]);
+									equipe.getListePersonnage().get(i).retirerEquipement(combattants[i].getSac()[j]);
+								}
+							}
+							catch(NullPointerException e) {}
+						}
+					}
+				}
+				//Option Fuite choisi
+				else if (option=='F' || option=='f'){
+					System.out.println("Vous tentez de fuir (La réussite dépend de votre vitesse)");
+					this.attente();
+					fuite = combattants[i].fuir();
+					if (fuite == true) {
+						System.out.println("Vous avez réussi à fuir");
+						i = combattants.length;
+					}
+					else {
+						System.out.println("Votre tentative de fuite a échouée");
 					}
 				}
 				else {
-					System.out.println("Le joueur est périfié de peur (mauvaise saisie de touche)");
+					System.out.println("Le joueur est pétrifié de peur (mauvaise saisie de touche)");
 				}
 			}		
-			
-			System.out.println("Les monstres s'apprêtent à vous attaquer");
-			this.attente();
-			
-			for(int i=0; i<equipeMonstre.getListeMonstre().size(); i++) {
+			//Attaque des monstres
+			if (fuite == false) {
+				System.out.println("Les monstres s'apprêtent à vous attaquer");
+				this.attente();
 				
-				int choixCible=(int)(Math.random()*equipe.getListePersonnage().size());
-							
-					equipeMonstre.getListeMonstre().get(i).Attaquer(equipe.getListePersonnage().get(choixCible));
-				/*
-					if(equipeMonstre.getListeMonstre().get(i) instanceof Assassin) {
-						((Assassin)equipeMonstre.getListeMonstre().get(i)).Attaquer(equipe.getListePersonnage().get(choixCible));	
-					}
-					if(equipeMonstre.getListeMonstre().get(i) instanceof Chamane) {
-						((Chamane)equipeMonstre.getListeMonstre().get(i)).Attaquer(equipe.getListePersonnage().get(choixCible));
-					}
-					if(equipeMonstre.getListeMonstre().get(i) instanceof Necromancien) {
-						((Necromancien)equipeMonstre.getListeMonstre().get(i)).Attaquer(equipe.getListePersonnage().get(choixCible));
-					}
-				*/
-			}
-			
-			tour=tour+1;
-			
-			for(int i=0; i<equipe.getListePersonnage().size(); i++) {
-				if(equipe.getListePersonnage().get(i).getPointVie()<=0) {
-					System.out.println(equipe.getListePersonnage().get(i).getNom()+" est KO");
-					equipe.getListePersonnage().remove(i);
-					break;
-				}
-			}
-			
-			for(int i=0; i<equipeMonstre.getListeMonstre().size(); i++) {
-				if(equipeMonstre.getListeMonstre().get(i).getPointVie()<=0) {
-					System.out.println(equipeMonstre.getListeMonstre().get(i).getNom()+" a été neutralisé");
-					equipeMonstre.getListeMonstre().get(i).setEstVivant(false);
-					equipeMonstre.getListeMonstre().remove(i);
+				for(int i=0; i<monstres.length; i++) {
 					
-					break;
+					if (monstres[i].getEstVivant()) {
+						
+						int choixCible=(int)(Math.random()*(combattants.length-1));
+									
+							monstres[i].attaquer(combattants[choixCible]);
+							if(combattants[choixCible].getPointVie()<=0) {
+								System.out.println(combattants[choixCible].getNom()+" est KO");
+								combattants[choixCible].setEstVivant(false);
+							}
+					}
 				}
 			}
 			
-			equipe.CalculerPointVieGlobal();
-			equipeMonstre.CalculerPointVieGlobal();
+			//Calcul de nouveau des points de vie global pour les monstres et l'équipe
+			equipeMonstrePointVieGlobal=0; 
+			equipePointVieGlobal=0;
+			for (int i=0; i<monstres.length; i++) {
+					equipeMonstrePointVieGlobal += monstres[i].getPointVie();
+			}
 			
-						
+			for (int i=0; i<combattants.length; i++) {
+					equipePointVieGlobal += combattants[i].getPointVie();
+			}
+			
+			//Reset des parade
+			for (int i=0; i<monstres.length; i++) {
+				monstres[i].setParade(false);
+			}
+			
+			for (int i=0; i<combattants.length; i++) {
+				combattants[i].setParade(false);
+			}
+			
 		}
 		//fin combat
-				
-			
-			//Reset utilisation des objets
-			for(int i=0; i<equipe.getListePersonnage().size(); i++) {	
-				if(equipe.getListePersonnage().get(i) instanceof Guerrier) {
-					((Guerrier)equipe.getListePersonnage().get(i)).setPointRage(10+((Guerrier)equipe.getListePersonnage().get(i)).getParerGuerrier());
-					equipe.getListePersonnage().get(i).setPointMana(0);
-					equipe.getListePersonnage().get(i).setPointDefense(5);
-					equipe.getListePersonnage().get(i).setPointResistance(5);
-				}
-				if(equipe.getListePersonnage().get(i) instanceof Mage) {
-					equipe.getListePersonnage().get(i).setPointRage(0);
-					((Mage)equipe.getListePersonnage().get(i)).setPointMana(10+((Mage)equipe.getListePersonnage().get(i)).getParerMage());
-					equipe.getListePersonnage().get(i).setPointDefense(5);
-					equipe.getListePersonnage().get(i).setPointResistance(5);
-				}
-				if(equipe.getListePersonnage().get(i) instanceof Paladin) {
-					((Paladin)equipe.getListePersonnage().get(i)).setPointRage(10+((Paladin)equipe.getListePersonnage().get(i)).getParerPaladin());
-					((Paladin)equipe.getListePersonnage().get(i)).setPointMana(10+((Paladin)equipe.getListePersonnage().get(i)).getParerPaladin());
-					equipe.getListePersonnage().get(i).setPointDefense(5);
-					equipe.getListePersonnage().get(i).setPointResistance(5);
-				}
-				System.out.println();
-			}
-			
-			for(int i=0; i<equipeMonstre.getListeMonstre().size(); i++) {	
-				if(equipeMonstre.getListeMonstre().get(i) instanceof Assassin) {
-					equipeMonstre.getListeMonstre().get(i).setPointRage(10);
-					equipeMonstre.getListeMonstre().get(i).setPointMana(0);
-					equipeMonstre.getListeMonstre().get(i).setPointDefense(5);
-					equipeMonstre.getListeMonstre().get(i).setPointResistance(5);
-				}
-				if(equipeMonstre.getListeMonstre().get(i) instanceof Chamane) {
-					equipeMonstre.getListeMonstre().get(i).setPointRage(10);
-					equipeMonstre.getListeMonstre().get(i).setPointMana(10);
-					equipeMonstre.getListeMonstre().get(i).setPointDefense(5);
-					equipeMonstre.getListeMonstre().get(i).setPointResistance(5);
-				}
-				if(equipeMonstre.getListeMonstre().get(i) instanceof Necromancien) {
-					equipeMonstre.getListeMonstre().get(i).setPointRage(0);
-					equipeMonstre.getListeMonstre().get(i).setPointMana(10);
-					equipeMonstre.getListeMonstre().get(i).setPointDefense(5);
-					equipeMonstre.getListeMonstre().get(i).setPointResistance(5);
-				}
-				System.out.println();
-			}
-		
 		
 		//Résultat
+		System.out.println();
 		if (equipe.getPointVieGlobal()>0) {
-			System.out.println(equipe.getNom()+" est le vainqueur !");
+			System.out.println(equipe.getNom()+" est vainqueur !");
+			if (monstres[0].getLettre() == 'B') {
+				equipe.getListePersonnage().get(0).ajouterEquipement(new ObjetQuete("La tête du boss du " +carte.getCarte_nom()));
+				System.out.println("Vous avez récupéré la tête du boss du " +carte.getCarte_nom());
+			}
 			for(int i=0; i<equipe.getListePersonnage().size(); i++) {
-				if(equipe.getListePersonnage().get(i).getPointVie()>0) {
+				if(equipe.getListePersonnage().get(i).getPointVie()>0 && fuite == false) {
 					equipe.getListePersonnage().get(i).setXP(equipe.getListePersonnage().get(i).getXP()+10);
-					System.out.println(equipe.getListePersonnage().get(i).getNom()+ "gagne 10 XP." );
+					System.out.println(equipe.getListePersonnage().get(i).getNom()+ " gagne 10 XP." );
 				}
 				else {
 					equipe.getListePersonnage().get(i).setXP(equipe.getListePersonnage().get(i).getXP()+5); 
-					System.out.println(equipe.getListePersonnage().get(i).getNom()+ "gagne 5 XP." );
+					System.out.println(equipe.getListePersonnage().get(i).getNom()+ " gagne 5 XP." );
+				}
+				if (equipe.getListePersonnage().get(i).getXP()>=100) {
+					equipe.getListePersonnage().get(i).levelUp();
+					System.out.println(equipe.getListePersonnage().get(i).getNom()+ " est passé au niveau " +equipe.getListePersonnage().get(i).getLevel() 
+									   +" (+2 en attaque et en défense, +5 en vie)");
 				}
 			}
 		}

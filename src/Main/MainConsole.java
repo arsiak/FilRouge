@@ -1,22 +1,18 @@
 package Main;
+
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Random;
 import java.util.Scanner;
 
 import Bdd.ChargementParam;
+import Bdd.SauvegardeParam;
 import Cartes.*;
 import Combat.Combat;
-import Equipements.Amulette;
-import Equipements.Bombe;
-import Equipements.Bouclier;
-import Equipements.Casque;
-import Equipements.Epee;
-import Equipements.Objet;
-import Equipements.ObjetQuete;
+import Objets.*;
 import Panneau.Menu;
 import Panneau.MenuEquipe;
-import Panneau.MenuInitialisation;
+import Panneau.PanneauInitialisation;
 import Personnages.Equipe;
 import Personnages.Guerrier;
 import Personnages.Mage;
@@ -24,49 +20,57 @@ import Personnages.Paladin;
 import Personnages.Personnage;
 import Quetes.Pnj;
 import Quetes.PnjKaramel;
+import Quetes.PnjMaria;
 import Quetes.PnjPerlin;
 import Quetes.PnjPoppy;
 import Quetes.PnjRomuald;
+import Tresors.Tresor;
 
 public class MainConsole {
 
 	public static void main(String[] args) throws IOException {
 
-		Personnage perso = new Personnage();
+		
 		Carte carte = new Carte();
 		Pnj pnjKaramel = new PnjKaramel();
-		Pnj pnjMaria = new PnjKaramel();
+		Pnj pnjMaria = new PnjMaria();
 		Pnj pnjRomuald = new PnjRomuald();
-		Pnj pnjPerlin = new PnjPerlin();
-		Pnj pnjPoppy = new PnjPoppy();
+		PnjPerlin pnjPerlin = new PnjPerlin();
+		PnjPoppy pnjPoppy = new PnjPoppy();
 		
-		ChargementParam param = new ChargementParam();
-		MenuInitialisation init = new MenuInitialisation(param);
-		perso = new Guerrier("Elias",'@', param.getCoordPerso());
+		//ChargementParam chargement = new ChargementParam();
+		//SauvegardeParam sauvegarde = new SauvegardeParam();
+		//PanneauInitialisation init = new PanneauInitialisation(chargement);
+		PanneauInitialisation init = new PanneauInitialisation();
+		Personnage perso = new Guerrier("Elias",'@', new Coord(20,14));
+		perso.ajouterEquipement(new PotionVitesse());
 		perso.ajouterEquipement(new Epee());
-		perso.ajouterEquipement(new Casque());
-		perso.ajouterEquipement(new ObjetQuete("blablabla"));
 		Equipe equipe = new Equipe ("Votre équipe", perso);
+		//Test de différent équipement et différents membres d'équipe
+			//perso.ajouterEquipement(new PotionVie());
+			//perso.ajouterEquipement(new Bombe());
+			//Paladin poppy = new Paladin("Poppy");
+			//poppy.ajouterEquipement(new Epee());
+			//poppy.ajouterEquipement(new Bouclier());
+			//Mage maria = new Mage("Maria");
+			//maria.ajouterEquipement(new Amulette());
+			//maria.ajouterEquipement(new PotionVie());
+			//equipe.ajouterPersonnage(poppy);
+			//equipe.ajouterPersonnage(maria);		
+		
 		//init.accueil();
-		init.demarrage(perso,carte);
-		Paladin poppy = new Paladin("Poppy",'P');
-		poppy.ajouterEquipement(new Epee());
-		poppy.ajouterEquipement(new Bouclier());
-		Mage maria = new Mage("Maria",'M');
-		maria.ajouterEquipement(new Amulette());
-		equipe.ajouterPersonnage(poppy);
-		equipe.ajouterPersonnage(maria);
-		carte = param.getCoordCarte();
+		//init.demarrage(perso,carte);
+		init.scenario();
+		//carte = chargement.getCoordCarte();
+		carte = new CarteMonde();
 		Combat combat;
+		Tresor tresor = new Tresor(carte, pnjKaramel, pnjMaria, pnjPerlin, pnjPoppy, pnjRomuald);;
 
-		carte.setDeplacementPerso(perso);
-		
-		
-		
+		carte.setDeplacementPerso(perso, equipe);
 
 		Scanner sc = new Scanner(System.in);
 		char saisie;
-		int personnage_pas = 0, combat_apparition = (int)(Math.floor(Math.random()*5 + 5));;
+		int personnage_pas = 0, combat_apparition = (int)(Math.floor(Math.random()*5 + 5));
 
 		boolean mouvement = true;
 
@@ -76,70 +80,148 @@ public class MainConsole {
 			carte.afficher();
 			carte.enlever(perso.getCoord());
 
-			switch (saisie = sc.nextLine().charAt(0)) {
-
-			case 'z':
-				perso.mvtHaut();
-				if (carte.bloque(perso)) { 
-					if (carte.elementCarte(perso).equals("Karamel")) {
-						 pnjKaramel.deroulementQueteC(perso);
-					  }
-					perso.mvtBas(); }
-				break;
-
-			case 's':
-				perso.mvtBas();
-				if (carte.bloque(perso)) { perso.mvtHaut(); }
-				break;
-
-			case 'q':
-				perso.mvtGauche();
-				if (carte.bloque(perso)) {
-					if (carte.elementCarte(perso).equals("Romuald")) {
-						 pnjRomuald.deroulementQueteC(perso);
-					}
-					perso.mvtDroite(); }
-				break;
-
-			case 'd':
-				perso.mvtDroite();
-				if (carte.bloque(perso)) { 
-					if (carte.elementCarte(perso).equals("Maria")) {
-						 pnjMaria.deroulementQueteC(perso);
-					}
-					perso.mvtGauche(); }
-				break;
-			
-			case 't': 
-				param.saveCoordPerso(perso);
-				param.saveCoordCarte(carte);
-				System.out.println("Partie sauvegardée.");
-				break;
+			try {
 				
-			case 'm':
-				new Menu(equipe);
-				break;
+				switch (saisie = sc.nextLine().charAt(0)) {
+	
+				case 'z':
+					perso.mvtHaut();
+					if (carte.bloque(perso)) { 
+						if (carte.elementCarte(perso).equals("Karamel")) {
+							 pnjKaramel.deroulementQuete(equipe);
+						  }
+						if (carte.elementCarte(perso).equals("Perlin")) {
+							if (pnjKaramel.getListe_quetes().get(1).getActive() || pnjKaramel.getQueteActuel() > 2)
+								  pnjPerlin.boucleFinListeQuete(equipe, pnjKaramel);
+							else  
+								pnjPerlin.boucleSansQuete(perso);
+						}
+						if (carte.elementCarte(perso).equals("tresor")) {
+							tresor.ouvrir(perso);
+						}
+						if (carte.elementCarte(perso).equals("boss")) {
+							try {
+								combat = new Combat(equipe, carte);
+								if (combat.getGameOver() == true) {
+									mouvement = false;
+								}
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						perso.mvtBas(); }
+					break;
+	
+				case 's':
+					perso.mvtBas();
+					if (carte.bloque(perso)) { 
+						if (carte.elementCarte(perso).equals("tresor")) {
+							tresor.ouvrir(perso);
+						}
+						if (carte.elementCarte(perso).equals("boss")) {
+							try {
+								combat = new Combat(equipe, carte);
+								if (combat.getGameOver() == true) {
+									mouvement = false;
+								}
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						perso.mvtHaut(); }
+					break;
+	
+				case 'q':
+					perso.mvtGauche();
+					if (carte.bloque(perso)) {
+						if (carte.elementCarte(perso).equals("Romuald")) {
+							 pnjRomuald.deroulementQuete(equipe);
+						}
+						if (carte.elementCarte(perso).equals("Poppy")) {
+							if (pnjMaria.getListe_quetes().get(1).getActive() || pnjMaria.getQueteActuel() > 2)
+								  pnjPoppy.boucleFinListeQuete(equipe, pnjMaria);
+							else  
+								pnjPoppy.boucleSansQuete(perso);
+						}
+						if (carte.elementCarte(perso).equals("tresor")) {
+							tresor.ouvrir(perso);
+						}
+						if (carte.elementCarte(perso).equals("boss")) {
+							try {
+								combat = new Combat(equipe, carte);
+								if (combat.getGameOver() == true) {
+									mouvement = false;
+								}
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						perso.mvtDroite(); }
+					break;
+	
+				case 'd':
+					perso.mvtDroite();
+					if (carte.bloque(perso)) { 
+						if (carte.elementCarte(perso).equals("Maria")) {
+							 pnjMaria.deroulementQuete(equipe);
+						}
+						if (carte.elementCarte(perso).equals("tresor")) {
+							tresor.ouvrir(perso);
+						}
+						if (carte.elementCarte(perso).equals("boss")) {
+							try {
+								combat = new Combat(equipe, carte);
+								if (combat.getGameOver() == true) {
+									mouvement = false;
+								}
+							} catch (Exception e) {
+								// TODO Auto-generated catch block
+								e.printStackTrace();
+							}
+						}
+						perso.mvtGauche(); }
+					break;
+				
+				case 't': 
+					//sauvegarde.saveCoordPerso(perso);
+					//sauvegarde.saveCoordCarte(carte);
+					System.out.println("Partie sauvegardée.");
+					break;
+					
+				case 'm':
+					new Menu(equipe);
+					break;
+					
+				}
+			}catch(StringIndexOutOfBoundsException e) {
+				
 			}
 			
-
 			//carte.setDeplacementPerso(p);
 			if (carte.estChange(perso) == true) { 
-				if (carte.getCarte_nom().contains("Donjon")) {
-					
-					personnage_pas = 0;
-					combat_apparition = (int)(Math.floor(Math.random()*5 + 5));
-				}
+				
 				carte = carte.changementCarte(perso);
 				System.out.println("Vous entrez sur la carte" +carte.getCarte_nom());
-				carte.setDeplacementPerso(perso);
+				if (carte.getCarte_nom().contains("Donjon")) {
+					
+					tresor = new Tresor(carte, pnjKaramel, pnjMaria, pnjPerlin, pnjPoppy, pnjRomuald);
+					personnage_pas = 0;
+					combat_apparition = (int)(Math.floor(Math.random()*5 + 5));
+					
+				}
+				carte.setDeplacementPerso(perso, equipe);
 				
 			}
 			if (carte.getCarte_nom().contains("Donjon")) {
 				
 				personnage_pas++;
 				if (personnage_pas == combat_apparition) {
+					
 					try {
-						combat = new Combat(equipe);
+						combat = new Combat(sc, equipe);
 						if (combat.getGameOver() == true) {
 							mouvement = false;
 						}
@@ -151,6 +233,7 @@ public class MainConsole {
 					combat_apparition = (int)(Math.floor(Math.random()*5 + 5));
 				}
 			}
+
 		}
 		sc.close();
 

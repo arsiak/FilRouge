@@ -1,4 +1,4 @@
-package Equipements;
+package Objets;
 
 public class Amulette extends Arme {
 	

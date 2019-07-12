@@ -4,19 +4,23 @@ import java.util.Scanner;
 
 import Bdd.ChargementParam;
 import Cartes.Carte;
-import Equipements.Casque;
-import Equipements.Epee;
+import Objets.Casque;
+import Objets.Epee;
 import Personnages.Guerrier;
 import Personnages.Personnage;
 
-public class MenuInitialisation {
+public class PanneauInitialisation {
 	
 	ChargementParam param;
 	MenuScenario menuScenario = new MenuScenario();
 	Scanner sc;
 	String pseudo;
 	
-	public MenuInitialisation(ChargementParam param ) { 
+	public PanneauInitialisation() {
+		
+	}
+	
+	public PanneauInitialisation(ChargementParam param ) { 
 		this.param=param;
 		sc=new Scanner(System.in);
 	}
@@ -68,7 +72,8 @@ public class MenuInitialisation {
 		if (sc.next().equals("N")) {
 			this.scenario();
 		} else if (sc.next().equals("C")) {
-			
+			//Manque la bd pour récupérer tous les paramètres
+			System.out.println("En attente de création de la base de données ...");
 		}
 
 	}

@@ -1,17 +1,18 @@
 package Quetes;
 
-import Equipements.Objet;
+import Objets.Objet;
+import Objets.ObjetQuete;
 
 public class Quete {
 
 	protected String quete_nom;
 	protected String quete_dialogue_initial;
 	protected String quete_dialogue_final;
-	protected Objet quete_objet;
+	protected ObjetQuete quete_objet;
 	protected String quete_recompense;
 	protected Boolean quete_active;
 	
-	public Quete(String nom, String dial_init, String dial_final, Objet objet, String recompense, Boolean active) {
+	public Quete(String nom, String dial_init, String dial_final, ObjetQuete objet, String recompense, Boolean active) {
 		
 		quete_nom = nom;
 		quete_dialogue_initial = dial_init;
@@ -21,16 +22,6 @@ public class Quete {
 		quete_active = active;
 	
 	}
-	
-	/*public Quete(String nom, String dial_init, String dial_final, String recompense, Boolean active) {
-		
-		quete_nom = nom;
-		quete_dialogue_initial = dial_init;
-		quete_dialogue_final = dial_final;
-		quete_recompense = recompense;
-		quete_active = active;
-	
-	}*/
 	
 	public String getNom() {
 		return quete_nom;
@@ -52,11 +43,11 @@ public class Quete {
 		return quete_dialogue_final;
 	}
 
-	public Objet getObjet() {
+	public ObjetQuete getObjet() {
 		return quete_objet;
 	}
 
-	public void setObjet(Objet objet) {
+	public void setObjet(ObjetQuete objet) {
 		quete_objet=objet;
 	}
 

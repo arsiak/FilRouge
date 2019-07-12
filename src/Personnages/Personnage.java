@@ -1,15 +1,17 @@
 package Personnages;
 
+import java.awt.Image;
 import java.util.Arrays;
 
 import Cartes.Coord;
-import Equipements.Objet;
 import Monstres.Monstre;
+import Objets.Objet;
 
 public class Personnage {
 	
 	protected String personnage_nom;
 	protected char personnage_lettre;
+	protected Image personnage_image;
 	protected Coord personnage_coord;
 	protected int personnage_pointVie=100;
 	protected int personnage_pointRage;
@@ -17,42 +19,40 @@ public class Personnage {
 	protected int personnage_pointMana;
 	protected int personnage_pointResistance;
 	protected int personnage_pointVitesse;
-	protected String personnage_criGuerre;
-	private Objet[] personnage_sac = new Objet[10];
+	protected String personnage_criGuerre="A l'attaque !!";
+	private Objet[] personnage_sac = new Objet[15];
 	protected int personnage_level;
 	protected int personnage_XP;
+	protected boolean personnage_parade = false;
+	protected boolean personnage_estVivant = true;
 
-	public Personnage() {
-		
-		this.personnage_pointVie=100;
-		this.setPointRage(10);
-		this.personnage_pointDefense=5;
-		this.personnage_criGuerre="A l'attaque !!";
-	}
-	/*
-	public Personnage(String nom, Coord coord) {
-		this.personnage_nom=nom;
-		this.personnage_coord=coord;
-	}
-	*/
+	public Personnage() { }
+	
 	public Personnage(String nom, char lettre, Coord coord) {
 		personnage_nom=nom;
 		personnage_coord=coord;
 		personnage_lettre=lettre;
+		personnage_pointVie=100;
+		personnage_pointRage=10;
+		personnage_pointDefense=5;
+		personnage_pointMana=10;
+		personnage_pointResistance=5;
+		personnage_pointVitesse=5;
+		personnage_level=0;
+		personnage_XP=0;
 	}
 	
-	
-	public Personnage(String nom,char lettre) {
-		this.personnage_nom=nom;
-		this.personnage_lettre=lettre;
-		this.personnage_pointVie=100;
-		this.personnage_pointRage=10;
-		this.personnage_pointDefense=5;
-		this.personnage_pointMana=10;
-		this.personnage_pointResistance=5;
-		this.personnage_pointVitesse=5;
-		this.personnage_criGuerre="A l'attaque !!";
-		
+	public Personnage(String nom,Image image, Coord coord) {
+		personnage_nom=nom;
+		personnage_image=image;
+		personnage_pointVie=100;
+		personnage_pointRage=10;
+		personnage_pointDefense=5;
+		personnage_pointMana=10;
+		personnage_pointResistance=5;
+		personnage_pointVitesse=5;	
+		personnage_level=0;
+		personnage_XP=0;
 	}
 	
 	public String toString() {
@@ -79,6 +79,10 @@ public class Personnage {
 		personnage_lettre=lettre;
 	}
 	
+	public void setImage(Image image) {
+		this.personnage_image=image;
+	}
+	
 	public void mvtGauche () {
 		personnage_coord.setX(-1);
 	}
@@ -88,7 +92,7 @@ public class Personnage {
 	}
 	
 	public void mvtHaut () {
-		personnage_coord.setY(-1);;
+		personnage_coord.setY(-1);
 	}
 	
 	public void mvtBas () {
@@ -135,9 +139,18 @@ public class Personnage {
 		this.personnage_criGuerre=criGuerre;
 	}
 	
+	public boolean getEstVivant() {
+		return personnage_estVivant;
+	}
+
+	public void setEstVivant(boolean estVivant) {
+		this.personnage_estVivant = estVivant;
+	}
+	
 	public void attaquer(Monstre monstre) {
 		System.out.println(this.personnage_nom+" attaque "+monstre.getNom()+" !");
 		int degat;
+		
 		degat=monstre.getPointVie()+monstre.getPointDefense()-this.getPointRage();
 		if(monstre.getPointDefense()>this.getPointRage()) {
 			monstre.setPointDefense(monstre.getPointDefense()-this.getPointRage());
@@ -151,6 +164,17 @@ public class Personnage {
 		}
 		monstre.setPointVie(degat);
 		System.out.println(monstre.getNom()+" perd "+(this.getPointRage()-monstre.getPointDefense())+" point(s) de vie !");
+	}
+	
+	public boolean fuir() {
+		
+		double randomFuite = Math.random();
+		boolean fuite = false;
+		
+		if (randomFuite>0.5) {
+			fuite = true;
+		}
+		return fuite;
 	}
 
 	public Coord getPosition() {
@@ -190,22 +214,6 @@ public class Personnage {
 		this.personnage_pointVitesse = personnage_pointVitesse;
 	}
 
-	/*public Arme[] getSacArme() {
-		return personnage_sacArme;
-	}
-
-	public void setSacArme(Arme[] personnage_sacArme) {
-		this.personnage_sacArme = personnage_sacArme;
-	}
-
-	public Armure[] getArmure() {
-		return personnage_armure;
-	}
-
-	public void setArmure(Armure[] personnage_armure) {
-		this.personnage_armure = personnage_armure;
-	}*/
-
 	public int getLevel() {
 		return personnage_level;
 	}
@@ -221,6 +229,14 @@ public class Personnage {
 	public void setXP(int personnage_XP) {
 		this.personnage_XP = personnage_XP;
 	}
+	
+	public boolean getParade() {
+		return this.personnage_parade;
+	}
+	
+	public void setParade(boolean parade) {
+		this.personnage_parade=parade;
+	}
 
 	public void ajouterEquipement(Objet equipement) {
 		
@@ -232,9 +248,8 @@ public class Personnage {
 				
 			}
 		}
-		equipement.utiliser(this);
-		//System.out.println(personnage_sac.length);
-		//System.out.println(Arrays.toString(equipement));
+		if (equipement.getType().equals("Arme") || equipement.getType().equals("Armure")) 
+			equipement.utiliser(this);
 		
 	}
 	
@@ -247,6 +262,7 @@ public class Personnage {
 				i=personnage_sac.length;
 			}
 		}
+		equipement.desutiliser(this);
 		//System.out.println(Arrays.toString(equipements));
 		
 	}
@@ -287,6 +303,23 @@ public class Personnage {
 			}catch (NullPointerException e) {}
 		}
 		return nombreObjet;
+	}
+	
+	public void levelUp() {
+		this.personnage_level++;
+		this.personnage_XP = this.personnage_XP-100;
+		this.personnage_pointRage = this.personnage_pointRage+2;
+		this.personnage_pointMana = this.personnage_pointMana+2;
+		this.personnage_pointDefense = this.personnage_pointDefense+2;
+		this.personnage_pointResistance = this.personnage_pointResistance+2;
+		this.personnage_pointVie = this.personnage_pointVie+5;
+	}
+
+	public void parer() {
+		
+		System.out.println(this.getNom()+" pare ! (Diminue de moitié l'attaque ennemi)");
+		this.personnage_parade = true;
+		
 	}
 	
 }

@@ -6,7 +6,7 @@ import java.util.Scanner;
 
 import javax.swing.JPanel;
 
-import Equipements.Objet;
+import Objets.Objet;
 import Personnages.Equipe;
 
 public class MenuInventaire extends JPanel {
@@ -65,7 +65,7 @@ public class MenuInventaire extends JPanel {
 		int selectActu = 0;
 		
 		System.out.print("-----------------------------------------------------------------------------\n" + 
-				 		 "|                Equipe (A)              |         *  Inventaire (I)        |\n" + 
+				 		 "|                Equipe (a)              |         *  Inventaire (i)        |\n" + 
 				 		 "-----------------------------------------------------------------------------\n");
 			
 		for (int j=0; j<equipe.getListePersonnage().size(); j++) {
@@ -89,7 +89,8 @@ public class MenuInventaire extends JPanel {
 				}
 			}
 		}
-		System.out.println("-----------------------------------------------------------------------------\n");		   
+		System.out.println("-----------------------------------------------------------------------------\n");	
+		System.out.println("\n| z : haut | s : bas | v : valider");
 		//System.out.println(selectActu);
 		//System.out.println(select);
 		return taille;

@@ -30,7 +30,7 @@ public class CarteVillage extends Carte {
 			carte_pnj_2 = ImageIO.read(new File("Ressources/Images/MariaGauche.png"));
 			carte_pnj_3 = ImageIO.read(new File("Ressources/Images/RomualdDroit.png"));
 			carte_sortie = ImageIO.read(new File("Ressources/Images/porte.png"));
-			carte_sol = ImageIO.read(new File("Ressources/Images/terre.png"));
+			carte_sol = (ImageIO.read(new File("Ressources/Images/terre.png")));
 			      
 		}
 		catch (IOException e) {
