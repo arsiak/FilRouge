@@ -36,15 +36,15 @@ import Tresors.Tresor;
 
 public class MainInterface extends JFrame implements KeyListener {
 
-	ChargementParam param = new ChargementParam();
-	Personnage p = new Guerrier("Elias", '@', param.getCoordPerso());
+	//ChargementParam param = new ChargementParam();
+	Personnage p = new Guerrier("Elias", '@', new Coord(20,14));
 	Equipe equipe = new Equipe ("Votre équipe", new ArrayList<Personnage>());
 	Pnj pnjKaramel = new PnjKaramel();
 	Pnj pnjPerlin = new PnjPerlin();
 	Pnj pnjMaria = new PnjMaria();
 	Pnj pnjPoppy = new PnjPoppy();
 	Pnj pnjRomuald = new PnjRomuald();
-	Carte carte = param.getCoordCarte();
+	Carte carte = new CarteMonde();
 	MenuScenario scenario = new MenuScenario(this);
 	JLabel label = new JLabel();
 	
@@ -54,7 +54,7 @@ public class MainInterface extends JFrame implements KeyListener {
 	    this.setSize(450, 470);
 	    this.setLocationRelativeTo(null); 
 	    //this.setResizable(false);
-	    this.setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
+	    this.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 	    this.setContentPane(carte);
 	    //this.setContentPane(scenario);
 	    equipe.ajouterPersonnage(p);
@@ -163,7 +163,7 @@ public class MainInterface extends JFrame implements KeyListener {
 		    break;
 		    
 		  case KeyEvent.VK_ESCAPE:
-			  dispose();
+			  //dispose();
 			  break;
 		  }
 
@@ -184,11 +184,11 @@ public class MainInterface extends JFrame implements KeyListener {
 
 	}  
 	
-	public void dispose() {
-		param.saveCoordPerso(p);
-		  param.saveCoordCarte(carte);
-		  System.exit(0);
-	}
+//	public void dispose() {
+//		param.saveCoordPerso(p);
+//		  param.saveCoordCarte(carte);
+//		  System.exit(0);
+//	}
 	
 
 	public static void main(String[] args) throws IOException {
