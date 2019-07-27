@@ -7,7 +7,7 @@ import java.util.Scanner;
 
 import javax.swing.JPanel;
 
-import Equipements.Objet;
+import Objets.Objet;
 import Personnages.Equipe;
 
 public class MenuInventaireDetail extends JPanel {
@@ -75,35 +75,8 @@ public class MenuInventaireDetail extends JPanel {
 			System.out.print("#\n");
 		}
 		System.out.print("####################\n");
-		/*
-		for (int i=0; i<(equipe.getListePersonnage().size()); i++) {
-			
-			if (select == i) { fleche = "->"; }
-			else { fleche = "  "; };
-			
-			System.out.print("|                                                                                |\n"
-							+"| " +fleche+ " " +equipe.getListePersonnage().get(i).toStringMenu());
-			for (int j=0; j<76-equipe.getListePersonnage().get(i).toStringMenu().length(); j++) { System.out.print(" "); } 
-			System.out.print("|\n"
-							  +"|                                                                                |\n");	 		
-		}		 		   
-				 		   		   
-		System.out.print("----------------------------------------------------------------------------------\n");
-		for (int i=0; i<equipe.getListePersonnage().get(select).getSac().length; i++) {
-			Objet objet = equipe.getListePersonnage().get(select).getSac()[i];
-			try {
-				System.out.print("| " +objet.getPresentationMenu());
-				for (int j=0; j<79-objet.getPresentationMenu().length(); j++) { System.out.print(" "); } 
-				System.out.print("|\n"
-								+"|     Decription : " +objet.getDescription());
-				for (int j=0; j<62-objet.getDescription().length(); j++) { System.out.print(" "); } 
-				System.out.print("|\n");
-			} catch (NullPointerException e) {
-				
-			}
-		}
-		System.out.println("----------------------------------------------------------------------------------\n");		   
-		*/	 		   
+		System.out.println("\n| z : haut | s : bas | v : validation");
+		
 	}
 
 }

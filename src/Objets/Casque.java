@@ -1,12 +1,12 @@
-package Equipements;
+package Objets;
 
 public class Casque extends Armure {
 
 	public Casque() {
 		super();
 		objet_nom = "Casque";
-		armure_description = "Protège la tête ";
-		armure_defense = 10;
+		objet_description = "Protège la tête ";
+		objet_defense = 10;
 	}
 
 }

@@ -1,12 +1,15 @@
 package Monstres;
 
+import java.awt.Image;
+
 import Cartes.Coord;
-import Equipements.Objet;
+import Objets.Objet;
 import Personnages.Personnage;
 
 public class Monstre {
-	private String monstre_nom;
-	protected String monstre_lettre;
+	protected String monstre_nom;
+	protected char monstre_lettre;
+	protected Image monstre_image;
 	protected Coord monstre_coord;
 	protected int monstre_pointVie;
 	protected int monstre_pointRage;
@@ -14,11 +17,28 @@ public class Monstre {
 	protected int monstre_pointMana;
 	protected int monstre_pointResistance;
 	protected int monstre_pointVitesse;
-	protected String monstre_criGuerre;
-	public Objet[] monstre_sac;
-	private boolean estVivant;
+	protected String monstre_criGuerre="mlll wwouogrouroulou !!";
+	protected Objet[] monstre_sac;
+	protected boolean monstre_parade;
+	protected boolean monstre_estVivant;
 	
-	public Monstre(String nom, String lettre, Objet[] sac) {
+	/*public Monstre(String nom, Image image, Objet[] sac, int vie, int rage, int def, int mana, int res, int vit, String cri) {
+		this.monstre_nom=nom;
+		this.monstre_image=image;
+		this.monstre_pointVie=vie;
+		this.monstre_pointRage=rage;
+		this.monstre_pointDefense=def;
+		this.monstre_pointMana=mana;
+		this.monstre_pointResistance=res;
+		this.monstre_pointVitesse=vit;
+		this.monstre_criGuerre=cri;
+		this.monstre_sac=sac;
+		this.setEstVivant(true);
+	}*/
+	
+	public Monstre() { }
+	
+	public Monstre(String nom, char lettre, Objet[] sac) {
 		this.setNom(nom);
 		this.monstre_lettre=lettre;
 		this.monstre_pointVie=60;
@@ -27,7 +47,19 @@ public class Monstre {
 		this.monstre_pointMana=10;
 		this.monstre_pointResistance=5;
 		this.monstre_pointVitesse=5;
-		this.monstre_criGuerre="mlll wwouogrouroulou !!";
+		this.monstre_sac=sac;
+		this.setEstVivant(true);
+	}
+	
+	public Monstre(String nom, Image image, Objet[] sac) {
+		this.setNom(nom);
+		this.monstre_image=image;
+		this.monstre_pointVie=60;
+		this.monstre_pointRage=10;
+		this.monstre_pointDefense=5;
+		this.monstre_pointMana=10;
+		this.monstre_pointResistance=5;
+		this.monstre_pointVitesse=5;
 		this.monstre_sac=sac;
 		this.setEstVivant(true);
 	}
@@ -44,12 +76,19 @@ public class Monstre {
 		this.monstre_nom=nom;
 	}
 	
+	public Image getImage() {
+		return monstre_image;
+	}
+	
+	public void setImage(Image image) {
+		this.monstre_image=image;
+	}
 
-	public String getLettre() {
+	public char getLettre() {
 		return monstre_lettre;
 	}
 	
-	public void setLettre(String lettre) {
+	public void setLettre(char lettre) {
 		this.monstre_lettre=lettre;
 	}
 	
@@ -116,17 +155,51 @@ public class Monstre {
 	public void setSac(Objet[] sac) {
 		monstre_sac = sac;
 	}
+	
+	public boolean getParade() {
+		return monstre_parade;
+	}
+
+	public void setParade(boolean parade) {
+		monstre_parade=parade;
+	}
 
 	public boolean getEstVivant() {
-		return estVivant;
+		return monstre_estVivant;
 	}
 
 	public void setEstVivant(boolean estVivant) {
-		this.estVivant = estVivant;
+		this.monstre_estVivant = estVivant;
 	}
 	
-	public void Attaquer(Personnage personnage) {
+	public void retirerEquipement(Objet equipement) {
+		
+		for (int i=0; i<monstre_sac.length; i++) {
+			
+			if (monstre_sac[i].getNom().equals(equipement.getNom())) {
+				monstre_sac[i] = null;
+				i=monstre_sac.length;
+			}
+		}
+		//System.out.println(Arrays.toString(equipements));
 		
 	}
 	
+	public void attaquer(Personnage personnage) {
+		
+	}
+	
+	public int nombreObjetDansSac() {
+		
+		int nombreObjet = 0;
+		for (int i=0; i<monstre_sac.length; i++) {
+
+			try {
+				if (!(monstre_sac[i] == null)) {
+					nombreObjet++;
+				}
+			}catch (NullPointerException e) {}
+		}
+		return nombreObjet;
+	}
 }

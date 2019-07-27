@@ -64,8 +64,8 @@ public class MenuScenario extends JPanel {
 	
 	 public void paintComponent(Graphics g){
 		
-		 String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
-		 for (int i=0; i<fonts.length;i++) System.out.println(fonts[i]);
+		 //String[] fonts = GraphicsEnvironment.getLocalGraphicsEnvironment().getAvailableFontFamilyNames();
+		 //for (int i=0; i<fonts.length;i++) System.out.println(fonts[i]);
 		 
 		 Graphics2D g1 = (Graphics2D) g;
 		 
@@ -88,7 +88,7 @@ public class MenuScenario extends JPanel {
 		    g1.setPaint(new Color(150, 150, 150));
 		    textLayout.draw(g1, (jf.getWidth()-scenario[i].length()*taille2)/2+2, ecartBordH + 2 +i*ecartPhrase);
 
-		    g1.setPaint(Color.RED);
+		    g1.setPaint(Color.WHITE);
 		    textLayout.draw(g1, (jf.getWidth()-scenario[i].length()*taille2)/2, ecartBordH +i*ecartPhrase);
 			
 		 }

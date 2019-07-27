@@ -81,25 +81,6 @@ public class ChargementParam {
 		return coordPerso;
 	}
 	
-	public void saveCoordPerso(Personnage perso) {
-		
-		try {
-			
-			state = co.createStatement();
-			
-			state.executeUpdate("update perso SET coordX = " +perso.getCoord().getX());
-				
-			state.executeUpdate("update perso SET coordY = " +perso.getCoord().getY());
-
-			state.close();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
-	}
-	
 	public Carte getCoordCarte() {
 		
 		Carte carte = new Carte();
@@ -139,23 +120,6 @@ public class ChargementParam {
 		}
 			
 		return carte;
-	}
-	
-	public void saveCoordCarte(Carte carte) {
-		
-		try {
-			
-			state = co.createStatement();
-			
-			state.executeUpdate("update perso SET coordCarte = " + "'" +carte.getCarte_nom()+ "'");
-
-			state.close();
-			
-		} catch (SQLException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
-
 	}
 	
 }

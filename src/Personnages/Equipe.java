@@ -1,6 +1,8 @@
 package Personnages;
 import java.util.ArrayList;
 
+import Objets.Objet;
+
 public class Equipe {
 	private String equipe_nom;
 	private ArrayList<Personnage> equipe_listePersonnage=new ArrayList<Personnage>();
@@ -57,6 +59,28 @@ public class Equipe {
 	public String ajouterPersonnage(Personnage personnage) {
 		equipe_listePersonnage.add(personnage);
 		return personnage.getNom() + " a rejoint votre équipe.";
+	}
+	
+	public String remplacerPersonnage(int position, Personnage personnage) {
+		Personnage persoARemplacer = equipe_listePersonnage.get(position);
+		equipe_listePersonnage.set(position, personnage);
+		return persoARemplacer.getNom() + " a été remplacé par " +personnage.getNom()+ " votre équipe.";
+	}
+	
+	public Boolean verifiePersonnage(String personnage_nom) {
+		
+		Boolean verification = false;
+		for (int i=0; i<equipe_listePersonnage.size(); i++) {
+			
+			try {
+				if (equipe_listePersonnage.get(i).getNom().equals(personnage_nom)) {
+					verification = true;
+				}
+			
+			}catch (NullPointerException e) {}
+			
+		}
+		return verification;
 	}
 
 

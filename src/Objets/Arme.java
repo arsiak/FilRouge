@@ -1,4 +1,4 @@
-package Equipements;
+package Objets;
 import Personnages.Personnage;
 import Monstres.Monstre;
 
@@ -7,20 +7,20 @@ public abstract class Arme extends Objet {
 	
 	protected String objet_nom;
 	protected String objet_description;
-	protected int objet_rage, objet_mana, objet_defense;
+	protected String objet_type = "Arme";
+	protected int objet_rage, objet_mana;
 	
 	//Constructeur
 	public Arme() {
-				
+		
 	}
 	
 	
-	public Arme (String nom, String description, int rage, int mana, int defense) {
+	public Arme (String nom, String description, int rage, int mana) {
 		objet_nom = nom;
 		objet_description = description;
 		objet_rage = rage;
 		objet_mana = mana;
-		objet_defense = defense;
 	}	
 	
 	/*
@@ -33,7 +33,7 @@ public abstract class Arme extends Objet {
 	Bombe("Bombe", "Aveugle l'adversaire", +10,5,0,0,0,0),
 	Potion("Potion", "Accélère la guérison ", +10,0,0,0,0,0);
 	*/
-
+	
 	public String getNom() {
 		// TODO Auto-generated method stub
 		return objet_nom;
@@ -43,7 +43,11 @@ public abstract class Arme extends Objet {
 		// TODO Auto-generated method stub
 		objet_nom=nom;
 	}
-	   
+	
+	public String getType() {
+		return objet_type;
+	}
+	
 	public String getPresentationMenu(){
 		return (objet_nom+ " Rage " +objet_rage+ " Mana " +objet_mana);
 	}
@@ -64,6 +68,12 @@ public abstract class Arme extends Objet {
 		super.utiliser(personnage); 
 		personnage.setPointRage(personnage.getPointRage() + objet_rage);
 		personnage.setPointMana(personnage.getPointMana() + objet_mana);
+	}
+	
+	public void desutiliser(Personnage personnage) {
+		super.utiliser(personnage); 
+		personnage.setPointRage(personnage.getPointRage() - objet_rage);
+		personnage.setPointMana(personnage.getPointMana() - objet_mana);
 	}
 	
 	public void utiliser(Monstre monstre) {

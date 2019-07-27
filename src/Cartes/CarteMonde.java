@@ -41,8 +41,8 @@ public class CarteMonde extends Carte {
 			carte_obstacle_2 = ImageIO.read(new File("Ressources/Images/eau.png"));
 			carte_entree_1 = ImageIO.read(new File("Ressources/Images/chateau.png"));
 			carte_entree_2 = ImageIO.read(new File("Ressources/Images/maison.png"));
-			carte_sol = ImageIO.read(new File("Ressources/Images/terre.png"));
-			      
+			carte_sol = (ImageIO.read(new File("Ressources/Images/terre.png")));
+			carte_img_tresor = ImageIO.read(new File("Ressources/Images/tresor.png"));    
 		}
 		catch (IOException e) {
 		      e.printStackTrace();

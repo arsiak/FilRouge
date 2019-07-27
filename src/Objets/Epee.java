@@ -1,11 +1,11 @@
-package Equipements;
-
+package Objets;
 
 public class Epee extends Arme {
 
 
 	public Epee() {
-		objet_nom = "épée";
+		//super();
+		objet_nom = "Epée";
 		objet_description = "Une lame bien affûtée.";
 		objet_rage = 10;
 	}

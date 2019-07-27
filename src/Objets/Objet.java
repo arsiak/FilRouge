@@ -1,4 +1,4 @@
-package Equipements;
+package Objets;
 
 import Monstres.Monstre;
 import Personnages.Personnage;
@@ -11,6 +11,8 @@ public abstract class Objet {
 		return objet_nom;
 	}
 	
+	public abstract String getType();
+	
 	public abstract String getPresentationMenu();
 	
 	public abstract String getDescription();
@@ -20,6 +22,10 @@ public abstract class Objet {
 	}
 	
 	public void utiliser(Personnage personnage) {
+		// TODO Auto-generated method stub
+	}
+	
+	public void desutiliser(Personnage personnage) {
 		// TODO Auto-generated method stub
 	}
 	
